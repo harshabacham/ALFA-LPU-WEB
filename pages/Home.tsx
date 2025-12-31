@@ -11,9 +11,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS, QUOTES } from '../constants';
 import { Event, Notification as NotificationType } from '../types';
-<script async custom-element="amp-auto-ads"
-        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
-</script>
+import AdBanner from '../components/AdBanner';
 
 const Home: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -92,7 +90,7 @@ const Home: React.FC = () => {
   };
 
   const quickLinks = [
-    { name: 'Pulse Feed', path: '/notifications', icon: Bell, color: 'bg-red-500' },
+    { name: 'Announcements', path: '/notifications', icon: Bell, color: 'bg-red-500' },
     { name: 'Events', path: '/events', icon: Calendar, color: 'bg-primary-500' },
     { name: 'Duty Leaves', path: '/duty-leaves', icon: FileText, color: 'bg-orange-500' },
     { name: 'Notes', path: '/notes', icon: BookOpen, color: 'bg-primary-600' },
@@ -180,7 +178,9 @@ const Home: React.FC = () => {
                 ))}
                 <div className="flex items-center gap-6 pt-8">
                    <div className="flex gap-2">
+                      {/* Removed non-standard handlePrev attribute */}
                       <button onClick={handlePrev} className="w-12 h-12 shrink-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900 text-gray-400 rounded-xl border border-gray-100 dark:border-gray-800 hover:bg-primary-600 hover:text-white transition-all shadow-sm"><ChevronLeft size={24} /></button>
+                      {/* Removed non-standard handleNext attribute */}
                       <button onClick={handleNext} className="w-12 h-12 shrink-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900 text-gray-400 rounded-xl border border-gray-100 dark:border-gray-800 hover:bg-primary-600 hover:text-white transition-all shadow-sm"><ChevronRight size={24} /></button>
                    </div>
                    <div className="h-1 flex-grow max-w-[100px] bg-gray-100 dark:bg-gray-900 rounded-full overflow-hidden">
@@ -194,6 +194,9 @@ const Home: React.FC = () => {
           )}
         </div>
       </section>
+
+      /* {/* Ad Placement: Below Hero */}
+      {events.length > 0 && <AdBanner slot="4012397543" />} */
 
       {/* Campus Content */}
       <div className="max-w-screen-2xl px-6 md:px-12 mt-12 space-y-16">
@@ -216,7 +219,7 @@ const Home: React.FC = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           <section className="lg:col-span-2">
             <div className="flex justify-between items-center mb-8">
-              <h3 className="text-xl font-black flex items-center gap-3 dark:text-white"><div className="w-2 h-8 bg-primary-600 rounded-full"></div>Pulse Feed</h3>
+              <h3 className="text-xl font-black flex items-center gap-3 dark:text-white"><div className="w-2 h-8 bg-primary-600 rounded-full"></div>Announcements</h3>
               <Link to="/notifications" className="text-[10px] font-black uppercase text-primary-600 tracking-widest hover:underline">View All</Link>
             </div>
             <div className="space-y-4">
@@ -242,12 +245,15 @@ const Home: React.FC = () => {
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 shadow-sm relative overflow-hidden flex flex-col justify-center min-h-[200px]">
               <Quote className="text-primary-500 opacity-5 absolute top-6 right-6" size={80} />
               <div className="relative z-10 space-y-4">
-                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-600">Daily Wisdom</h4>
+                <h4><span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-600">Daily Wisdom</span></h4>
                 <p className="text-gray-800 dark:text-gray-200 text-lg font-bold italic leading-relaxed">"{quote}"</p>
               </div>
             </div>
           </section>
         </div>
+
+        /* {/* Ad Placement: Middle Content */}
+        <AdBanner slot="4012397543" /> */
 
         {/* Download App Section */}
         <section className="mt-8">
@@ -257,8 +263,8 @@ const Home: React.FC = () => {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">
                 <Sparkles size={14} /> New Release
               </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none">Download ALFA App</h2>
-              <p className="text-white/80 text-lg max-w-md font-medium">Experience ALFA HUB directly on your Android device with native notifications and faster access.</p>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none">Download ALFA(LPU) App</h2>
+              <p className="text-white/80 text-lg max-w-md font-medium">Experience ALFA(LPU) directly on your Android device with native notifications and faster access.</p>
               <a 
                 href="https://alfalpu1.apk.com" 
                 target="_blank" 
@@ -276,33 +282,8 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* ALFA Social Handles */}
-        <section className="mt-8">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-2 h-8 bg-primary-600 rounded-full"></div>
-            <h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-widest">Connect With Us</h3>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { name: 'Instagram', icon: Instagram, color: 'text-pink-500', bg: 'bg-pink-500/10', handle: '@alfa.hub' },
-              { name: 'Twitter / X', icon: Twitter, color: 'text-blue-400', bg: 'bg-blue-400/10', handle: '@alfahub_lpu' },
-              { name: 'LinkedIn', icon: Linkedin, color: 'text-blue-700', bg: 'bg-blue-700/10', handle: 'ALFA HUB Community' },
-              { name: 'GitHub', icon: Github, color: 'text-gray-900 dark:text-white', bg: 'bg-gray-500/10', handle: 'Alfa-Organization' },
-            ].map((social) => (
-              <a key={social.name} href="#" className={`flex flex-col items-center gap-4 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 transition-all hover:shadow-xl group`}>
-                <div className={`${social.bg} ${social.color} w-16 h-16 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                  <social.icon size={32} />
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-black uppercase text-gray-400 tracking-widest mb-1">{social.name}</p>
-                  <p className="font-bold text-gray-900 dark:text-white">{social.handle}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        
+        /* {/* Ad Placement: Bottom Footer */}
+        <AdBanner slot="4012397543" /> */
 
         {/* Collaboration & Get Featured Section */}
         <section className="mt-8 mb-16">
@@ -315,7 +296,7 @@ const Home: React.FC = () => {
             <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
                 <div className="space-y-4">
-                  <h4 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">Want to grow with ALFA HUB?</h4>
+                  <h4 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">Want to grow with ALFA(LPU)?</h4>
                   <p className="text-primary-100/80 text-lg font-medium leading-relaxed max-w-lg">
                     Whether you're a business looking for promotions, a PG owner wanting to list your space, or a club leader organizing the next big event—reach thousands of students instantly.
                   </p>
@@ -373,7 +354,7 @@ const Home: React.FC = () => {
           </div>
           <div className="bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800 p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-10">
             <div className="w-48 h-48 rounded-[3rem] bg-indigo-50 dark:bg-indigo-900/20 overflow-hidden shrink-0 border-4 border-white dark:border-gray-800 shadow-2xl relative group">
-              <img src="https://ui-avatars.com/api/?name=Harsha+Bacham&background=4f46e5&color=fff&size=512" alt="Harsha Bacham" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <img src="https://i.postimg.cc/d0dg476z/Chat-GPT-Image-Jun-11-2025-07-35-42-AM.png" alt="Harsha Bacham" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 rounded-[2rem]" />
               <div className="absolute inset-0 bg-indigo-600/10 mix-blend-overlay"></div>
             </div>
             <div className="flex-grow space-y-6 text-center md:text-left">
@@ -385,10 +366,9 @@ const Home: React.FC = () => {
                 Passionate about building community-driven technologies that empower students and simplify campus life. Harsha is a full-stack engineer dedicated to creating elegant solutions for complex problems.
               </p>
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                <a href="#" className="w-12 h-12 flex items-center justify-center bg-blue-700 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><Linkedin size={20} /></a>
-                <a href="#" className="w-12 h-12 flex items-center justify-center bg-pink-600 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><Instagram size={20} /></a>
-                <a href="#" className="w-12 h-12 flex items-center justify-center bg-gray-900 dark:bg-white dark:text-gray-900 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><Github size={20} /></a>
-                <a href="#" className="w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><MessageCircle size={20} /></a>
+                <a href="https://www.linkedin.com/in/harsha-bacham/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center bg-blue-700 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><Linkedin size={20} /></a>
+                <a href="https://github.com/harshabacham" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center bg-gray-900 dark:bg-white dark:text-gray-900 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><Github size={20} /></a>
+                <a href="https://wa.me/917793914091" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-xl shadow-lg hover:-translate-y-1 transition-all"><MessageCircle size={20} /></a>
               </div>
             </div>
           </div>

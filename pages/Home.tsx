@@ -195,8 +195,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      /* {/* Ad Placement: Below Hero */}
-      {events.length > 0 && <AdBanner slot="4012397543" />} */
+      
 
       {/* Campus Content */}
       <div className="max-w-screen-2xl px-6 md:px-12 mt-12 space-y-16">
@@ -252,8 +251,7 @@ const Home: React.FC = () => {
           </section>
         </div>
 
-        /* {/* Ad Placement: Middle Content */}
-        <AdBanner slot="4012397543" /> */
+        
 
         {/* Download App Section */}
         <section className="mt-8">
@@ -282,8 +280,7 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        /* {/* Ad Placement: Bottom Footer */}
-        <AdBanner slot="4012397543" /> */
+       
 
         {/* Collaboration & Get Featured Section */}
         <section className="mt-8 mb-16">

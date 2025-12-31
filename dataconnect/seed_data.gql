@@ -1,0 +1,46 @@
+mutation CreateDemoData @transaction @auth(level: PUBLIC, insecureReason: "This operation is only used to seed the database with demo data.") {
+  student_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      studentId: "12345",
+      firstName: "Alice",
+      lastName: "Smith",
+      email: "alice.smith@example.com"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      studentId: "67890",
+      firstName: "Bob",
+      lastName: "Johnson",
+      email: "bob.johnson@example.com"
+    }
+  ])
+  course_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440002",
+      courseCode: "CS101",
+      title: "Introduction to Computer Science",
+      description: "A foundational course in computer science.",
+      instructorId: "550e8400-e29b-41d4-a716-446655440003"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440004",
+      courseCode: "MATH201",
+      title: "Calculus I",
+      description: "An introductory course in calculus.",
+      instructorId: "550e8400-e29b-41d4-a716-446655440005"
+    }
+  ])
+  enrollment_insertMany(data: [
+    {
+      studentId: "550e8400-e29b-41d4-a716-446655440000",
+      courseId: "550e8400-e29b-41d4-a716-446655440002",
+      enrollmentDate: "2024-01-15T00:00:00Z"
+    },
+    {
+      studentId: "550e8400-e29b-41d4-a716-446655440001",
+      courseId: "550e8400-e29b-41d4-a716-446655440004",
+      enrollmentDate: "2024-01-16T00:00:00Z"
+    }
+  ])
+}

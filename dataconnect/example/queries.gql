@@ -1,0 +1,32 @@
+mutation CreateStudent($email: String!, $firstName: String!, $lastName: String!, $studentId: UUID!) @auth(level: USER) {
+  student_insert(data: {email: $email, firstName: $firstName, lastName: $lastName, studentId: $studentId})
+}
+
+query GetStudent($id: UUID!) @auth(level: USER) {
+  student(id: $id) {
+    id
+    email
+    firstName
+    lastName
+    major
+    profilePictureUrl
+    studentId
+    year
+  }
+}
+
+mutation UpdateCourse($id: UUID!, $description: String!) @auth(level: USER) {
+  course_update(key: {id: $id}, data: {description: $description})
+}
+
+query ListCourses @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  courses {
+    id
+    courseCode
+    credits
+    department
+    description
+    instructorId
+    title
+  }
+}

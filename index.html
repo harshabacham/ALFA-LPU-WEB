@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alfa(LPU)</title>
+    <link rel="icon" href="https://i.postimg.cc/d0dg476z/Chat-GPT-Image-Jun-11-2025-07-35-42-AM.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense - Global Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9077289968849050" crossorigin="anonymous"></script>
+    <script>
+      (window.adsbygoogle = window.adsbygoogle || []).pauseAdRequests = 0;
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #0ea5e9; /* Sky 500 */
+        border-radius: 20px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #0284c7;
+      }
+      .transition-all { transition: all 0.3s ease; }
+      
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* 3D Transform Utilities */
+      .perspective-distant {
+        perspective: 1000px;
+      }
+      .transform-3d {
+        transform-style: preserve-3d;
+      }
+
+      /* AdSense Placeholder style to prevent layout jump */
+      .adsbygoogle {
+        background-color: transparent !important;
+      }
+
+      /* Dark mode specific glows */
+      .dark .glow-primary {
+        box-shadow: 0 0 20px -5px rgba(14, 165, 233, 0.2);
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                300: '#7dd3fc',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              },
+              // Sophisticated Zinc palette for premium dark mode
+              zinc: {
+                950: '#09090b',
+                900: '#18181b',
+                800: '#27272a',
+                700: '#3f3f46',
+                600: '#52525b',
+                500: '#71717a',
+                400: '#a1a1aa',
+                300: '#d4d4d8',
+                200: '#e4e4e7',
+                100: '#f4f4f5',
+                50: '#fafafa',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+        "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+        "papaparse": "https://esm.sh/papaparse@^5.5.3",
+        "framer-motion": "https://esm.sh/framer-motion@11.15.0",
+        "clsx": "https://esm.sh/clsx@^2.1.1",
+        "tailwind-merge": "https://esm.sh/tailwind-merge@^2.5.2"
+      }
+    }
+    </script>
+    <script type="module" src="./index.tsx"></script>
+  </head>
+  <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-primary-500/30">
+    <div id="root"></div>
+  </body>
+</html>

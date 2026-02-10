@@ -33,8 +33,8 @@ const AdBanner: React.FC<AdBannerProps> = ({ slot, format = 'auto', responsive =
       className="w-full flex flex-col items-center my-10 overflow-hidden"
       style={{ clear: 'both' }}
     >
-      <span className="text-[8px] font-black uppercase tracking-[0.4em] text-gray-300 dark:text-gray-700 mb-2">Advertisement</span>
-      <div className="w-full bg-gray-50/30 dark:bg-gray-900/10 rounded-2xl border border-gray-100 dark:border-gray-800 flex justify-center min-h-[100px] py-4">
+      <span className="text-[8px] font-black uppercase tracking-[0.4em] text-zinc-300 dark:text-zinc-700 mb-2">Advertisement</span>
+      <div className="w-full bg-zinc-50/30 dark:bg-zinc-900/10 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex justify-center min-h-[100px] py-4">
         <ins
           className="adsbygoogle"
           style={{ 
@@ -43,7 +43,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ slot, format = 'auto', responsive =
             minWidth: '250px', 
             minHeight: '100px' 
           }}
-          data-ad-client="ca-pub-9077289968849050"
+          data-ad-client="ca-pub-8722682185198272"
           data-ad-slot={slot}
           data-ad-format={format}
           data-full-width-responsive={responsive ? "true" : "false"}

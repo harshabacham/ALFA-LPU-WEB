@@ -54,7 +54,7 @@ const Bookmarks: React.FC = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-10 animate-in fade-in duration-500 text-left">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 space-y-10 animate-in fade-in duration-500 text-left">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gray-100 dark:border-gray-800 pb-8">
         <div className="space-y-3">

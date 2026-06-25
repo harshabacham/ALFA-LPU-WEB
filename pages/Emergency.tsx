@@ -133,7 +133,7 @@ const Emergency: React.FC = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 space-y-12">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-12">
       
       {/* Sleek, Non-Routine Header Card */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-zinc-50 dark:bg-zinc-900/40 p-6 md:p-10 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800/80 shadow-2xl">

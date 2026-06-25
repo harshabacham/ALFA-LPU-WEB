@@ -116,7 +116,7 @@ const EventDetail: React.FC = () => {
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-24 text-left">
       {/* Sticky Top Action Bar */}
       <div className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200/50 dark:border-zinc-800/60 transition-all shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           
           {/* Back button */}
           <button 
@@ -204,7 +204,7 @@ const EventDetail: React.FC = () => {
       </div>
 
       {/* Main Content Layout */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8 -mt-24 md:-mt-28 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 -mt-24 md:-mt-28 relative z-10">
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Side: Rich poster display & descriptive body */}

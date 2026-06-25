@@ -165,7 +165,7 @@ const Notifications: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10 space-y-10 min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10 space-y-10 min-h-screen">
       
       {/* 1. Header with dynamic updates counter */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-zinc-950 p-6 md:p-10 text-white border border-zinc-900 shadow-2xl">

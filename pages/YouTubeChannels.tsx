@@ -149,7 +149,7 @@ const YouTubeChannels: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-12 animate-in fade-in duration-700 text-left">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-12 animate-in fade-in duration-700 text-left">
       
       {/* 1. Immersive Cinema Player Backdrop overlay if video selected */}
       {activeVideo && (

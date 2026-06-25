@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="w-full bg-white dark:bg-zinc-950 border-t border-zinc-200/50 dark:border-zinc-900/60 transition-colors duration-200 mt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16 space-y-12 md:space-y-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16 space-y-12 md:space-y-16">
         
         {/* Banner Segment (Contact Us for Academic Assistance) */}
         <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-violet-600 via-indigo-600 to-indigo-700 text-white p-8 md:p-12 lg:p-16 shadow-[0_20px_50px_rgba(99,102,241,0.2)] group">

@@ -40,7 +40,7 @@ const FreeCourses: React.FC = () => {
   const categories = ['All', ...Array.from(new Set(data.map(i => i.category).filter(Boolean)))];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Free Learning Hub</h1>

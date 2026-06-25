@@ -58,7 +58,7 @@ const PGRooms: React.FC = () => {
   const pgTypes = ['All', ...Array.from(new Set(data.map(i => i.pg_type).filter(Boolean)))];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 text-left">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 text-left">
       {/* Simple Header */}
       <div className="space-y-4">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">PG Rooms</h1>

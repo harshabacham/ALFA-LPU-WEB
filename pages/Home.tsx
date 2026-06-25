@@ -130,7 +130,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Hero Spotlight Section */}
-      <section className="relative pt-6 md:pt-12 pb-12 px-4 md:px-8 overflow-hidden">
+      <section className="relative pt-6 md:pt-12 pb-12 px-4 md:px-6 lg:px-8 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary-500/10 dark:bg-primary-500/5 rounded-full blur-[130px] pointer-events-none animate-pulse-slow"></div>
         <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-accent-500/10 dark:bg-accent-500/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
         
@@ -505,7 +505,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Campus Content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12 space-y-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 mt-12 space-y-16">
         <section className="text-left">
           <div className="flex items-center gap-2 mb-8">
             <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
@@ -589,7 +589,7 @@ const Home: React.FC = () => {
 
         {/* Download App Section */}
         <section className="mt-8 text-left">
-          <div className="bg-primary-950 dark:bg-zinc-900 rounded-[2rem] p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl border border-zinc-200/20 dark:border-zinc-850/40 relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-accent-900 to-accent-950 dark:from-zinc-900 dark:to-zinc-950 rounded-[2rem] p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl border border-zinc-200/20 dark:border-zinc-850/40 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-1000"></div>
             <div className="space-y-5 relative z-10 text-center md:text-left max-w-xl">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 dark:bg-zinc-800/80 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/10">
@@ -603,7 +603,7 @@ const Home: React.FC = () => {
                 href="https://alfalpu1.apk.com" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2.5 px-8 py-4 bg-sand-50 text-primary-950 hover:bg-sand-200 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl transition-all hover:scale-105 active:scale-95 font-display"
+                className="inline-flex items-center gap-2.5 px-8 py-4 bg-sand-50 text-accent-900 hover:bg-sand-200 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl transition-all hover:scale-105 active:scale-95 font-display"
               >
                 <Download size={16} /> Download APK Document
               </a>

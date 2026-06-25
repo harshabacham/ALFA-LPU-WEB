@@ -126,7 +126,7 @@ const Clubs: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-12 animate-in fade-in duration-700 text-left">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-12 animate-in fade-in duration-700 text-left">
       
       {/* 1. Bento Grid Hero Section */}
       <div className="grid lg:grid-cols-12 gap-6">

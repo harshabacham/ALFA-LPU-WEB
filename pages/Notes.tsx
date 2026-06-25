@@ -98,7 +98,7 @@ const Notes: React.FC = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 text-left">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 text-left">
       {/* Editorial Welcome Header */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-zinc-900 via-zinc-950 to-neutral-900 text-white p-8 md:p-12 mb-10 shadow-2xl border border-zinc-800">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 blur-[120px] rounded-full pointer-events-none" />

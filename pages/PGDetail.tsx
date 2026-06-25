@@ -49,7 +49,7 @@ const PGDetail: React.FC = () => {
   const videos = String(room.video_urls || "").split(/[\n,\s]+/).map(u => u.trim()).filter(u => u.length > 10);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 md:px-8 py-10 space-y-10 animate-in fade-in duration-500 pb-32 text-left">
+    <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-10 space-y-10 animate-in fade-in duration-500 pb-32 text-left">
       {/* Navigation and Bookmarks */}
       <div className="flex items-center justify-between gap-4">
         <button 

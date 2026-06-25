@@ -434,7 +434,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
             opacity: (visible || isOverlayOpen) ? 1 : 0,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={cn("fixed top-4 md:top-6 inset-x-0 mx-auto z-[5000] w-[92%] max-w-5xl", className)}
+          className={cn("fixed top-4 md:top-6 inset-x-0 mx-auto z-[5000] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-7xl", className)}
         >
           {/* Main Floating Pill Header */}
           <div className="flex h-14 md:h-16 items-center justify-between rounded-2xl border border-sand-200/60 bg-white/80 px-3 md:px-5 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 dark:border-zinc-800/60 dark:bg-zinc-900/80">

@@ -1,8 +1,8 @@
 {
   "name": "ALFA(LPU)",
   "description": "A comprehensive community platform for students and residents, featuring notifications, club registrations, events, PG listings, duty leaves, educational notes, free courses, marketplace deals, and AI tools - all powered by live Google Sheets data.",
-  "requestFramePermissions": [
-    "geolocation"
-  ],
-  "majorCapabilities": []
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

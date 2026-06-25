@@ -4,17 +4,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { 
   Bed, MapPin, Star, Users, ChevronLeft, Navigation,
   PlayCircle, CheckCircle, Phone, Heart, Share2, 
-  ShieldCheck, Info, ArrowRight
+  ShieldCheck, Info, ArrowRight, Bookmark
 } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { PGRoom } from '../types';
+import { useBookmarks } from '../lib/bookmarks';
 
 const PGDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [room, setRoom] = useState<PGRoom | null>(null);
   const [loading, setLoading] = useState(true);
+  const { isPGBookmarked, togglePG } = useBookmarks();
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,14 +49,28 @@ const PGDetail: React.FC = () => {
   const videos = String(room.video_urls || "").split(/[\n,\s]+/).map(u => u.trim()).filter(u => u.length > 10);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 space-y-10 animate-in fade-in duration-500 pb-32">
-      {/* Navigation */}
-      <button 
-        onClick={() => navigate('/pg-rooms')} 
-        className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-      >
-        <ChevronLeft size={18} /> Back to Listings
-      </button>
+    <div className="max-w-4xl mx-auto px-4 md:px-8 py-10 space-y-10 animate-in fade-in duration-500 pb-32 text-left">
+      {/* Navigation and Bookmarks */}
+      <div className="flex items-center justify-between gap-4">
+        <button 
+          onClick={() => navigate('/pg-rooms')} 
+          className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+        >
+          <ChevronLeft size={18} /> Back to Listings
+        </button>
+        <button
+          onClick={() => togglePG(room, parseInt(id || '0'))}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+            isPGBookmarked(room.name)
+            ? 'bg-red-500/10 border-red-500/20 text-red-600'
+            : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-500 hover:text-gray-900 dark:hover:text-white'
+          }`}
+          style={{ minHeight: '44px' }}
+        >
+          <Bookmark size={15} className={isPGBookmarked(room.name) ? "fill-red-500 text-red-500" : ""} />
+          <span>{isPGBookmarked(room.name) ? 'Saved' : 'Save PG'}</span>
+        </button>
+      </div>
 
       {/* Main Content */}
       <div className="space-y-8">

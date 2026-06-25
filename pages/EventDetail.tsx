@@ -4,17 +4,20 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
   Calendar, MapPin, Clock, ExternalLink, Share2, 
   ChevronLeft, CalendarPlus, Download, User, Info, 
-  Ticket, ArrowRight, ChevronRight
+  Ticket, ArrowRight, Bookmark, Copy, Check, Sparkles
 } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Event } from '../types';
+import { useBookmarks } from '../lib/bookmarks';
 
 const EventDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const { isEventBookmarked, toggleEvent } = useBookmarks();
 
   useEffect(() => {
     const loadData = async () => {
@@ -31,17 +34,20 @@ const EventDetail: React.FC = () => {
   }, [id]);
 
   if (loading) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950">
-      <div className="w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="mt-4 text-gray-500 text-sm font-medium tracking-wide">Loading details...</p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950">
+      <div className="w-8 h-8 border-3 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="mt-4 text-zinc-500 dark:text-zinc-400 text-xs font-bold uppercase tracking-widest">Gathering intelligence...</p>
     </div>
   );
 
   if (!event) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950 px-6 text-center">
-       <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Event Not Found</h1>
-       <p className="text-gray-500 mt-2 mb-8">The event you are looking for doesn't exist or has been removed.</p>
-       <button onClick={() => navigate('/events')} className="px-6 py-3 bg-primary-600 text-white rounded-xl font-bold text-sm transition-transform active:scale-95">Return to Hub</button>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-6 text-center">
+       <div className="w-16 h-16 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4">
+         <Info size={28} />
+       </div>
+       <h1 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">Event Not Found</h1>
+       <p className="text-zinc-500 dark:text-zinc-400 text-xs mt-2 mb-6 max-w-sm">The event you are looking for doesn't exist or has been archived.</p>
+       <button onClick={() => navigate('/events')} className="px-5 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-xl font-bold text-xs uppercase tracking-wider transition-transform active:scale-95">Return to Events</button>
     </div>
   );
 
@@ -82,6 +88,13 @@ const EventDetail: React.FC = () => {
     link.click();
   };
 
+  const copyLink = () => {
+    const shareUrl = window.location.origin + window.location.pathname + window.location.hash;
+    navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const handleShare = async () => {
     if (navigator.share && event) {
       try {
@@ -92,134 +105,230 @@ const EventDetail: React.FC = () => {
           url: shareUrl,
         });
       } catch (err) {
-        console.error("Error sharing event details:", err);
+        copyLink();
       }
+    } else {
+      copyLink();
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-20">
-      {/* Top Navigation Bar */}
-      <div className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-24 text-left">
+      {/* Sticky Top Action Bar */}
+      <div className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200/50 dark:border-zinc-800/60 transition-all shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
+          
+          {/* Back button */}
           <button 
             onClick={() => navigate('/events')}
-            className="flex items-center gap-2 text-gray-500 hover:text-primary-600 font-semibold text-sm transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl text-zinc-700 dark:text-zinc-300 hover:text-primary-500 font-extrabold text-xs uppercase tracking-wider transition-all"
           >
-            <ChevronLeft size={20} /> Back
+            <ChevronLeft size={16} /> Back to hub
           </button>
-          <button 
-            onClick={handleShare}
-            className="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          >
-            <Share2 size={20} />
-          </button>
-        </div>
-      </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-12 gap-10">
-          
-          {/* Main Content Area */}
-          <div className="lg:col-span-8 space-y-8">
-            {/* Header Info */}
-            <div className="space-y-4">
-              <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
-                {event.title}
-              </h1>
-              <div className="flex flex-wrap gap-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-full">
-                  <Calendar size={16} className="text-primary-500" /> {event.date}
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-full">
-                  <Clock size={16} className="text-primary-500" /> {event.time}
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-full">
-                  <MapPin size={16} className="text-primary-500" /> {event.venue}
-                </div>
+          {/* Action Hub */}
+          <div className="flex items-center gap-2">
+            
+            {/* Quick RSVP Button in Nav Bar */}
+            <a 
+              href={event.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 px-4.5 py-2.5 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-primary-500/10 hover:shadow-primary-500/20 active:scale-95 cursor-pointer"
+            >
+              <span>Register Instantly</span>
+              <ArrowRight size={14} className="shrink-0" />
+            </a>
+
+            {/* Quick Calendar Dropdown */}
+            <div className="relative group">
+              <button 
+                className="flex items-center gap-1.5 px-3 py-2.5 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl text-xs font-black uppercase tracking-wider text-zinc-600 dark:text-zinc-300 transition-all shadow-sm"
+              >
+                <CalendarPlus size={15} className="text-primary-500 shrink-0" />
+                <span className="hidden md:inline">Add to Calendar</span>
+              </button>
+              
+              {/* Dropdown Menu on Hover */}
+              <div className="absolute right-0 mt-1 w-44 bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800/80 rounded-xl shadow-xl py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <a 
+                  href={getGoogleCalendarUrl(event)} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block px-4 py-2 text-left text-[10px] font-black uppercase tracking-wider text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-primary-500"
+                >
+                  Google Calendar
+                </a>
+                <button 
+                  onClick={() => downloadIcs(event)}
+                  className="w-full block px-4 py-2 text-left text-[10px] font-black uppercase tracking-wider text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-primary-500"
+                >
+                  Outlook / ICS File
+                </button>
               </div>
             </div>
 
-            {/* Main Poster */}
-            <div className="aspect-video w-full rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800 shadow-sm">
+            {/* Bookmark */}
+            <button 
+              onClick={() => event && toggleEvent(event, parseInt(id || '0'))}
+              className={`p-2.5 rounded-xl border transition-all shadow-sm ${
+                event && isEventBookmarked(event.title) 
+                ? 'text-amber-500 border-amber-500/20 bg-amber-500/5 hover:bg-amber-500/10' 
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200/50 dark:border-zinc-800/60 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+              title={event && isEventBookmarked(event.title) ? "Remove Bookmark" : "Bookmark Event"}
+            >
+              <Bookmark size={15} className={event && isEventBookmarked(event.title) ? "fill-amber-500 text-amber-500" : ""} />
+            </button>
+            
+            {/* Share */}
+            <button 
+              onClick={handleShare}
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-xl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all shadow-sm"
+              title="Share Event"
+            >
+              {copied ? <Check size={15} className="text-green-500" /> : <Share2 size={15} />}
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Dynamic blurred hero backdrop (gives cinema effect) */}
+      <div className="relative h-48 md:h-56 overflow-hidden w-full select-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center blur-3xl opacity-30 dark:opacity-20 scale-110"
+          style={{ backgroundImage: `url(${event.image_url})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-50/50 to-zinc-50 dark:via-zinc-950/50 dark:to-zinc-950" />
+      </div>
+
+      {/* Main Content Layout */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 -mt-24 md:-mt-28 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Left Side: Rich poster display & descriptive body */}
+          <div className="lg:col-span-8 space-y-6">
+            
+            {/* Visual Header Poster */}
+            <div className="aspect-[16/9] w-full rounded-[2rem] overflow-hidden bg-zinc-200 dark:bg-zinc-900 shadow-2xl border-4 border-white dark:border-zinc-900 relative group">
               <img 
                 src={event.image_url} 
                 alt={event.title} 
-                className="w-full h-full object-cover" 
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
               />
+              <div className="absolute top-4 left-4">
+                <span className="px-3 py-1.5 bg-zinc-950/80 text-white backdrop-blur-md rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
+                  <Sparkles size={10} className="text-amber-400 animate-spin" /> Featured Campus Event
+                </span>
+              </div>
             </div>
 
-            {/* About Section */}
-            <div className="space-y-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <Info size={20} className="text-primary-500" /> About the Event
-              </h2>
-              <div className="prose dark:prose-invert max-w-none">
-                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed whitespace-pre-wrap">
+            {/* Title & Detailed Information */}
+            <div className="bg-white dark:bg-zinc-900/20 border border-zinc-200/50 dark:border-zinc-800/40 rounded-3xl p-6 sm:p-8 space-y-6 text-left">
+              <div className="space-y-2">
+                <h1 className="text-xl sm:text-3xl font-black text-zinc-900 dark:text-white leading-tight">
+                  {event.title}
+                </h1>
+                <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+                  <span>Organized by</span>
+                  <span className="font-extrabold text-zinc-700 dark:text-zinc-300">{event.organizer}</span>
+                </div>
+              </div>
+
+              <div className="border-t border-zinc-200/50 dark:border-zinc-800/60 pt-5 space-y-3">
+                <h3 className="text-xs font-black text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <Info size={14} className="text-primary-500" /> Event Description
+                </h3>
+                <p className="text-zinc-600 dark:text-zinc-300 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-medium">
                   {event.description}
                 </p>
               </div>
             </div>
 
-            {/* Organizer Section */}
-            <div className="p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl flex items-center gap-4">
-              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/20 rounded-xl flex items-center justify-center text-primary-600">
-                <User size={24} />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Organized By</p>
-                <h4 className="font-bold text-gray-900 dark:text-white">{event.organizer}</h4>
-              </div>
-            </div>
           </div>
 
-          {/* Sidebar / Registration Area */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-24 space-y-6">
+          {/* Right Side: Quick facts sidebar (no redundant registration buttons!) */}
+          <div className="lg:col-span-4 space-y-5">
+            
+            {/* Quick RSVP Details Box */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/60 rounded-3xl p-6 shadow-xl relative overflow-hidden text-left space-y-4">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary-500/5 blur-2xl rounded-full pointer-events-none" />
               
-              {/* Registration Card */}
-              <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-8 shadow-sm space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">Entry Fee</span>
-                  <div className="text-2xl font-extrabold text-primary-600">₹{event.price || 'Free'}</div>
-                </div>
-
-                <div className="space-y-3">
-                  <a 
-                    href={event.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold text-sm transition-all active:scale-95 shadow-lg shadow-primary-500/20"
-                  >
-                    Register Now <ArrowRight size={18} />
-                  </a>
-                  <p className="text-[10px] text-center text-gray-400 font-medium">Clicking above will redirect you to the official portal.</p>
-                </div>
-
-                <div className="pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                    <CalendarPlus size={14} className="text-primary-500" /> Save to Calendar
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    <a 
-                      href={getGoogleCalendarUrl(event)} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition-all"
-                    >
-                      Google
-                    </a>
-                    <button 
-                      onClick={() => downloadIcs(event)}
-                      className="flex items-center justify-center gap-2 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition-all"
-                    >
-                      Outlook
-                    </button>
+              <div className="space-y-4.5">
+                <div className="border-b border-zinc-100 dark:border-zinc-800/60 pb-3">
+                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Admission</span>
+                  <div className="text-xl font-black text-primary-500 font-display mt-1">
+                    {event.price && !isNaN(Number(event.price.replace(/[^\d]/g, ''))) 
+                      ? `₹${event.price}` 
+                      : event.price || 'Free Admission'
+                    }
                   </div>
                 </div>
-              </div>
 
+                {/* Grid of facts */}
+                <div className="space-y-3.5">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 rounded-xl shrink-0">
+                      <Calendar size={15} />
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-black text-zinc-400 uppercase tracking-widest leading-none mb-1">Date</p>
+                      <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{event.date}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 rounded-xl shrink-0">
+                      <Clock size={15} />
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-black text-zinc-400 uppercase tracking-widest leading-none mb-1">Time</p>
+                      <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{event.time}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 rounded-xl shrink-0">
+                      <MapPin size={15} />
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-black text-zinc-400 uppercase tracking-widest leading-none mb-1">Venue</p>
+                      <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{event.venue}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 rounded-xl shrink-0">
+                      <User size={15} />
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-black text-zinc-400 uppercase tracking-widest leading-none mb-1">Host</p>
+                      <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{event.organizer}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-zinc-100 dark:border-zinc-800/60 pt-3">
+                  <button
+                    onClick={copyLink}
+                    className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-900 rounded-xl text-[9px] font-black uppercase tracking-widest text-zinc-500 transition-all border border-zinc-200/30 dark:border-zinc-800/30"
+                  >
+                    {copied ? (
+                      <>
+                        <Check size={12} className="text-green-500" /> Link Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={12} /> Share event link
+                      </>
+                    )}
+                  </button>
+                </div>
+
+              </div>
             </div>
+
           </div>
 
         </div>

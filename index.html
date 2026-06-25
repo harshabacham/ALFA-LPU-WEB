@@ -9,13 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Google AdSense - Global Script Updated with your client ID -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8722682185198272" crossorigin="anonymous"></script>
-    <script>
-      (window.adsbygoogle = window.adsbygoogle || []).pauseAdRequests = 0;
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
       html {
@@ -24,22 +18,28 @@
       body {
         font-family: 'Inter', sans-serif;
       }
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #0ea5e9; /* Sky 500 */
+        background: #fe7f2d; /* Brand Orange */
         border-radius: 20px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #0284c7;
+        background: #ee6517;
       }
-      .transition-all { transition: all 0.3s ease; }
+      .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
       
       .scrollbar-hide::-webkit-scrollbar {
         display: none;
@@ -57,14 +57,71 @@
         transform-style: preserve-3d;
       }
 
-      /* AdSense Placeholder style to prevent layout jump */
-      .adsbygoogle {
-        background-color: transparent !important;
+      /* Dark mode specific glows and animations */
+      .glow-primary {
+        box-shadow: 0 4px 20px -2px rgba(254, 127, 45, 0.12);
+      }
+      .dark .glow-primary {
+        box-shadow: 0 4px 25px -2px rgba(254, 127, 45, 0.15);
+      }
+      .glow-accent {
+        box-shadow: 0 4px 20px -2px rgba(35, 61, 77, 0.12);
+      }
+      .dark .glow-accent {
+        box-shadow: 0 4px 25px -2px rgba(35, 61, 77, 0.15);
       }
 
-      /* Dark mode specific glows */
-      .dark .glow-primary {
-        box-shadow: 0 0 20px -5px rgba(14, 165, 233, 0.2);
+      /* Card Border Beams & Shimmers */
+      .border-glow-hover {
+        position: relative;
+        z-index: 1;
+      }
+      .border-glow-hover::before {
+        content: '';
+        position: absolute;
+        inset: -1.5px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, transparent 40%, rgba(254, 127, 45, 0.15), rgba(35, 61, 77, 0.15), transparent 60%);
+        background-size: 200% 200%;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.5s ease, background-position 0.5s ease;
+      }
+      .border-glow-hover:hover::before {
+        opacity: 1;
+        background-position: 100% 100%;
+      }
+
+      /* Background grid patterns */
+      .bg-grid-pattern {
+        background-image: radial-gradient(rgba(254, 127, 45, 0.04) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      .dark .bg-grid-pattern {
+        background-image: radial-gradient(rgba(254, 127, 45, 0.02) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+
+      /* Premium Glassmorphism */
+      .glass-card {
+        background: rgba(244, 245, 247, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(234, 236, 240, 0.5);
+      }
+      .dark .glass-card {
+        background: rgba(18, 18, 18, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(234, 236, 240, 0.12);
+      }
+
+      /* Hover dynamic tilt effect */
+      .tilt-hover {
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+      }
+      .tilt-hover:hover {
+        transform: translateY(-4px) scale(1.01);
       }
     </style>
     <script>
@@ -74,29 +131,57 @@
           extend: {
             colors: {
               primary: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                200: '#bae6fd',
-                300: '#7dd3fc',
-                400: '#38bdf8',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                800: '#075985',
-                900: '#0c4a6e',
+                50: '#fff7f1',
+                100: '#ffeedc',
+                200: '#ffd6b9',
+                300: '#ffb485',
+                400: '#ff894d',
+                500: '#fe7f2d', // Brand Orange (#FE7F2D)
+                600: '#ee6517',
+                700: '#c54d11',
+                800: '#9d3e13',
+                900: '#7f3413',
+                950: '#451806',
               },
-              // Sophisticated Zinc palette for premium dark mode
+              accent: {
+                50: '#f2f5f7',
+                100: '#e2e8ee',
+                200: '#cbd7e2',
+                300: '#a7bfd1',
+                400: '#7ba1bc',
+                500: '#5380a1',
+                600: '#3e6482',
+                700: '#31506a',
+                800: '#2c4459',
+                900: '#233d4d', // Deep Navy / Prussian Blue (#233D4D)
+                950: '#172632',
+              },
+              // Cool Grey-white color (#EAECF0) mapped to sand
+              sand: {
+                50: '#f4f5f7',
+                100: '#eaecf0', // Cool Grey-white (#EAECF0)
+                200: '#d5d8e1',
+                300: '#b9bfc9',
+                400: '#969fad',
+                500: '#798495',
+                600: '#5f6a7a',
+                700: '#4c5563',
+                800: '#414752',
+                900: '#353a43',
+                950: '#212429',
+              },
+              // Pitch black / charcoal metallic palette (#262626)
               zinc: {
-                950: '#09090b',
-                900: '#18181b',
-                800: '#27272a',
-                700: '#3f3f46',
-                600: '#52525b',
-                500: '#71717a',
-                400: '#a1a1aa',
-                300: '#d4d4d8',
-                200: '#e4e4e7',
-                100: '#f4f4f5',
+                950: '#000000', // Pitch Black (#000000)
+                900: '#121212', // Deep neutral charcoal gray
+                800: '#1c1c1c',
+                700: '#262626', // Charcoal Gray (#262626)
+                600: '#383838',
+                500: '#525252',
+                400: '#737373',
+                300: '#a3a3a3',
+                200: '#d4d4d4',
+                100: '#e5e5e5',
                 50: '#fafafa',
               }
             }
@@ -120,8 +205,10 @@
     }
     </script>
     <script type="module" src="./index.tsx"></script>
-  </head>
-  <body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-primary-500/30">
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-sand-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-primary-500/30">
     <div id="root"></div>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

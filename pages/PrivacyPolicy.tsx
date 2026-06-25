@@ -7,7 +7,7 @@ const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 space-y-10 animate-in fade-in duration-700">
+    <div className="max-w-4xl mx-auto px-4 md:px-8 py-10 space-y-10 animate-in fade-in duration-700 text-left">
       <button 
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-primary-600 transition-colors"

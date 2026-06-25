@@ -67,100 +67,100 @@ const AITools: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 text-left">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-500/10 text-primary-600 rounded-full text-[10px] font-black uppercase tracking-widest">
-            <Sparkles size={14} /> Productivity
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-[10px] font-bold uppercase tracking-wider font-display">
+            <Sparkles size={12} className="text-accent-500" /> Productivity Engine
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-zinc-50 tracking-tighter uppercase leading-none">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight leading-none font-display">
             AI Toolbox
           </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 font-medium text-lg max-w-xl">
-            Supercharge your workflow with curated artificial intelligence tools. Handpicked for students and creators.
+          <p className="text-zinc-500 dark:text-zinc-400 font-medium text-sm md:text-base max-w-xl">
+            Supercharge your academic and creative workflow with curated intelligence tools handpicked for LPU students.
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           <div className="relative flex-grow">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
             <input 
               type="text" 
-              placeholder="Find tools..." 
-              className="pl-14 pr-8 py-4 w-full md:w-72 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all shadow-sm font-medium"
+              placeholder="Search tools..." 
+              className="pl-11 pr-4 py-3.5 w-full md:w-64 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all shadow-sm font-medium text-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="relative">
             <select 
-              className="pl-6 pr-12 py-4 w-full rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all shadow-sm font-bold text-xs appearance-none uppercase tracking-widest"
+              className="pl-5 pr-10 py-3.5 w-full rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all shadow-sm font-bold text-xs appearance-none uppercase tracking-wider"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
             </select>
-            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-              <Zap size={14} />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
+              <Zap size={12} />
             </div>
           </div>
         </div>
       </div>
 
       {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
         {loading ? (
           <div className="col-span-full py-40 text-center">
-            <div className="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
-            <p className="mt-6 text-zinc-400 font-black uppercase tracking-widest text-xs">Syncing AI Database...</p>
+            <div className="animate-spin w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
+            <p className="mt-4 text-zinc-400 font-bold uppercase tracking-widest text-[10px] font-display">Syncing AI Database...</p>
           </div>
         ) : filteredData.length > 0 ? (
           filteredData.map((tool, idx) => (
             <div 
               key={idx} 
               onClick={() => setSelectedTool(tool)}
-              className="group relative bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/50 rounded-[2.5rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col cursor-pointer overflow-hidden"
+              className="group relative bg-white dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/40 rounded-2xl p-6 hover:shadow-md hover:border-primary-500/20 hover:scale-[1.02] transition-all duration-350 flex flex-col cursor-pointer overflow-hidden text-left"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary-500/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
               
-              <div className="flex items-center gap-6 mb-8 relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-zinc-50 dark:bg-zinc-800 p-2.5 flex items-center justify-center border border-zinc-100 dark:border-zinc-700 shadow-sm group-hover:scale-110 transition-transform duration-500">
-                  <img src={tool.logo_url} alt={tool.tool_name} className="w-full h-full object-contain" />
+              <div className="flex items-center gap-4 mb-5 relative z-10">
+                <div className="w-12 h-12 rounded-xl bg-zinc-50 dark:bg-zinc-800/80 p-2 flex items-center justify-center border border-zinc-200/50 dark:border-zinc-700/50 shadow-inner group-hover:scale-105 transition-transform duration-300">
+                  <img src={tool.logo_url} alt={tool.tool_name} className="w-full h-full object-contain rounded-lg" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-black text-zinc-900 dark:text-zinc-50 group-hover:text-primary-600 transition-colors">
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 group-hover:text-primary-500 transition-colors font-display leading-tight">
                     {tool.tool_name}
                   </h3>
-                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">{tool.category}</span>
+                  <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider font-display">{tool.category}</span>
                 </div>
               </div>
 
-              <div className="flex-grow space-y-4 relative z-10">
-                <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed line-clamp-4 font-medium">
+              <div className="flex-grow space-y-3 relative z-10">
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed line-clamp-3 font-medium">
                   {tool.description}
                 </p>
-                <button className="text-[10px] font-black text-primary-600 uppercase tracking-widest flex items-center gap-1.5 hover:gap-2 transition-all">
-                  Full Details <ArrowRight size={14} />
-                </button>
+                <div className="text-[10px] font-bold text-primary-500 uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform font-display">
+                  Full Details <ArrowRight size={12} />
+                </div>
               </div>
 
-              <div className="mt-10 pt-6 border-t border-zinc-50 dark:border-zinc-800/50 flex items-center justify-between relative z-10">
-                 <div className="flex items-center gap-2 text-zinc-300 dark:text-zinc-700">
-                    <Zap size={16} className="fill-current" />
-                    <span className="text-[9px] font-black uppercase tracking-widest">Premium Pick</span>
+              <div className="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center justify-between relative z-10">
+                 <div className="flex items-center gap-1.5 text-zinc-400 dark:text-zinc-600">
+                    <Zap size={14} className="fill-current text-primary-500/60" />
+                    <span className="text-[9px] font-semibold uppercase tracking-wider font-display">Verified Tool</span>
                  </div>
-                 <div className="w-10 h-10 rounded-full bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition-all shadow-sm">
-                    <ExternalLink size={18} />
+                 <div className="w-8 h-8 rounded-lg bg-primary-500/10 text-primary-500 flex items-center justify-center group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <ExternalLink size={14} />
                  </div>
               </div>
             </div>
           ))
         ) : (
-          <div className="col-span-full py-48 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-[4rem] border-2 border-dashed border-zinc-200 dark:border-zinc-800">
-             <Cpu className="mx-auto text-zinc-200 dark:text-zinc-800 mb-8" size={120} />
-             <h3 className="text-3xl font-black text-zinc-900 dark:text-zinc-50 uppercase tracking-tighter">Tools Not Found</h3>
-             <p className="text-zinc-500 mt-2 font-medium max-w-sm mx-auto">Try search for something else or explore a different category.</p>
+          <div className="col-span-full py-24 text-center bg-zinc-50 dark:bg-zinc-900/10 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800/60 max-w-lg mx-auto w-full">
+             <Cpu className="mx-auto text-zinc-300 dark:text-zinc-700 mb-6" size={80} />
+             <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 uppercase tracking-tight font-display">Tools Not Found</h3>
+             <p className="text-zinc-500 dark:text-zinc-400 mt-2 text-xs font-medium max-w-sm mx-auto px-4">No tool names or descriptions matched your keyword. Please try a different category or search query.</p>
           </div>
         )}
       </div>
@@ -168,85 +168,80 @@ const AITools: React.FC = () => {
       {/* Detailed Tool Modal */}
       {selectedTool && (
         <div 
-          className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
+          className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/50 backdrop-blur-md animate-in fade-in duration-300"
           onClick={() => setSelectedTool(null)}
         >
           <div 
-            className="bg-white dark:bg-zinc-900 w-full max-w-3xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/10 dark:border-zinc-800"
+            className="bg-white dark:bg-zinc-900 w-full max-w-xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-zinc-200 dark:border-zinc-800"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="p-8 md:p-12 pb-4 flex justify-between items-start">
-              <div className="flex items-center gap-6 text-left">
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-zinc-50 dark:bg-zinc-800 rounded-[2rem] p-4 flex items-center justify-center border border-zinc-100 dark:border-zinc-700 shadow-xl">
-                  <img src={selectedTool.logo_url} alt={selectedTool.tool_name} className="w-full h-full object-contain" />
+            <div className="p-6 pb-3 flex justify-between items-start border-b border-zinc-100 dark:border-zinc-800/60">
+              <div className="flex items-center gap-4 text-left">
+                <div className="w-14 h-14 bg-zinc-50 dark:bg-zinc-800 rounded-xl p-2.5 flex items-center justify-center border border-zinc-200/50 dark:border-zinc-700/50 shadow-inner">
+                  <img src={selectedTool.logo_url} alt={selectedTool.tool_name} className="w-full h-full object-contain rounded" />
                 </div>
-                <div className="space-y-2">
-                   <div className="flex items-center gap-3">
-                      <span className="px-3 py-1 bg-primary-600 text-white rounded-full text-[9px] font-black uppercase tracking-widest">{selectedTool.category}</span>
-                      <div className="flex items-center gap-1.5 text-zinc-400">
-                         <ShieldCheck size={14} />
-                         <span className="text-[9px] font-black uppercase tracking-widest">Verified Tool</span>
+                <div className="space-y-1">
+                   <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-primary-500/10 text-primary-500 rounded text-[9px] font-bold uppercase tracking-wider font-display">{selectedTool.category}</span>
+                      <div className="flex items-center gap-1 text-zinc-400">
+                         <ShieldCheck size={12} className="text-emerald-500" />
+                         <span className="text-[9px] font-semibold uppercase tracking-wider font-display">Verified Integration</span>
                       </div>
                    </div>
-                   <h2 className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-zinc-50 leading-tight tracking-tighter">{selectedTool.tool_name}</h2>
+                   <h2 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight font-display">{selectedTool.tool_name}</h2>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedTool(null)} 
-                className="p-3 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-400 rounded-lg hover:bg-red-500 hover:text-white hover:scale-105 duration-300 transition-all cursor-pointer"
               >
-                <X size={24} />
+                <X size={16} />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-8 md:p-12 overflow-y-auto space-y-10 scrollbar-hide text-left">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                   <div className="w-2 h-8 bg-primary-600 rounded-full glow-primary"></div>
-                   <h3 className="text-xl font-black text-zinc-900 dark:text-zinc-50 uppercase tracking-widest">About this Tool</h3>
-                </div>
-                <div className="prose dark:prose-invert max-w-none">
-                  <p className="text-zinc-700 dark:text-zinc-300 text-lg md:text-xl font-medium leading-relaxed whitespace-pre-wrap">
-                    {selectedTool.description}
-                  </p>
-                </div>
+            <div className="p-6 overflow-y-auto space-y-6 scrollbar-hide text-left flex-grow">
+              <div className="space-y-3">
+                 <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-display">Description</h3>
+                 <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base font-medium leading-relaxed whitespace-pre-wrap">
+                   {selectedTool.description}
+                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                 <div className="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-3xl border border-zinc-100 dark:border-zinc-800/50 flex items-center gap-4">
-                    <div className="p-3 bg-white dark:bg-zinc-800 rounded-2xl text-primary-600 shadow-sm"><Zap size={20} /></div>
+              <div className="grid grid-cols-2 gap-4">
+                 <div className="p-4 bg-zinc-50 dark:bg-zinc-800/30 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40 flex items-center gap-3">
+                    <div className="p-2 bg-white dark:bg-zinc-800 rounded-lg text-primary-500 shadow-sm"><Zap size={16} /></div>
                     <div>
-                       <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Integration</p>
-                       <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Web & Browser</p>
+                       <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider font-display">Integration</p>
+                       <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">Web Portal</p>
                     </div>
                  </div>
-                 <div className="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-3xl border border-zinc-100 dark:border-zinc-800/50 flex items-center gap-4">
-                    <div className="p-3 bg-white dark:bg-zinc-800 rounded-2xl text-indigo-600 shadow-sm"><Globe size={20} /></div>
+                 <div className="p-4 bg-zinc-50 dark:bg-zinc-800/30 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40 flex items-center gap-3">
+                    <div className="p-2 bg-white dark:bg-zinc-800 rounded-lg text-accent-500 shadow-sm"><Globe size={16} /></div>
                     <div>
-                       <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Availability</p>
-                       <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Global Access</p>
+                       <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider font-display">Availability</p>
+                       <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">Free Access</p>
                     </div>
                  </div>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="p-8 md:p-12 pt-4 bg-zinc-50 dark:bg-zinc-800/50 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row gap-4">
+            <div className="p-6 pt-3 bg-zinc-50 dark:bg-zinc-900/60 border-t border-zinc-100 dark:border-zinc-800/60 flex gap-3">
               <button 
                 onClick={() => handleShare(selectedTool)}
-                className="flex-grow py-5 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 rounded-2xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 flex items-center justify-center gap-3 shadow-sm"
+                className="flex-1 py-3.5 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-750 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 active:scale-95 flex items-center justify-center gap-1.5 font-display"
               >
-                <Share2 size={18} /> Share Tool
+                <Share2 size={14} /> Share Tool
               </button>
               <a 
                 href={selectedTool.tool_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-grow py-5 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary-500/20 active:scale-95 glow-primary flex items-center justify-center gap-3"
+                className="flex-1 py-3.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-lg shadow-primary-500/10 active:scale-95 glow-primary flex items-center justify-center gap-1.5 font-display"
               >
-                Try {selectedTool.tool_name} <ExternalLink size={20} />
+                Try Portal <ExternalLink size={14} />
               </a>
             </div>
           </div>

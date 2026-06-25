@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Calendar, MapPin, Clock, Search, 
-  Sparkles, Tag
+  Sparkles, Tag, Bookmark
 } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Event } from '../types';
 import { CometCard } from '../components/ui/comet-card';
+import { useBookmarks } from '../lib/bookmarks';
 
 const Events: React.FC = () => {
   const [data, setData] = useState<Event[]>([]);
@@ -16,6 +17,7 @@ const Events: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { isEventBookmarked, toggleEvent } = useBookmarks();
 
   useEffect(() => {
     const load = async () => {
@@ -76,18 +78,51 @@ const Events: React.FC = () => {
       {/* Events Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 pb-32">
         {loading ? (
-          <div className="col-span-full py-40 text-center">
-            <div className="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
-            <p className="mt-6 text-gray-400 font-black uppercase tracking-widest text-xs">Syncing Calendar...</p>
-          </div>
+          Array.from({ length: 6 }).map((_, idx) => (
+            <div key={idx} className="flex justify-center h-full w-full max-w-[340px] mx-auto">
+              <div className="w-full bg-sand-50 dark:bg-zinc-900 p-5 rounded-[24px] border border-zinc-100/50 dark:border-zinc-800/50 space-y-6 animate-pulse text-left">
+                {/* Poster Image Skeleton */}
+                <div className="relative aspect-[3/4] w-full bg-zinc-200 dark:bg-zinc-800 rounded-[20px] flex items-center justify-center">
+                  <div className="absolute top-4 left-4 w-16 h-6 bg-zinc-300 dark:bg-zinc-700 rounded-xl" />
+                  <div className="absolute top-4 right-4 w-10 h-10 bg-zinc-300 dark:bg-zinc-700 rounded-full" />
+                  <Calendar className="text-zinc-300 dark:text-zinc-700/50" size={40} />
+                </div>
+                
+                {/* Details Skeleton */}
+                <div className="space-y-4 px-1">
+                  <div className="flex justify-between items-center">
+                    <div className="h-3 w-20 bg-zinc-300 dark:bg-zinc-700 rounded" />
+                    <div className="h-3 w-10 bg-zinc-200 dark:bg-zinc-800 rounded" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="h-6 w-11/12 bg-zinc-300 dark:bg-zinc-700 rounded-lg" />
+                    <div className="h-6 w-3/4 bg-zinc-300 dark:bg-zinc-700 rounded-lg" />
+                  </div>
+                  
+                  <div className="space-y-2 pt-2">
+                    <div className="h-4 w-1/2 bg-zinc-200 dark:bg-zinc-800 rounded" />
+                    <div className="h-4 w-2/3 bg-zinc-200 dark:bg-zinc-800 rounded" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
         ) : filteredData.length > 0 ? (
           filteredData.map((event, idx) => (
             <div key={idx} className="flex justify-center h-full">
               <CometCard className="w-full max-w-[340px]">
-                <button
-                  type="button"
+                <div
                   onClick={() => handleEventClick(event)}
-                  className="group flex h-full w-full cursor-pointer flex-col items-stretch rounded-[24px] bg-gradient-to-br from-indigo-50/75 via-white/75 to-blue-50/40 dark:from-slate-800/75 dark:via-slate-900/75 dark:to-slate-950/75 p-3 md:p-5 text-left transition-all backdrop-blur-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleEventClick(event);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  className="group flex h-full w-full cursor-pointer flex-col items-stretch rounded-[24px] bg-sand-50 dark:bg-zinc-900 p-3 md:p-5 text-left transition-all backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50"
                   aria-label={`View event ${event.title}`}
                   style={{ transformStyle: "preserve-3d" }}
                 >
@@ -106,6 +141,23 @@ const Events: React.FC = () => {
                       <div className="px-4 py-1.5 bg-white/90 dark:bg-black/60 backdrop-blur-md rounded-xl text-[10px] font-black text-primary-600 dark:text-primary-400 uppercase tracking-widest shadow-sm">
                         {event.price === '0' || (event.price && event.price.toLowerCase() === 'free') ? 'Free' : `₹${event.price}`}
                       </div>
+                    </div>
+
+                    {/* Bookmark Overlay Button */}
+                    <div className="absolute top-4 right-4 z-20">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const originalIndex = data.findIndex(ev => ev.title === event.title);
+                          toggleEvent(event, originalIndex >= 0 ? originalIndex : idx);
+                        }}
+                        className="p-2.5 bg-white/95 dark:bg-black/80 hover:bg-white dark:hover:bg-zinc-950 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 rounded-full transition-all shadow-md flex items-center justify-center border border-gray-100/10"
+                        title={isEventBookmarked(event.title) ? "Remove Bookmark" : "Bookmark Event"}
+                        style={{ minWidth: '44px', minHeight: '44px' }}
+                      >
+                        <Bookmark size={15} className={isEventBookmarked(event.title) ? "fill-primary-500 text-primary-500" : ""} />
+                      </button>
                     </div>
                   </div>
                   
@@ -135,7 +187,7 @@ const Events: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </button>
+                </div>
               </CometCard>
             </div>
           ))

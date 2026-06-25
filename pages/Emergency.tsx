@@ -325,7 +325,7 @@ const Emergency: React.FC = () => {
         
         {/* Modern Segmented Tab Switcher */}
         <div className="flex items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-900 pb-2">
-          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto no-scrollbar scroll-smooth">
+          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth">
             {(['all', 'hostels', 'medical', 'support'] as const).map((cat) => (
               <button
                 key={cat}

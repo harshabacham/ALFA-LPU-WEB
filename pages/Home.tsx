@@ -205,7 +205,7 @@ const Home: React.FC = () => {
               <div className="absolute -inset-1.5 bg-primary-500 rounded-3xl blur-xl opacity-20 dark:opacity-30 group-hover:opacity-40 transition-opacity duration-1000"></div>
               
               {/* macOS Window */}
-              <div className="relative rounded-2xl bg-zinc-900/90 dark:bg-black/95 border border-zinc-800/50 dark:border-zinc-800 shadow-2xl overflow-hidden text-left flex flex-col aspect-[4/3] md:aspect-[1.3] group">
+              <div className="relative rounded-2xl bg-zinc-900/90 dark:bg-black/95 border border-zinc-800/50 dark:border-zinc-800 shadow-2xl overflow-hidden text-left flex flex-col h-[340px] md:h-auto md:aspect-[1.3] group">
                 
                 {/* macOS Title Bar */}
                 <div className="h-10 bg-zinc-950/90 dark:bg-black/90 px-4 flex items-center justify-between border-b border-zinc-800/40 shrink-0">

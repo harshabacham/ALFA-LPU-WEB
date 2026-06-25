@@ -566,7 +566,7 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
             onAnimationComplete={() => {
               searchInputRef.current?.focus();
             }}
-            className="fixed top-0 left-0 bottom-0 z-[5000] h-full w-full max-w-[340px] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-3xl border-r border-zinc-200/40 dark:border-zinc-900/50 shadow-2xl flex flex-col overflow-hidden"
+            className="fixed top-0 left-0 bottom-0 z-[5000] h-full w-[calc(100%-48px)] sm:w-full sm:max-w-[340px] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-3xl border-r border-zinc-200/40 dark:border-zinc-900/50 shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Elegant Ambient lighting dot */}
             <div className="absolute top-0 right-0 w-24 h-24 bg-primary-500/5 blur-3xl rounded-full pointer-events-none" />

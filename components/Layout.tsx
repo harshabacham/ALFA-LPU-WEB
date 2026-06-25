@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const toggleTheme = () => setIsDark(!isDark);
 
   return (
-    <div className="flex min-h-screen bg-sand-100 dark:bg-zinc-950">
+    <div className="flex min-h-screen bg-sand-100 dark:bg-zinc-950 overflow-x-hidden w-full max-w-full">
       {/* Dynamic Floating Premium Navbar - Global for All Pages */}
       <FloatingNav isDark={isDark} toggleTheme={toggleTheme} />
 

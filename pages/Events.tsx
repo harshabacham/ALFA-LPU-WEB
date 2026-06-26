@@ -224,8 +224,8 @@ const Events: React.FC = () => {
         </div>
 
         {/* Live Pulse Analytics Widget */}
-        <div className="flex flex-wrap gap-4 lg:self-end">
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-5 py-4 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex items-center gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row gap-4 w-full lg:w-auto lg:self-end">
+          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-5 py-4 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex items-center gap-4 w-full">
             <div className="relative flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
@@ -236,7 +236,7 @@ const Events: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-5 py-4 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex items-center gap-4">
+          <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-5 py-4 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex items-center gap-4 w-full">
             <Star size={18} className="text-amber-500 fill-amber-500 animate-pulse" />
             <div>
               <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Entry Fee</div>
@@ -355,10 +355,10 @@ const Events: React.FC = () => {
 
       {/* Advanced Action and Control Dock (Grid, Lists, Category Pills) */}
       <div className="relative z-10 space-y-6">
-        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-[2.5rem] p-5 border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex flex-col lg:flex-row gap-5 items-stretch lg:items-center justify-between">
+        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-3xl md:rounded-[2.5rem] p-4 sm:p-5 border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex flex-col lg:flex-row gap-5 items-stretch lg:items-center justify-between">
           
           {/* Animated Slide-pill Category Selector */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 lg:pb-0 scroll-smooth">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 lg:pb-0 scroll-smooth w-full lg:w-auto">
             {(['all', 'free', 'premium', 'tech', 'cultural', 'workshop'] as const).map((cat) => {
               const labelMap: Record<CategoryOption, string> = {
                 all: 'All events',
@@ -394,10 +394,10 @@ const Events: React.FC = () => {
           </div>
 
           {/* Action Dock Right - Search, Sort, View Controls */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full lg:w-auto">
             
             {/* Elegant Search Container */}
-            <div className="relative flex-1 sm:flex-initial">
+            <div className="relative w-full sm:w-auto flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
               <input
                 type="text"
@@ -417,11 +417,11 @@ const Events: React.FC = () => {
             </div>
 
             {/* Custom Sort dropdown */}
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="appearance-none pl-4 pr-10 py-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/60 outline-none text-xs font-bold text-zinc-700 dark:text-zinc-300 focus:ring-4 focus:ring-primary-500/10 cursor-pointer"
+                className="appearance-none pl-4 pr-10 py-3 w-full bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/60 outline-none text-xs font-bold text-zinc-700 dark:text-zinc-300 focus:ring-4 focus:ring-primary-500/10 cursor-pointer"
               >
                 <option value="default">Default Sync</option>
                 <option value="title-asc">Alphabetical A-Z</option>
@@ -432,7 +432,7 @@ const Events: React.FC = () => {
             </div>
 
             {/* Modern list vs grid view selector */}
-            <div className="flex bg-zinc-50 dark:bg-zinc-950 p-1 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/60">
+            <div className="flex justify-center bg-zinc-50 dark:bg-zinc-950 p-1 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/60">
               <button
                 onClick={() => setViewMode('grid')}
                 className={`p-2.5 rounded-xl transition-all ${
@@ -528,9 +528,9 @@ const Events: React.FC = () => {
                         </div>
 
                         {/* Event Details info wrapper */}
-                        <div className="flex-1 flex flex-col justify-between pt-5 pb-2 px-1">
+                        <div className="flex-1 flex flex-col justify-between pt-5 pb-2 px-1 min-w-0">
                           <div className="space-y-3">
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                               <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest flex flex-wrap items-center gap-x-2 gap-y-1">
                                 <span className="flex items-center gap-1"><Calendar size={12} /> {event.date}</span>
                                 <span className="text-zinc-300 dark:text-zinc-700 font-normal">•</span>
@@ -553,8 +553,8 @@ const Events: React.FC = () => {
                           </div>
 
                           {/* Card Footer actions */}
-                          <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800/40 flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-2 truncate text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                          <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800/40 flex items-center justify-between gap-4 min-w-0">
+                            <div className="flex items-center gap-2 min-w-0 text-xs font-bold text-zinc-500 dark:text-zinc-400 flex-1">
                               <MapPin size={13} className="text-primary-500 shrink-0" />
                               <span className="truncate">{event.venue}</span>
                             </div>
@@ -611,7 +611,7 @@ const Events: React.FC = () => {
                       onClick={() => handleEventClick(event)}
                     >
                       {/* Image + Date flip block */}
-                      <div className="flex items-center gap-4 w-full md:w-auto">
+                      <div className="flex items-center gap-4 w-full md:w-auto min-w-0">
                         <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-zinc-100 shrink-0">
                           <img 
                             src={event.image_url} 
@@ -622,19 +622,20 @@ const Events: React.FC = () => {
                         </div>
 
                         {/* Mini flip block */}
-                        <div className="flex flex-col items-center justify-center w-11 h-12 bg-zinc-100 dark:bg-zinc-800 rounded-xl shrink-0">
+                        <div className="hidden sm:flex flex-col items-center justify-center w-11 h-12 bg-zinc-100 dark:bg-zinc-800 rounded-xl shrink-0">
                           <span className="text-[8px] font-black text-primary-500 uppercase">{dateInfo.month}</span>
                           <span className="text-xs font-black text-zinc-800 dark:text-white">{dateInfo.day}</span>
                         </div>
 
-                        <div className="space-y-1 min-w-0">
+                        <div className="space-y-1 min-w-0 flex-1">
                           <span className="text-[9px] font-black uppercase text-primary-500 tracking-wider bg-primary-500/10 px-2 py-0.5 rounded-md">
                             {getEventCategory(event)}
                           </span>
                           <h4 className="text-sm md:text-base font-black text-zinc-800 dark:text-zinc-100 truncate uppercase tracking-tight">
                             {event.title}
                           </h4>
-                          <div className="flex items-center gap-3 text-[11px] font-bold text-zinc-400 dark:text-zinc-500">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold text-zinc-400 dark:text-zinc-500">
+                            <span className="flex items-center gap-1 sm:hidden"><Calendar size={11} className="text-primary-500" /> {event.date}</span>
                             <span className="flex items-center gap-1"><Clock size={11} /> {event.time || "10:00 AM"}</span>
                             <span className="flex items-center gap-1"><MapPin size={11} /> {event.venue}</span>
                           </div>
@@ -731,11 +732,11 @@ const Events: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-              className="bg-white dark:bg-zinc-900 w-full max-w-xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-zinc-200 dark:border-zinc-800 text-left"
+              className="bg-white dark:bg-zinc-900 w-full max-w-xl rounded-3xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-zinc-200 dark:border-zinc-800 text-left"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal header details */}
-              <div className="p-6 md:p-8 flex items-center justify-between border-b border-zinc-200/40 dark:border-zinc-800/50">
+              <div className="p-4 sm:p-6 md:p-8 flex items-center justify-between border-b border-zinc-200/40 dark:border-zinc-800/50">
                 <div className="flex items-center gap-2">
                   <Ticket className="text-primary-500 animate-pulse" size={20} />
                   <span className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-widest">VIP Pass Generator</span>
@@ -749,10 +750,10 @@ const Events: React.FC = () => {
               </div>
 
               {/* Ticket stub content body */}
-              <div className="p-6 md:p-8 space-y-6 flex-1 overflow-y-auto max-h-[70vh]">
+              <div className="p-4 sm:p-6 md:p-8 space-y-6 flex-1 overflow-y-auto max-h-[70vh]">
                 
                 {/* Virtual Ticket Pass Render */}
-                <div className="relative bg-zinc-950 text-white rounded-[2rem] border border-zinc-800 p-6 flex flex-col gap-6 overflow-hidden shadow-xl group">
+                <div className="relative bg-zinc-950 text-white rounded-2xl sm:rounded-[2rem] border border-zinc-800 p-4 sm:p-6 flex flex-col gap-6 overflow-hidden shadow-xl group">
                   {/* Neon light corner decorations */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl pointer-events-none" />
                   <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl pointer-events-none" />
@@ -825,7 +826,7 @@ const Events: React.FC = () => {
 
                       {/* Barcode representation */}
                       <div className="flex flex-col items-center gap-1.5 pt-3 border-t border-zinc-900">
-                        <div className="flex items-center gap-[2px] h-10 w-full justify-center bg-white p-2 rounded-lg">
+                        <div className="flex items-center gap-[2px] h-10 w-full justify-center bg-white p-2 rounded-lg overflow-hidden">
                           {/* Dynamically styled barcode strips */}
                           {Array.from({ length: 44 }).map((_, i) => (
                             <div 
@@ -896,7 +897,7 @@ const Events: React.FC = () => {
               </div>
 
               {/* Modal controls footer */}
-              <div className="p-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200/40 dark:border-zinc-800/50 flex gap-4">
+              <div className="p-4 sm:p-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200/40 dark:border-zinc-800/50 flex gap-4">
                 <button
                   onClick={() => handleEventClick(selectedQuickViewEvent.event)}
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 rounded-xl font-black text-xs uppercase tracking-wider transition-all"

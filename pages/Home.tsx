@@ -185,18 +185,18 @@ const Home: React.FC = () => {
               </div>
 
               {/* Live Operating Stats ticker */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-zinc-200/55 dark:border-zinc-800/40 max-w-lg">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 border-t border-zinc-200/55 dark:border-zinc-800/40 max-w-lg">
                 <div className="text-left">
-                  <div className="text-lg md:text-2xl font-black text-zinc-800 dark:text-zinc-100 font-display">3,000+</div>
-                  <div className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Community Members</div>
+                  <div className="text-base sm:text-xl md:text-2xl font-black text-zinc-800 dark:text-zinc-100 font-display">3,000+</div>
+                  <div className="text-[7px] xs:text-[8px] sm:text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Community Members</div>
                 </div>
                 <div className="text-left">
-                  <div className="text-lg md:text-2xl font-black text-primary-500 font-display">99.2%</div>
-                  <div className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Duty Leave Approval</div>
+                  <div className="text-base sm:text-xl md:text-2xl font-black text-primary-500 font-display">99.2%</div>
+                  <div className="text-[7px] xs:text-[8px] sm:text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Duty Leave Approval</div>
                 </div>
                 <div className="text-left">
-                  <div className="text-lg md:text-2xl font-black text-accent-500 font-display">300+</div>
-                  <div className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Vetted Exam Notes</div>
+                  <div className="text-base sm:text-xl md:text-2xl font-black text-accent-500 font-display">300+</div>
+                  <div className="text-[7px] xs:text-[8px] sm:text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">Vetted Exam Notes</div>
                 </div>
               </div>
             </div>
@@ -230,7 +230,7 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* macOS Workspace Simulator Area */}
-                <div className="flex-grow p-4 pb-16 space-y-3.5 overflow-y-auto scrollbar-hide text-zinc-100 bg-zinc-950 font-sans">
+                <div className="flex-grow p-4 pb-20 space-y-3.5 overflow-y-auto scrollbar-hide text-zinc-100 bg-zinc-950 font-sans">
                   
                   {/* Real Interactive Notification Banner */}
                   {notifications.length > 0 ? (
@@ -241,7 +241,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="text-left min-w-0">
                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">LPU Announcement</p>
-                          <p className="text-xs font-semibold text-zinc-100 truncate max-w-[180px] sm:max-w-[220px] group-hover/banner:text-primary-400 transition-colors">
+                          <p className="text-xs font-semibold text-zinc-100 truncate max-w-[140px] sm:max-w-[220px] group-hover/banner:text-primary-400 transition-colors">
                             {notifications[0].title}
                           </p>
                         </div>
@@ -327,25 +327,25 @@ const Home: React.FC = () => {
                       </div>
                     )}
                   </div>
-
-                  {/* macOS Floating Dock - Always Visible, Never Scroll! */}
-                  <div className="absolute bottom-3 left-0 right-0 z-20 flex justify-center px-4 pointer-events-none">
-                    <div className="px-3.5 py-1.5 bg-zinc-900/90 dark:bg-zinc-950/95 backdrop-blur-md rounded-2xl border border-zinc-800/60 flex items-center gap-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] pointer-events-auto font-sans">
-                      {quickLinks.map((ql, i) => (
-                        <Link 
-                          key={i} 
-                          to={ql.path} 
-                          className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:scale-125 hover:-translate-y-1.5 transition-all duration-300 shadow"
-                          style={{ backgroundColor: ql.color === 'bg-primary-500' ? '#fe7f2d' : ql.color === 'bg-accent-500' ? '#233d4d' : ql.color === 'bg-red-500' ? '#ef4444' : ql.color === 'bg-orange-500' ? '#f97316' : ql.color === 'bg-primary-600' ? '#233d4d' : '#e11d48' }}
-                          title={ql.name}
-                        >
-                          <ql.icon size={15} />
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
                 </div>
+
+                {/* macOS Floating Dock - Always Visible, Never Scroll! */}
+                <div className="absolute bottom-3 left-0 right-0 z-20 flex justify-center px-4 pointer-events-none">
+                  <div className="px-3 sm:px-3.5 py-1.5 bg-zinc-900/95 dark:bg-zinc-950/95 backdrop-blur-md rounded-2xl border border-zinc-800/60 flex items-center gap-2 sm:gap-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] pointer-events-auto font-sans">
+                    {quickLinks.map((ql, i) => (
+                      <Link 
+                        key={i} 
+                        to={ql.path} 
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:scale-125 hover:-translate-y-1.5 transition-all duration-300 shadow"
+                        style={{ backgroundColor: ql.color === 'bg-primary-500' ? '#fe7f2d' : ql.color === 'bg-accent-500' ? '#233d4d' : ql.color === 'bg-red-500' ? '#ef4444' : ql.color === 'bg-orange-500' ? '#f97316' : ql.color === 'bg-primary-600' ? '#233d4d' : '#e11d48' }}
+                        title={ql.name}
+                      >
+                        <ql.icon size={15} />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -467,11 +467,11 @@ const Home: React.FC = () => {
                       </p>
 
                       <div className="grid grid-cols-2 gap-4 pt-4">
-                        <div className="p-3 bg-zinc-50 dark:bg-zinc-850/40 rounded-xl border border-zinc-200/50 dark:border-zinc-800/30">
+                        <div className="p-3 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200/50 dark:border-zinc-800/60">
                           <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-widest font-display block mb-1">Pass Price</span>
-                          <span className="text-lg font-bold text-zinc-900 dark:text-zinc-50 font-display">₹{event.price || 'Free'}</span>
+                          <span className="text-lg font-extrabold text-primary-500 dark:text-primary-400 font-display">₹{event.price || 'Free'}</span>
                         </div>
-                        <div className="p-3 bg-zinc-50 dark:bg-zinc-850/40 rounded-xl border border-zinc-200/50 dark:border-zinc-800/30">
+                        <div className="p-3 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200/50 dark:border-zinc-800/60">
                           <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-widest font-display block mb-1">Venue Coordinators</span>
                           <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 truncate block font-display">{event.organizer || 'LPU Student Hub'}</span>
                         </div>
@@ -513,7 +513,7 @@ const Home: React.FC = () => {
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Campus Hub</h3>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
             {[
               { name: 'Announcements', path: '/notifications', icon: Bell, color: 'text-rose-500 bg-rose-500/10 border-rose-500/10 dark:border-rose-500/5' },
               { name: 'Academic Notes', path: '/notes', icon: BookOpen, color: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/10 dark:border-indigo-500/5' },
@@ -525,14 +525,14 @@ const Home: React.FC = () => {
               <Link 
                 key={link.name} 
                 to={link.path} 
-                className="flex flex-col items-start gap-4 p-5 rounded-2xl bg-sand-50 dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/40 transition-all duration-300 hover:scale-[1.03] hover:shadow-md hover:border-primary-500/20 group"
+                className="flex flex-col items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-sand-50 dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/40 transition-all duration-300 hover:scale-[1.03] hover:shadow-md hover:border-primary-500/20 group"
               >
-                <div className={`${link.color} p-3 rounded-xl border flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
-                  <link.icon size={20} />
+                <div className={`${link.color} p-2.5 sm:p-3 rounded-xl border flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
+                  <link.icon size={18} />
                 </div>
-                <div className="space-y-1">
-                  <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 block font-display">{link.name}</span>
-                  <span className="text-[10px] text-zinc-400 font-medium block">Explore Portal →</span>
+                <div className="space-y-0.5 sm:space-y-1">
+                  <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 block font-display leading-tight">{link.name}</span>
+                  <span className="text-[9px] sm:text-[10px] text-zinc-400 font-medium block">Explore Portal →</span>
                 </div>
               </Link>
             ))}
@@ -553,9 +553,9 @@ const Home: React.FC = () => {
                 <div 
                   key={`${notif.id || 'notif'}-${index}`} 
                   onClick={() => setSelectedNotif(notif)} 
-                  className="bg-sand-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/40 flex gap-4 hover:shadow-md hover:border-primary-500/20 transition-all duration-300 cursor-pointer group"
+                  className="bg-sand-50 dark:bg-zinc-900/50 p-4 sm:p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/40 flex gap-3 sm:gap-4 hover:shadow-md hover:border-primary-500/20 transition-all duration-300 cursor-pointer group"
                 >
-                  <div className="w-11 h-11 shrink-0 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition-all duration-300"><Bell size={18} /></div>
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-xl bg-primary-500/10 text-primary-500 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition-all duration-300"><Bell size={18} /></div>
                   <div className="flex-grow min-w-0 text-left">
                     <div className="flex items-center gap-2 mb-0.5">
                       <span className="text-[10px] font-semibold text-primary-500 uppercase tracking-wider font-display">{notif.timestamp}</span>
@@ -563,7 +563,7 @@ const Home: React.FC = () => {
                     <h4 className="font-bold text-base text-zinc-900 dark:text-zinc-100 mb-1 truncate group-hover:text-primary-500 transition-colors duration-300 font-display">{notif.title}</h4>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1 font-medium">{notif.description}</p>
                   </div>
-                  <div className="w-8 h-11 shrink-0 flex items-center justify-center text-zinc-300 dark:text-zinc-700 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+                  <div className="w-8 h-10 sm:h-11 shrink-0 flex items-center justify-center text-zinc-300 dark:text-zinc-700 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
                     <ChevronRight size={20} />
                   </div>
                 </div>
@@ -576,7 +576,7 @@ const Home: React.FC = () => {
               <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Daily Wisdom</h3>
             </div>
-            <div className="bg-sand-50 dark:bg-zinc-900/50 p-8 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/40 relative overflow-hidden flex flex-col justify-center min-h-[220px] text-left shadow-sm group">
+            <div className="bg-sand-50 dark:bg-zinc-900/50 p-6 sm:p-8 rounded-2xl border border-zinc-200/50 dark:border-zinc-850/40 relative overflow-hidden flex flex-col justify-center min-h-[220px] text-left shadow-sm group">
               <div className="absolute inset-0 bg-primary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               <Quote className="text-primary-500 opacity-5 absolute top-6 right-6 group-hover:scale-110 transition-transform duration-700" size={70} />
               <div className="relative z-10 space-y-4">
@@ -591,7 +591,7 @@ const Home: React.FC = () => {
 
         {/* Download App Section */}
         <section className="mt-8 text-left">
-          <div className="bg-gradient-to-br from-accent-900 to-accent-950 dark:from-zinc-900 dark:to-zinc-950 rounded-[2rem] p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl border border-zinc-200/20 dark:border-zinc-850/40 relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-accent-900 to-accent-950 dark:from-zinc-900 dark:to-zinc-950 rounded-[2rem] p-6 sm:p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl border border-zinc-200/20 dark:border-zinc-850/40 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-1000"></div>
             <div className="space-y-5 relative z-10 text-center md:text-left max-w-xl">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 dark:bg-zinc-800/80 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/10">
@@ -605,7 +605,7 @@ const Home: React.FC = () => {
                 href="https://alfalpu1.apk.com" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2.5 px-8 py-4 bg-sand-50 text-accent-900 hover:bg-sand-200 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl transition-all hover:scale-105 active:scale-95 font-display"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 bg-sand-50 text-accent-900 hover:bg-sand-200 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl transition-all hover:scale-105 active:scale-95 font-display"
               >
                 <Download size={16} /> Download APK Document
               </a>

@@ -376,7 +376,7 @@ export const GPACalculator: React.FC = () => {
                       className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center bg-sand-50/50 dark:bg-zinc-900/40 border border-zinc-200/30 dark:border-zinc-800/20 p-3 sm:p-4 rounded-2xl group transition-all hover:border-indigo-500/20"
                     >
                       {/* Name input */}
-                      <div className="col-span-12 sm:col-span-5 flex items-center gap-3">
+                      <div className="w-full sm:col-span-5 flex items-center gap-3">
                         <span className="text-xs font-mono font-bold text-zinc-400 select-none w-5">
                           {idx + 1}.
                         </span>
@@ -390,7 +390,7 @@ export const GPACalculator: React.FC = () => {
                       </div>
 
                       {/* Credits slider / field */}
-                      <div className="col-span-5 sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
+                      <div className="w-full sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
                         <span className="sm:hidden text-[11px] font-bold text-zinc-400 mr-auto font-display">Cr:</span>
                         <input
                           type="number"
@@ -404,7 +404,7 @@ export const GPACalculator: React.FC = () => {
                       </div>
 
                       {/* Marks Input */}
-                      <div className="col-span-5 sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
+                      <div className="w-full sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
                         <span className="sm:hidden text-[11px] font-bold text-zinc-400 mr-auto font-display">Marks:</span>
                         <div className="flex items-center gap-1.5 sm:gap-2">
                           <input
@@ -423,7 +423,7 @@ export const GPACalculator: React.FC = () => {
                       </div>
 
                       {/* Delete */}
-                      <div className="col-span-2 sm:col-span-1 flex justify-end sm:justify-center">
+                      <div className="w-full sm:col-span-1 flex justify-end sm:justify-center">
                         <button
                           onClick={() => removeCourse(course.id)}
                           disabled={courses.length <= 1}
@@ -502,7 +502,7 @@ export const GPACalculator: React.FC = () => {
                         className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center bg-sand-50/50 dark:bg-zinc-900/40 border border-zinc-200/30 dark:border-zinc-800/20 p-3 sm:p-4 rounded-2xl group transition-all hover:border-emerald-500/20"
                       >
                         {/* Name input */}
-                        <div className="col-span-12 sm:col-span-5 flex items-center gap-3">
+                        <div className="w-full sm:col-span-5 flex items-center gap-3">
                           <span className="text-xs font-mono font-bold text-zinc-400 select-none w-5">
                             {idx + 1}.
                           </span>
@@ -516,7 +516,7 @@ export const GPACalculator: React.FC = () => {
                         </div>
 
                         {/* Semester Credits completed */}
-                        <div className="col-span-5 sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
+                        <div className="w-full sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
                           <span className="sm:hidden text-[11px] font-bold text-zinc-400 mr-auto font-display">Credits:</span>
                           <input
                             type="number"
@@ -530,7 +530,7 @@ export const GPACalculator: React.FC = () => {
                         </div>
 
                         {/* Semester SGPA */}
-                        <div className="col-span-5 sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
+                        <div className="w-full sm:col-span-3 flex items-center justify-center gap-1.5 sm:gap-2">
                           <span className="sm:hidden text-[11px] font-bold text-zinc-400 mr-auto font-display">SGPA:</span>
                           <input
                             type="number"
@@ -545,7 +545,7 @@ export const GPACalculator: React.FC = () => {
                         </div>
 
                         {/* Delete */}
-                        <div className="col-span-2 sm:col-span-1 flex justify-end sm:justify-center">
+                        <div className="w-full sm:col-span-1 flex justify-end sm:justify-center">
                           <button
                             onClick={() => removeSemester(sem.id)}
                             disabled={semesters.length <= 1}

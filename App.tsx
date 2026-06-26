@@ -19,6 +19,7 @@ import Emergency from './pages/Emergency';
 import YouTubeChannels from './pages/YouTubeChannels';
 import Bookmarks from './pages/Bookmarks';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import GPACalculator from './pages/GPACalculator';
 import CookieConsent from './components/CookieConsent';
 
 const App: React.FC = () => {
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Route path="/youtube" element={<YouTubeChannels />} />
         <Route path="/emergency" element={<Emergency />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/gpa" element={<GPACalculator />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
       <CookieConsent />

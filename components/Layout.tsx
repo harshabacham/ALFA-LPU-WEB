@@ -37,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex-grow pt-24 md:pt-28 pb-16 w-full">
           {children}
         </div>
-        <Footer />
+        {location.pathname === '/' && <Footer />}
       </main>
     </div>
   );

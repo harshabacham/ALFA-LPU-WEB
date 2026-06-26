@@ -13,7 +13,7 @@ import {
   Home, Bell, Users, Calendar, Bed, BookOpen, 
   GraduationCap, Tag, Cpu, PhoneCall, Youtube, 
   Bookmark, Ticket, ShieldAlert, Sparkle, ArrowRight,
-  Clock, Activity, Info, ArrowLeft
+  Clock, Activity, Info, ArrowLeft, Calculator
 } from "lucide-react";
 
 interface FloatingNavProps {
@@ -68,6 +68,15 @@ const modulesData = [
     description: "Chat with LPU-tailored AI study helpers",
     badge: "AI power",
     color: "violet"
+  },
+  { 
+    name: "GPA Calculator", 
+    path: "/gpa", 
+    icon: Calculator, 
+    category: "Academic Hub", 
+    description: "Calculate & estimate your CGPA and TGPA",
+    badge: "GPA",
+    color: "emerald"
   },
 
   { 

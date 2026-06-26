@@ -44,6 +44,16 @@ const Deals: React.FC = () => {
   const categories = ['All', ...Array.from(new Set(data.map(i => i.category).filter(Boolean)))];
   const conditions = ['All', ...Array.from(new Set(data.map(i => i.condition).filter(Boolean)))];
 
+  const getWhatsAppUrl = (contact: string, title: string) => {
+    if (!contact) return '#';
+    let cleaned = contact.replace(/\D/g, '');
+    if (cleaned.length === 10) {
+      cleaned = '91' + cleaned;
+    }
+    const message = encodeURIComponent(`Hi, I'm interested in buying your item "${title}" on Alfa Deals.`);
+    return `https://wa.me/${cleaned}?text=${message}`;
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 text-left">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -137,7 +147,9 @@ const Deals: React.FC = () => {
 
                   <div className="flex gap-2">
                     <a 
-                      href={`mailto:${deal.contact}`}
+                      href={getWhatsAppUrl(deal.contact, deal.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex-grow flex items-center justify-center gap-1.5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-md shadow-primary-500/10 transition-all active:scale-95 glow-primary font-display"
                     >
                       Buy Now

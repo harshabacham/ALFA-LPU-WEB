@@ -6,7 +6,8 @@ import {
   GraduationCap, Tag, Cpu, Quote, ChevronRight,
   X, ExternalLink, Play, Image as ImageIcon, Share2,
   ChevronLeft, Sparkles, ArrowUp, ArrowUpRight, MousePointer2, MapPin, Clock, Ticket, PhoneCall,
-  Download, Linkedin, Instagram, Github, MessageCircle, Twitter, Megaphone, PlusCircle, MessageSquare
+  Download, Linkedin, Instagram, Github, MessageCircle, Twitter, Megaphone, PlusCircle, MessageSquare,
+  Calculator
 } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS, QUOTES } from '../constants';
@@ -512,12 +513,13 @@ const Home: React.FC = () => {
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Campus Hub</h3>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {[
               { name: 'Announcements', path: '/notifications', icon: Bell, color: 'text-rose-500 bg-rose-500/10 border-rose-500/10 dark:border-rose-500/5' },
               { name: 'Academic Notes', path: '/notes', icon: BookOpen, color: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/10 dark:border-indigo-500/5' },
               { name: 'Events Spotlight', path: '/events', icon: Calendar, color: 'text-primary-500 bg-primary-500/10 border-primary-500/10 dark:border-primary-500/5' },
               { name: 'Duty Leaves', path: '/duty-leaves', icon: Ticket, color: 'text-amber-500 bg-amber-500/10 border-amber-500/10 dark:border-amber-500/5' },
+              { name: 'GPA Calculator', path: '/gpa', icon: Calculator, color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/10 dark:border-emerald-500/5' },
               { name: 'SOS Emergency', path: '/emergency', icon: PhoneCall, color: 'text-red-500 bg-red-500/10 border-red-500/10 dark:border-red-500/5' },
             ].map((link) => (
               <Link 

@@ -73,7 +73,7 @@ export function PointerHighlight({
             }}
           />
           <motion.div
-            className="pointer-events-none absolute"
+            className="pointer-events-none absolute hidden sm:block"
             initial={{ opacity: 0 }}
             whileInView={{
               opacity: 1,

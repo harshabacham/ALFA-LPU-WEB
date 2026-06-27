@@ -153,7 +153,7 @@ const YouTubeChannels: React.FC = () => {
       
       {/* 1. Immersive Cinema Player Backdrop overlay if video selected */}
       {activeVideo && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-[6000] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
           <div className="relative w-full max-w-5xl bg-zinc-950 border border-zinc-800 rounded-3xl overflow-hidden shadow-[0_24px_50px_rgba(0,0,0,0.8)] flex flex-col max-h-[90vh]">
             
             {/* Top Toolbar */}

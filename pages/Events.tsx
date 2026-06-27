@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { 
   Calendar, MapPin, Clock, Search, 
@@ -204,7 +205,7 @@ const Events: React.FC = () => {
   const regularEvents = data.length > 1 ? data.slice(1) : data;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-12 animate-in fade-in duration-1000 text-left">
+    <div className="relative overflow-hidden max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-12 animate-in fade-in duration-1000 text-left">
       {/* Dynamic Animated Glow Mesh Gradients */}
       <div className="absolute top-0 left-1/4 w-[450px] h-[450px] bg-primary-500/10 dark:bg-primary-500/5 rounded-full blur-[140px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }}></div>
       <div className="absolute top-1/3 right-1/4 w-[380px] h-[380px] bg-accent-500/10 dark:bg-accent-500/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '12s', animationDelay: '3s' }}></div>
@@ -358,7 +359,7 @@ const Events: React.FC = () => {
         <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-3xl md:rounded-[2.5rem] p-4 sm:p-5 border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm flex flex-col lg:flex-row gap-5 items-stretch lg:items-center justify-between">
           
           {/* Animated Slide-pill Category Selector */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 lg:pb-0 scroll-smooth w-full lg:w-auto">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-2 lg:pb-0 scroll-smooth w-full lg:w-auto">
             {(['all', 'free', 'premium', 'tech', 'cultural', 'workshop'] as const).map((cat) => {
               const labelMap: Record<CategoryOption, string> = {
                 all: 'All events',
@@ -374,7 +375,7 @@ const Events: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`relative px-4 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-colors shrink-0 ${
+                  className={`relative px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors shrink-0 cursor-pointer ${
                     isActive 
                       ? 'text-white dark:text-zinc-950 z-10' 
                       : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
@@ -384,7 +385,7 @@ const Events: React.FC = () => {
                     <motion.div
                       layoutId="activeCategoryPill"
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      className="absolute inset-0 bg-zinc-950 dark:bg-white rounded-2xl -z-10 shadow-md"
+                      className="absolute inset-0 bg-zinc-950 dark:bg-white rounded-xl -z-10 shadow-md"
                     />
                   )}
                   {labelMap[cat]}
@@ -561,13 +562,25 @@ const Events: React.FC = () => {
 
                             {/* Hover interactive mini-drawer buttons */}
                             <div className="flex items-center gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
-                              <button
-                                onClick={() => setSelectedQuickViewEvent({ event, index: idx })}
-                                className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded-xl transition-all"
-                                title="Quick Pass Ticket"
-                              >
-                                <Ticket size={14} />
-                              </button>
+                              {event.link ? (
+                                <a
+                                  href={event.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded-xl transition-all inline-flex items-center justify-center"
+                                  title="Register on Portal"
+                                >
+                                  <ExternalLink size={14} />
+                                </a>
+                              ) : (
+                                <button
+                                  onClick={() => handleEventClick(event)}
+                                  className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded-xl transition-all"
+                                  title="Explore Event"
+                                >
+                                  <ExternalLink size={14} />
+                                </button>
+                              )}
 
                               <button
                                 onClick={() => {
@@ -652,12 +665,24 @@ const Events: React.FC = () => {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <button 
-                            onClick={() => setSelectedQuickViewEvent({ event, index: idx })}
-                            className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all"
-                          >
-                            Quick Ticket
-                          </button>
+                          {event.link ? (
+                            <a 
+                              href={event.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all inline-flex items-center gap-1.5"
+                            >
+                              <span>Register</span>
+                              <ExternalLink size={10} />
+                            </a>
+                          ) : (
+                            <button 
+                              onClick={() => handleEventClick(event)}
+                              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all"
+                            >
+                              Explore
+                            </button>
+                          )}
 
                           <button
                             onClick={() => {
@@ -716,213 +741,6 @@ const Events: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
-
-      {/* Live Interactive VIP Virtual Ticket Pass Modal */}
-      <AnimatePresence>
-        {selectedQuickViewEvent && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[10000] bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
-            onClick={() => setSelectedQuickViewEvent(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-              className="bg-white dark:bg-zinc-900 w-full max-w-xl rounded-3xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-zinc-200 dark:border-zinc-800 text-left"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal header details */}
-              <div className="p-4 sm:p-6 md:p-8 flex items-center justify-between border-b border-zinc-200/40 dark:border-zinc-800/50">
-                <div className="flex items-center gap-2">
-                  <Ticket className="text-primary-500 animate-pulse" size={20} />
-                  <span className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-widest">VIP Pass Generator</span>
-                </div>
-                <button
-                  onClick={() => setSelectedQuickViewEvent(null)}
-                  className="p-2 bg-zinc-200/50 dark:bg-zinc-800/60 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 rounded-full transition-colors"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-
-              {/* Ticket stub content body */}
-              <div className="p-4 sm:p-6 md:p-8 space-y-6 flex-1 overflow-y-auto max-h-[70vh]">
-                
-                {/* Virtual Ticket Pass Render */}
-                <div className="relative bg-zinc-950 text-white rounded-2xl sm:rounded-[2rem] border border-zinc-800 p-4 sm:p-6 flex flex-col gap-6 overflow-hidden shadow-xl group">
-                  {/* Neon light corner decorations */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl pointer-events-none" />
-                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl pointer-events-none" />
-
-                  {/* Top Notch indicators (Ticket stub style) */}
-                  <div className="absolute left-[-10px] top-[70%] w-5 h-5 rounded-full bg-white dark:bg-zinc-900 border-r border-zinc-800 z-10" />
-                  <div className="absolute right-[-10px] top-[70%] w-5 h-5 rounded-full bg-white dark:bg-zinc-900 border-l border-zinc-800 z-10" />
-
-                  {/* Card Main Info */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1 min-w-0">
-                      <div className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-primary-500/20 text-primary-400 border border-primary-500/30 rounded-md text-[8px] font-black uppercase tracking-wider">
-                        Alfa VIP Boarding Pass
-                      </div>
-                      <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white line-clamp-2">
-                        {selectedQuickViewEvent.event.title}
-                      </h4>
-                      <p className="text-xs text-zinc-400 font-medium truncate">
-                        Organizer: {selectedQuickViewEvent.event.organizer || "LPU Student Council"}
-                      </p>
-                    </div>
-
-                    <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-zinc-800">
-                      <img 
-                        src={selectedQuickViewEvent.event.image_url} 
-                        alt="Event poster" 
-                        onError={(e) => (e.currentTarget.src = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800")}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Mid Schedule stats */}
-                  <div className="grid grid-cols-3 gap-3 bg-zinc-900/60 border border-zinc-850 p-4 rounded-2xl relative z-10 text-center">
-                    <div>
-                      <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-wider">Date</div>
-                      <div className="text-xs font-black text-zinc-200">{selectedQuickViewEvent.event.date}</div>
-                    </div>
-                    <div>
-                      <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-wider">Time</div>
-                      <div className="text-xs font-black text-zinc-200">{selectedQuickViewEvent.event.time || "10:00 AM"}</div>
-                    </div>
-                    <div>
-                      <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-wider">Price</div>
-                      <div className="text-xs font-black text-primary-400">
-                        {selectedQuickViewEvent.event.price === '0' || selectedQuickViewEvent.event.price.toLowerCase() === 'free' ? 'FREE' : `₹${selectedQuickViewEvent.event.price}`}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Simulated Tear Dotted separator line */}
-                  <div className="relative border-t-2 border-dashed border-zinc-800 my-1">
-                    <span className="absolute left-[-16px] top-[-1px] w-2 h-2 rounded-full bg-zinc-950" />
-                    <span className="absolute right-[-16px] top-[-1px] w-2 h-2 rounded-full bg-zinc-950" />
-                  </div>
-
-                  {/* Claimed Passenger pass details */}
-                  {claimedTickets[selectedQuickViewEvent.event.title] ? (
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between text-xs">
-                        <div>
-                          <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">Passenger Ticket Name</div>
-                          <div className="font-bold text-zinc-200 uppercase">{claimedTickets[selectedQuickViewEvent.event.title].name}</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">Registered At</div>
-                          <div className="font-mono text-[10px] text-zinc-400">{claimedTickets[selectedQuickViewEvent.event.title].date}</div>
-                        </div>
-                      </div>
-
-                      {/* Barcode representation */}
-                      <div className="flex flex-col items-center gap-1.5 pt-3 border-t border-zinc-900">
-                        <div className="flex items-center gap-[2px] h-10 w-full justify-center bg-white p-2 rounded-lg overflow-hidden">
-                          {/* Dynamically styled barcode strips */}
-                          {Array.from({ length: 44 }).map((_, i) => (
-                            <div 
-                              key={i} 
-                              className="bg-black h-full shrink-0" 
-                              style={{ width: `${(i % 3 === 0 ? 3 : i % 2 === 0 ? 1.5 : 2.5)}px` }} 
-                            />
-                          ))}
-                        </div>
-                        <span className="text-[10px] font-mono text-zinc-400 tracking-[0.25em] font-bold">
-                          {claimedTickets[selectedQuickViewEvent.event.title].id}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {/* Name editor input */}
-                      <div className="space-y-1.5 text-left">
-                        <label className="text-[9px] font-black text-zinc-400 uppercase tracking-wider">Assign Pass To Name</label>
-                        <input
-                          type="text"
-                          value={ticketName}
-                          onChange={(e) => setTicketName(e.target.value)}
-                          placeholder="Your boarding pass name"
-                          className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-xl px-4 py-2.5 text-xs outline-none focus:border-primary-500/50"
-                        />
-                      </div>
-
-                      <button
-                        onClick={() => handleClaimTicket(selectedQuickViewEvent.event)}
-                        className="w-full bg-white hover:bg-zinc-200 text-zinc-950 font-black text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
-                      >
-                        <Ticket size={14} /> Assign Boarding pass
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Additional Event Specifications list details */}
-                <div className="space-y-3.5 text-left bg-white dark:bg-zinc-950 p-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-850 shadow-xs">
-                  <div className="flex items-center gap-2.5">
-                    <Info size={16} className="text-primary-500 shrink-0" />
-                    <span className="text-xs font-black uppercase text-zinc-800 dark:text-zinc-100 tracking-wider">Event Information & Guidelines</span>
-                  </div>
-                  
-                  <div className="text-xs text-zinc-500 dark:text-zinc-400 space-y-2 leading-relaxed font-medium">
-                    <p>
-                      • Present the printed or digital VIP boarding pass ticket upon campus entry gate verification.
-                    </p>
-                    <p>
-                      • Specific guidelines, project code sheets, or cultural materials will be provided directly at the venue: <span className="font-bold text-zinc-700 dark:text-zinc-200">{selectedQuickViewEvent.event.venue}</span>.
-                    </p>
-                    {selectedQuickViewEvent.event.link && (
-                      <div className="pt-2">
-                        <a
-                          href={selectedQuickViewEvent.event.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 font-bold hover:underline"
-                        >
-                          Official Link <ExternalLink size={12} />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Modal controls footer */}
-              <div className="p-4 sm:p-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200/40 dark:border-zinc-800/50 flex gap-4">
-                <button
-                  onClick={() => handleEventClick(selectedQuickViewEvent.event)}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 rounded-xl font-black text-xs uppercase tracking-wider transition-all"
-                >
-                  Explore Full Page <ChevronRight size={14} />
-                </button>
-                <button
-                  onClick={(e) => handleShareEvent(selectedQuickViewEvent.event, e)}
-                  className="px-5 py-3.5 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-xl font-bold text-xs uppercase tracking-wider transition-all relative flex items-center gap-2"
-                >
-                  {copyStatus === selectedQuickViewEvent.event.title ? (
-                    <>
-                      <CheckCircle2 size={14} className="text-emerald-500" /> Copied
-                    </>
-                  ) : (
-                    <>
-                      <Share2 size={14} /> Share
-                    </>
-                  )}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

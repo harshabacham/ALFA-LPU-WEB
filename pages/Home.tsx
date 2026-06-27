@@ -218,7 +218,7 @@ const Home: React.FC = () => {
                   </div>
                   
                   {/* Address Bar */}
-                  <div className="px-6 py-1 bg-zinc-900 dark:bg-zinc-900/60 rounded-md border border-zinc-800/40 text-[10px] font-mono text-zinc-500 select-none flex items-center gap-1.5 max-w-[200px] truncate">
+                  <div className="hidden sm:flex px-4 md:px-6 py-1 bg-zinc-900 dark:bg-zinc-900/60 rounded-md border border-zinc-800/40 text-[10px] font-mono text-zinc-500 select-none items-center gap-1.5 max-w-[150px] md:max-w-[200px] truncate">
                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
                     alfa.lpu.edu/student-os
                   </div>
@@ -241,7 +241,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="text-left min-w-0">
                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-display">LPU Announcement</p>
-                          <p className="text-xs font-semibold text-zinc-100 truncate max-w-[140px] sm:max-w-[220px] group-hover/banner:text-primary-400 transition-colors">
+                          <p className="text-xs font-semibold text-zinc-100 truncate max-w-[110px] xs:max-w-[140px] sm:max-w-[220px] group-hover/banner:text-primary-400 transition-colors">
                             {notifications[0].title}
                           </p>
                         </div>
@@ -624,7 +624,7 @@ const Home: React.FC = () => {
             <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Get Featured</h3>
           </div>
-          <div className="bg-sand-50 dark:bg-zinc-900/30 rounded-[2rem] p-8 md:p-12 text-zinc-900 dark:text-zinc-100 shadow-sm relative overflow-hidden group/featured border border-zinc-200/50 dark:border-zinc-800/40">
+          <div className="bg-sand-50 dark:bg-zinc-900/30 rounded-[2rem] p-6 sm:p-8 md:p-12 text-zinc-900 dark:text-zinc-100 shadow-sm relative overflow-hidden group/featured border border-zinc-200/50 dark:border-zinc-800/40">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary-500/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover/featured:scale-125 transition-transform duration-1000"></div>
             <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6 text-left">
@@ -765,7 +765,7 @@ const Home: React.FC = () => {
             <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">About the Author</h3>
           </div>
-          <div className="bg-sand-50 dark:bg-zinc-900/50 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-850/40 p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group">
+          <div className="bg-sand-50 dark:bg-zinc-900/50 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-850/40 p-6 sm:p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-3xl rounded-full pointer-events-none"></div>
             <div className="w-32 h-32 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800 shadow-md relative group/dev">
               <img src="https://i.postimg.cc/d0dg476z/Chat-GPT-Image-Jun-11-2025-07-35-42-AM.png" alt="Harsha Bacham" className="w-full h-full object-cover transition-transform duration-500 group-hover/dev:scale-110" />
@@ -781,6 +781,7 @@ const Home: React.FC = () => {
               </p>
               <div className="flex justify-center md:justify-start gap-3">
                 <a href="https://www.linkedin.com/in/harsha-bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#0077b5] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Linkedin size={15} /></a>
+                <a href="https://www.instagram.com/harsha_bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#e1306c] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Instagram size={15} /></a>
                 <a href="https://github.com/harshabacham" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Github size={15} /></a>
                 <a href="https://wa.me/917793914091" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#25D366] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><MessageCircle size={15} /></a>
               </div>

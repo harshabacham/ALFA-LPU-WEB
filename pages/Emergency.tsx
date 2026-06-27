@@ -146,7 +146,7 @@ const Emergency: React.FC = () => {
               <Siren size={12} className="animate-pulse" /> Official 24/7 Response Desk
             </div>
             <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none font-display text-zinc-900 dark:text-white">
-              Crisis & Support <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-rose-400 to-pink-400">Hub</span>
+              Helpline <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-rose-400 to-pink-400">Numbers</span>
             </h1>
             <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base max-w-2xl font-medium">
               Zero friction, immediate assistance portal. Access dedicated hospital services, safety commanders, and student relationship cells dynamically.

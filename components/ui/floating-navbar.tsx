@@ -222,15 +222,12 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
 
     if (isOverlayOpen) {
       document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     }
     return () => {
       window.dispatchEvent(new CustomEvent('alfa-modal-active', { detail: { open: false } }));
       document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     };
   }, [isOverlayOpen]);
 
@@ -265,6 +262,21 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
   useEffect(() => {
     setIsOverlayOpen(false);
   }, [location]);
+
+  const [isModalActive, setIsModalActive] = useState(false);
+
+  useEffect(() => {
+    const handleModalActive = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && typeof customEvent.detail.open === 'boolean') {
+        setIsModalActive(customEvent.detail.open);
+      }
+    };
+    window.addEventListener('alfa-modal-active', handleModalActive);
+    return () => {
+      window.removeEventListener('alfa-modal-active', handleModalActive);
+    };
+  }, []);
 
   // Listen for custom menu toggle event
   useEffect(() => {
@@ -469,12 +481,12 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               </Link>
             ) : (
               <Link 
-                to="/" 
+                to={location.pathname.startsWith("/events/") ? "/events" : "/"} 
                 onClick={() => setIsOverlayOpen(false)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sand-100 hover:bg-sand-200 text-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-750 dark:text-zinc-300 font-extrabold text-xs uppercase tracking-wider transition-all border border-sand-200/10 dark:border-zinc-800/10 cursor-pointer shadow-sm group"
               >
                 <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-                <span>Back</span>
+                <span>{location.pathname.startsWith("/events/") ? "Campus Hub" : "Back"}</span>
               </Link>
             )}
 

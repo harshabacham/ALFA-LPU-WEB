@@ -310,7 +310,7 @@ export const GPACalculator: React.FC = () => {
       </div>
 
       {/* Tabs Menu */}
-      <div className="grid grid-cols-2 lg:flex lg:flex-row gap-2 p-1.5 bg-sand-50/50 dark:bg-zinc-900/40 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/20 w-full lg:max-w-fit">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:flex lg:flex-row gap-2 p-1.5 bg-sand-50/50 dark:bg-zinc-900/40 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/20 w-full lg:max-w-fit">
         {[
           { id: 'tgpa', label: 'TGPA / SGPA', desc: 'Calculate Semester' },
           { id: 'cgpa', label: 'CGPA Accumulator', desc: 'Combine Semesters' },
@@ -340,7 +340,7 @@ export const GPACalculator: React.FC = () => {
 
           {/* PANEL 1: TGPA / SGPA CALCULATOR */}
           {activeTab === 'tgpa' && (
-            <div className="bg-white dark:bg-zinc-900/80 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm overflow-hidden p-6 md:p-8 space-y-6">
+            <div className="bg-white dark:bg-zinc-900/80 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm overflow-hidden p-4 sm:p-6 md:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/60 pb-5">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
@@ -466,7 +466,7 @@ export const GPACalculator: React.FC = () => {
             <div className="space-y-6">
               
               {/* Method 1: Detailed Semester Addition */}
-              <div className="bg-white dark:bg-zinc-900/80 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-6 md:p-8 space-y-6">
+              <div className="bg-white dark:bg-zinc-900/80 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
                 <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/60 pb-5">
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
@@ -572,7 +572,7 @@ export const GPACalculator: React.FC = () => {
               </div>
 
               {/* Method 2: Quick Current CGPA + New term estimate */}
-              <div className="bg-white dark:bg-zinc-900/80 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-6 md:p-8 space-y-6">
+              <div className="bg-white dark:bg-zinc-900/80 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
                 <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800/60 pb-5">
                   <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-500 border border-purple-500/20">
                     <Compass size={20} />
@@ -640,7 +640,7 @@ export const GPACalculator: React.FC = () => {
 
           {/* PANEL 3: TARGET GPA PLANNER */}
           {activeTab === 'target' && (
-            <div className="bg-white dark:bg-zinc-900/80 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-6 md:p-8 space-y-6">
+            <div className="bg-white dark:bg-zinc-900/80 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
               <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800/60 pb-5">
                 <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
                   <TrendingUp size={20} />
@@ -704,7 +704,7 @@ export const GPACalculator: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-sand-50/50 dark:bg-zinc-950/40 p-6 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 flex flex-col justify-center items-center text-center space-y-4">
+                <div className="bg-sand-50/50 dark:bg-zinc-950/40 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 flex flex-col justify-center items-center text-center space-y-4">
                   <div className="p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full">
                     <TrendingUp size={24} />
                   </div>
@@ -749,7 +749,7 @@ export const GPACalculator: React.FC = () => {
 
           {/* PANEL 4: REFERENCE GUIDE */}
           {activeTab === 'reference' && (
-            <div className="bg-white dark:bg-zinc-900/80 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-6 md:p-8 space-y-6">
+            <div className="bg-white dark:bg-zinc-900/80 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
               <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800/60 pb-5">
                 <div className="p-2.5 rounded-xl bg-primary-500/10 text-primary-500 border border-primary-500/20">
                   <Award size={20} />
@@ -804,7 +804,7 @@ export const GPACalculator: React.FC = () => {
         <div className="lg:col-span-4 space-y-6">
           
           {/* Main Scoring Showcase Widget */}
-          <div className="bg-zinc-950 text-white rounded-[2rem] border border-zinc-800 p-6 md:p-8 space-y-6 relative overflow-hidden shadow-xl shadow-primary-500/5">
+          <div className="bg-zinc-950 text-white rounded-2xl sm:rounded-[2rem] border border-zinc-800 p-4 sm:p-6 md:p-8 space-y-6 relative overflow-hidden shadow-xl shadow-primary-500/5">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 blur-[50px] rounded-full pointer-events-none" />
             
             <div className="space-y-1 text-left">
@@ -815,7 +815,7 @@ export const GPACalculator: React.FC = () => {
             {/* Display relevant result based on tab selection */}
             {activeTab === 'tgpa' && (
               <div className="space-y-6">
-                <div className="flex justify-between items-end bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800/50">
+                <div className="flex justify-between items-end bg-zinc-900/60 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-zinc-800/50">
                   <div className="text-left space-y-1">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Current Term TGPA</span>
                     <div className="text-5xl font-black text-primary-500 tracking-tighter font-display">
@@ -853,7 +853,7 @@ export const GPACalculator: React.FC = () => {
                 {/* Method A Result */}
                 <div className="space-y-3">
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-zinc-500 font-mono block text-left">Method A (Semesters Combined)</span>
-                  <div className="flex justify-between items-end bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800/50">
+                  <div className="flex justify-between items-end bg-zinc-900/60 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-zinc-800/50">
                     <div className="text-left space-y-1">
                       <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Calculated CGPA</span>
                       <div className="text-5xl font-black text-emerald-500 tracking-tighter font-display">
@@ -872,7 +872,7 @@ export const GPACalculator: React.FC = () => {
                 {/* Method B Result */}
                 <div className="space-y-3 pt-2 border-t border-zinc-900">
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-zinc-500 font-mono block text-left">Method B (Quick Mix)</span>
-                  <div className="flex justify-between items-end bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800/50">
+                  <div className="flex justify-between items-end bg-zinc-900/60 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-zinc-800/50">
                     <div className="text-left space-y-1">
                       <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Estimated CGPA</span>
                       <div className="text-5xl font-black text-purple-500 tracking-tighter font-display">
@@ -903,7 +903,7 @@ export const GPACalculator: React.FC = () => {
 
             {activeTab === 'target' && (
               <div className="space-y-6">
-                <div className="flex justify-between items-end bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800/50">
+                <div className="flex justify-between items-end bg-zinc-900/60 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-zinc-800/50">
                   <div className="text-left space-y-1">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">Target CGPA Goal</span>
                     <div className="text-5xl font-black text-amber-500 tracking-tighter font-display">
@@ -951,7 +951,7 @@ export const GPACalculator: React.FC = () => {
           </div>
 
           {/* Placement Eligibility Guidelines Card */}
-          <div className="bg-white dark:bg-zinc-900/85 p-6 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 space-y-4 text-left">
+          <div className="bg-white dark:bg-zinc-900/85 p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-zinc-200/50 dark:border-zinc-800/40 space-y-4 text-left">
             <h4 className="font-bold text-zinc-900 dark:text-zinc-100 font-display text-sm uppercase tracking-wider flex items-center gap-2">
               <Compass size={16} className="text-primary-500" />
               <span>Campus Eligibility Tips</span>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Bell, Search, Filter, X, Calendar, ExternalLink, Play, 
   Image as ImageIcon, RefreshCw, Circle, Share2, 
   ArrowUpDown, Megaphone, Clock, Sparkles, Compass, 
-  Layers, CheckCircle2, AlertCircle, ChevronRight, HelpCircle
+  Layers, CheckCircle2, AlertCircle, ChevronRight, HelpCircle,
+  Sliders, BellOff
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchCSV } from '../services/csvService';
@@ -20,6 +22,133 @@ const Notifications: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<string>('');
+
+  // User notification preferences
+  const [preferences, setPreferences] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('alfa_notification_preferences');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
+  // Simulated push notification toast
+  const [testNotif, setTestNotif] = useState<{ title: string; body: string; category: string } | null>(null);
+
+  // User dismissed notifications
+  const [dismissedNotifs, setDismissedNotifs] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('alfa_dismissed_notifications');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  const dismissNotification = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDismissedNotifs(prev => {
+      const updated = [...prev, id];
+      localStorage.setItem('alfa_dismissed_notifications', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const togglePreference = (category: string) => {
+    setPreferences(prev => {
+      const updated = {
+        ...prev,
+        [category]: prev[category] === false ? true : false
+      };
+      localStorage.setItem('alfa_notification_preferences', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const triggerTestNotification = () => {
+    const templates = [
+      {
+        title: "Upcoming Midterm Examination Shift",
+        body: "The mid-semester examination for third-year classes has been rescheduled to next Monday. Please review the official portal for modified room allotments.",
+        category: "Academic / Exams"
+      },
+      {
+        title: "Annual Tech Fest Registration Open",
+        body: "Registration for the annual campus hackathon is now open! Prizes up to $5,000. Team registration closes on Friday.",
+        category: "Events"
+      },
+      {
+        title: "Microsoft Placement Drive 2026",
+        body: "Microsoft recruitment coordinators are visiting campus next month for early career roles. Register your eligibility by midnight.",
+        category: "Placements"
+      }
+    ];
+    
+    const enabledCats = Object.keys(preferences).filter(cat => preferences[cat] !== false);
+    let chosen = templates[Math.floor(Math.random() * templates.length)];
+    
+    if (enabledCats.length > 0) {
+      const matching = templates.filter(t => enabledCats.some(ec => ec.toLowerCase().includes(t.category.toLowerCase().split(' ')[0])));
+      if (matching.length > 0) {
+        chosen = matching[Math.floor(Math.random() * matching.length)];
+      }
+    } else {
+      chosen = {
+        title: "All Channels Muted",
+        body: "You have muted all notification channels. Unmute at least one channel to receive campus updates!",
+        category: "Alert"
+      };
+    }
+
+    setTestNotif(chosen);
+
+    setTimeout(() => {
+      setTestNotif(prev => prev && prev.title === chosen.title ? null : prev);
+    }, 5000);
+  };
+
+  const getCategoryDetails = (cat: string) => {
+    const normalized = (cat || "").toLowerCase();
+    if (normalized.includes('urgent') || normalized.includes('important') || normalized.includes('alert')) {
+      return {
+        label: 'Urgent Alerts',
+        desc: 'Urgent notifications, system alerts, and crucial notices.',
+        colorClass: 'text-rose-500',
+        bgToggleClass: 'bg-rose-500'
+      };
+    }
+    if (normalized.includes('placement') || normalized.includes('job') || normalized.includes('career')) {
+      return {
+        label: 'Placement & Career',
+        desc: 'Recruitment drives, career workshops, and job alerts.',
+        colorClass: 'text-emerald-500',
+        bgToggleClass: 'bg-emerald-500'
+      };
+    }
+    if (normalized.includes('exam') || normalized.includes('academic') || normalized.includes('class')) {
+      return {
+        label: 'Academic Updates',
+        desc: 'Exam sheets, schedule changes, and academic policies.',
+        colorClass: 'text-sky-500',
+        bgToggleClass: 'bg-sky-500'
+      };
+    }
+    if (normalized.includes('event') || normalized.includes('club') || normalized.includes('fest')) {
+      return {
+        label: 'Events & Club News',
+        desc: 'Festivals, hackathons, club announcements, and webinars.',
+        colorClass: 'text-violet-500',
+        bgToggleClass: 'bg-violet-500'
+      };
+    }
+    return {
+      label: cat,
+      desc: `General campus updates from the ${cat} department.`,
+      colorClass: 'text-zinc-500',
+      bgToggleClass: 'bg-zinc-600'
+    };
+  };
 
   const loadData = useCallback(async (isSilent = false) => {
     if (!isSilent) setLoading(true);
@@ -40,6 +169,22 @@ const Notifications: React.FC = () => {
         })[0];
         localStorage.setItem('alfa_last_notified_id', latestInFeed.id);
       }
+
+      // Initialize preferences for newly discovered categories
+      setPreferences(prev => {
+        const updated = { ...prev };
+        let changed = false;
+        result.forEach(item => {
+          if (item.category && updated[item.category] === undefined) {
+            updated[item.category] = true;
+            changed = true;
+          }
+        });
+        if (changed) {
+          localStorage.setItem('alfa_notification_preferences', JSON.stringify(updated));
+        }
+        return updated;
+      });
     } catch (error) {
       console.error("Polling error:", error);
     } finally {
@@ -57,10 +202,22 @@ const Notifications: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [loadData]);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('alfa-modal-active', { detail: { open: !!selectedNotif } }));
+  }, [selectedNotif]);
+
   // Derived filtered & sorted data
   const processedData = useMemo(() => {
     let result = [...data];
     
+    // Filter out dismissed notifications
+    result = result.filter(item => !dismissedNotifs.includes(item.id));
+    
+    // Filter out muted categories only when viewing 'All'
+    if (selectedCategory === 'All') {
+      result = result.filter(item => preferences[item.category] !== false);
+    }
+
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
       result = result.filter(item => 
@@ -81,7 +238,7 @@ const Notifications: React.FC = () => {
     });
 
     return result;
-  }, [data, searchTerm, selectedCategory, sortOrder]);
+  }, [data, searchTerm, selectedCategory, sortOrder, preferences, dismissedNotifs]);
 
   // Group stats for Left Sidebar panel
   const categoriesList = useMemo(() => {
@@ -201,10 +358,7 @@ const Notifications: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="text-left">
-              <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Last Synced At</p>
-              <p className="text-sm font-black text-white font-mono">{lastSyncTime || 'Just now'}</p>
-            </div>
+
             <button 
               onClick={() => loadData()}
               className="p-2 hover:bg-zinc-800 rounded-xl transition-all cursor-pointer text-zinc-400 hover:text-white"
@@ -338,6 +492,7 @@ const Notifications: React.FC = () => {
                 {categoriesList.map((cat) => {
                   const isActive = selectedCategory === cat.name;
                   const theme = getCategoryTheme(cat.name);
+                  const isMuted = preferences[cat.name] === false;
                   return (
                     <button
                       key={cat.name}
@@ -348,9 +503,14 @@ const Notifications: React.FC = () => {
                           : 'bg-zinc-50/50 dark:bg-zinc-900/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border-zinc-200/50 dark:border-zinc-900/60'
                       }`}
                     >
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         <span className={`w-2 h-2 rounded-full ${theme.dot}`} />
                         <span className="truncate">{cat.name}</span>
+                        {isMuted && (
+                          <span className="shrink-0 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-rose-500/10 text-rose-500 text-[8px] uppercase tracking-wider font-extrabold">
+                            <BellOff size={8} /> Muted
+                          </span>
+                        )}
                       </div>
                       <span className={`px-2 py-0.5 rounded-md text-[10px] font-mono ${
                         isActive ? 'bg-zinc-800 dark:bg-zinc-200 text-white dark:text-zinc-900' : 'bg-zinc-200/50 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400'
@@ -377,6 +537,72 @@ const Notifications: React.FC = () => {
 
           </div>
 
+          {/* Card: Notification Preferences */}
+          <div className="rounded-[2rem] bg-white dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-900 p-6 space-y-6 shadow-sm text-left">
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                <Sliders size={18} className="text-primary-500" />
+                <span>Preferences</span>
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                Configure your notification channels. Muted channels are hidden from the general timeline.
+              </p>
+            </div>
+
+            <div className="space-y-3 pt-2">
+              {Object.keys(preferences).length > 0 ? (
+                Object.keys(preferences).map(cat => {
+                  const isEnabled = preferences[cat] !== false;
+                  const details = getCategoryDetails(cat);
+                  const theme = getCategoryTheme(cat);
+                  return (
+                    <div 
+                      key={cat} 
+                      className="flex items-center justify-between gap-4 p-3 rounded-2xl bg-zinc-50/50 dark:bg-zinc-900/30 border border-zinc-100/60 dark:border-zinc-900/60 transition-all hover:border-zinc-200 dark:hover:border-zinc-800"
+                    >
+                      <div className="space-y-1 text-left flex-grow min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-1.5 h-1.5 rounded-full ${theme.dot}`} />
+                          <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate block max-w-[150px]">{details.label}</span>
+                        </div>
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium leading-normal line-clamp-2">
+                          {details.desc}
+                        </p>
+                      </div>
+                      
+                      {/* Interactive Custom Switch */}
+                      <button
+                        onClick={() => togglePreference(cat)}
+                        className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                          isEnabled ? theme.dot.split(' ')[1] || 'bg-primary-500' : 'bg-zinc-200 dark:bg-zinc-800'
+                        }`}
+                        aria-label={`Toggle notifications for ${details.label}`}
+                      >
+                        <span
+                          className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                            isEnabled ? 'translate-x-4' : 'translate-x-0'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="text-center py-4 text-xs text-zinc-400 font-medium">
+                  Loading preferences...
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={triggerTestNotification}
+              className="w-full py-2.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-300 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              <Bell size={13} className="text-primary-500 animate-pulse" />
+              <span>Send Test Notification</span>
+            </button>
+          </div>
+
           {/* Card: Help Tip Card */}
           <div className="rounded-[2rem] bg-linear-to-br from-indigo-500/5 to-purple-500/5 border border-zinc-200/50 dark:border-zinc-900 p-6 space-y-4">
             <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
@@ -399,6 +625,22 @@ const Notifications: React.FC = () => {
               {selectedCategory === 'All' ? 'Timeline Stream' : `${selectedCategory} Notices`} ({processedData.length})
             </h3>
           </div>
+
+          {/* Alert banner if viewing a muted category */}
+          {selectedCategory !== 'All' && preferences[selectedCategory] === false && (
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-400 text-xs font-medium text-left">
+              <div className="flex items-center gap-2.5">
+                <BellOff size={16} className="text-amber-500 shrink-0" />
+                <span>You have muted notifications for <strong>{selectedCategory}</strong>. Updates in this category won't show in the "All" stream.</span>
+              </div>
+              <button 
+                onClick={() => togglePreference(selectedCategory)}
+                className="px-3.5 py-1.5 bg-amber-500 text-white dark:text-zinc-950 font-bold rounded-xl hover:bg-amber-600 transition-all cursor-pointer whitespace-nowrap active:scale-95 text-xs"
+              >
+                Unmute Channel
+              </button>
+            </div>
+          )}
 
           {loading && data.length === 0 ? (
             <div className="text-center py-20 bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-zinc-200/60 dark:border-zinc-900">
@@ -439,11 +681,21 @@ const Notifications: React.FC = () => {
                           </span>
                         </div>
 
-                        {/* Tiny hover arrow icon */}
-                        <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-zinc-400 group-hover:text-primary-500 transition-colors">
-                          <span>View Notice</span>
-                          <ChevronRight size={12} className="transition-transform group-hover:translate-x-0.5" />
-                        </span>
+                        <div className="flex items-center gap-3">
+                          {/* Dismiss Button */}
+                          <button 
+                            onClick={(e) => dismissNotification(notif.id, e)}
+                            className="p-1 hover:bg-rose-500/10 hover:text-rose-500 text-zinc-400 dark:text-zinc-500 rounded-lg transition-colors cursor-pointer"
+                            title="Dismiss notification"
+                          >
+                            <X size={14} />
+                          </button>
+                          {/* Tiny hover arrow icon */}
+                          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-zinc-400 group-hover:text-primary-500 transition-colors">
+                            <span>View Notice</span>
+                            <ChevronRight size={12} className="transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        </div>
                       </div>
 
                       <div className="flex flex-col md:flex-row gap-5 items-start">
@@ -506,115 +758,158 @@ const Notifications: React.FC = () => {
       {/* 4. Elegant Interactive Slide Drawer (Replaces plain routine modal) */}
       <AnimatePresence>
         {selectedNotif && (
-          <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
-            
-            {/* Backdrop Layer */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-zinc-950/60 backdrop-blur-sm"
-              onClick={() => setSelectedNotif(null)}
-            />
-
-            {/* Slider Drawer Panel */}
-            <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 180 }}
-              className="relative w-full max-w-lg bg-white dark:bg-zinc-950 h-full shadow-2xl border-l border-zinc-200 dark:border-zinc-800 flex flex-col justify-between"
-            >
-              
-              {/* Drawer Header */}
-              <div className="p-6 md:p-8 border-b border-zinc-100 dark:border-zinc-900 flex items-start justify-between">
-                <div className="space-y-2 max-w-[80%]">
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest font-display border ${getCategoryTheme(selectedNotif.category).bg}`}>
-                      {selectedNotif.category}
-                    </span>
-                    <span className="text-[10px] font-bold text-zinc-400 flex items-center gap-1">
-                      <Clock size={11} /> {selectedNotif.timestamp}
-                    </span>
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 font-display leading-snug">
-                    {selectedNotif.title}
-                  </h3>
-                </div>
-
-                <button 
-                  onClick={() => setSelectedNotif(null)}
-                  className="p-2.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-400 hover:text-zinc-950 dark:hover:text-white rounded-xl transition-all cursor-pointer border border-zinc-200/40 dark:border-zinc-850"
-                  aria-label="Close panel"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Drawer Scrollable Content */}
-              <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 scrollbar-thin">
+          <div key="notification-modal-portal">
+            {createPortal(
+              <div className="fixed inset-0 z-[6000] overflow-hidden flex justify-end">
                 
-                {/* Media Preview Container */}
-                {selectedNotif.media_url && selectedNotif.media_url.trim() !== "" && (
-                  <div className="rounded-2xl overflow-hidden border border-zinc-200/60 dark:border-zinc-800 bg-zinc-950 shadow-md">
-                    {isVideo(selectedNotif.media_url) ? (
-                      <video controls className="w-full aspect-video object-contain" autoPlay>
-                        <source src={selectedNotif.media_url} />
-                      </video>
-                    ) : (
-                      <img 
-                        src={selectedNotif.media_url} 
-                        alt="" 
-                        className="w-full h-auto max-h-[300px] object-cover hover:scale-101 transition-transform" 
-                      />
-                    )}
-                  </div>
-                )}
-
-                {/* Main Body Description text content */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                    <Megaphone size={13} className="text-primary-500" />
-                    <span>Notice Body Description</span>
-                  </div>
-                  
-                  <div className="bg-zinc-50 dark:bg-zinc-900/40 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-900/60">
-                    <p className="text-zinc-800 dark:text-zinc-200 leading-relaxed text-sm md:text-base whitespace-pre-line font-medium">
-                      {selectedNotif.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Additional Info Block */}
-                <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900 space-y-2">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 dark:text-zinc-500">Notice Integrity Check</span>
-                  <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-                    <CheckCircle2 size={14} className="text-green-500" />
-                    <span>Verifiable source (ALFA community cloud synchronization)</span>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Drawer Footer controls */}
-              <div className="p-6 md:p-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-900/80 flex items-center gap-4">
-                <button 
-                  onClick={(e) => handleShare(selectedNotif, e)}
-                  className="flex-1 py-3 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-xs font-extrabold transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <Share2 size={14} />
-                  <span>Copy or Share</span>
-                </button>
-                <button 
+                {/* Backdrop Layer */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-zinc-950/60 backdrop-blur-sm z-0"
                   onClick={() => setSelectedNotif(null)}
-                  className="flex-1 py-3 bg-zinc-950 dark:bg-zinc-100 hover:bg-zinc-900 dark:hover:bg-white text-white dark:text-zinc-950 rounded-2xl text-xs font-extrabold transition-all shadow-md cursor-pointer"
-                >
-                  Close Notice
-                </button>
-              </div>
+                />
 
-            </motion.div>
+                {/* Slider Drawer Panel */}
+                <motion.div 
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "100%" }}
+                  transition={{ type: "spring", damping: 25, stiffness: 180 }}
+                  className="relative w-full max-w-lg bg-white dark:bg-zinc-950 h-full shadow-2xl border-l border-zinc-200 dark:border-zinc-800 flex flex-col justify-between z-10"
+                >
+                  
+                  {/* Drawer Header */}
+                  <div className="p-6 md:p-8 border-b border-zinc-100 dark:border-zinc-900 flex items-start justify-between">
+                    <div className="space-y-2 max-w-[80%]">
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest font-display border ${getCategoryTheme(selectedNotif.category).bg}`}>
+                          {selectedNotif.category}
+                        </span>
+                        <span className="text-[10px] font-bold text-zinc-400 flex items-center gap-1">
+                          <Clock size={11} /> {selectedNotif.timestamp}
+                        </span>
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 font-display leading-snug">
+                        {selectedNotif.title}
+                      </h3>
+                    </div>
+
+                    <button 
+                      onClick={() => setSelectedNotif(null)}
+                      className="p-2.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-400 hover:text-zinc-950 dark:hover:text-white rounded-xl transition-all cursor-pointer border border-zinc-200/40 dark:border-zinc-850"
+                      aria-label="Close panel"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  {/* Drawer Scrollable Content */}
+                  <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 scrollbar-thin">
+                    
+                    {/* Media Preview Container */}
+                    {selectedNotif.media_url && selectedNotif.media_url.trim() !== "" && (
+                      <div className="rounded-2xl overflow-hidden border border-zinc-200/60 dark:border-zinc-800 bg-zinc-950 shadow-md">
+                        {isVideo(selectedNotif.media_url) ? (
+                          <video controls className="w-full aspect-video object-contain" autoPlay>
+                            <source src={selectedNotif.media_url} />
+                          </video>
+                        ) : (
+                          <img 
+                            src={selectedNotif.media_url} 
+                            alt="" 
+                            className="w-full h-auto max-h-[300px] object-cover hover:scale-101 transition-transform" 
+                          />
+                        )}
+                      </div>
+                    )}
+
+                    {/* Main Body Description text content */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+                        <Megaphone size={13} className="text-primary-500" />
+                        <span>Notice Body Description</span>
+                      </div>
+                      
+                      <div className="bg-zinc-50 dark:bg-zinc-900/40 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-900/60">
+                        <p className="text-zinc-800 dark:text-zinc-200 leading-relaxed text-sm md:text-base whitespace-pre-line font-medium">
+                          {selectedNotif.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Additional Info Block */}
+                    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900 space-y-2">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 dark:text-zinc-500">Notice Integrity Check</span>
+                      <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                        <CheckCircle2 size={14} className="text-green-500" />
+                        <span>Verifiable source (ALFA community cloud synchronization)</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Drawer Footer controls */}
+                  <div className="p-6 md:p-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-900/80 flex items-center gap-4">
+                    <button 
+                      onClick={(e) => handleShare(selectedNotif, e)}
+                      className="flex-1 py-3 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-xs font-extrabold transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <Share2 size={14} />
+                      <span>Copy or Share</span>
+                    </button>
+                    <button 
+                      onClick={() => setSelectedNotif(null)}
+                      className="flex-1 py-3 bg-zinc-950 dark:bg-zinc-100 hover:bg-zinc-900 dark:hover:bg-white text-white dark:text-zinc-950 rounded-2xl text-xs font-extrabold transition-all shadow-md cursor-pointer"
+                    >
+                      Close Notice
+                    </button>
+                  </div>
+
+                </motion.div>
+              </div>,
+              document.body
+            )}
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Simulated Push Notification Banner Popup */}
+      <AnimatePresence>
+        {testNotif && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="fixed top-6 right-6 z-[6000] w-full max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 flex gap-3.5 items-start overflow-hidden text-left"
+          >
+            <div className="p-2 bg-indigo-500/10 text-indigo-500 rounded-xl shrink-0">
+              <Bell size={18} className="animate-bounce" />
+            </div>
+            
+            <div className="flex-grow space-y-1 pr-6 min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest border ${getCategoryTheme(testNotif.category).bg}`}>
+                  {testNotif.category}
+                </span>
+                <span className="text-[9px] font-bold text-zinc-400 font-mono">Simulation</span>
+              </div>
+              <h5 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 leading-snug truncate">
+                {testNotif.title}
+              </h5>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-normal line-clamp-2 font-medium">
+                {testNotif.body}
+              </p>
+            </div>
+
+            <button 
+              onClick={() => setTestNotif(null)}
+              className="absolute top-3 right-3 p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 rounded-lg cursor-pointer"
+            >
+              <X size={14} />
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 

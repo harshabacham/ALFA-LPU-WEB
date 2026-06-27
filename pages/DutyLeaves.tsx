@@ -129,17 +129,7 @@ const DutyLeaves: React.FC = () => {
             </p>
           </div>
 
-          {/* Mini Statistics cards inside Hero banner */}
-          <div className="flex items-center gap-4 shrink-0 bg-zinc-900/40 backdrop-blur-md p-4 rounded-3xl border border-zinc-800/80">
-            <div className="text-left px-2 border-r border-zinc-800">
-              <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Total DLs</p>
-              <p className="text-2xl font-black text-white font-display">{totalDLCount}</p>
-            </div>
-            <div className="text-left px-2">
-              <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Hours Saved</p>
-              <p className="text-2xl font-black text-primary-400 font-display">~{totalSavedHours} hrs</p>
-            </div>
-          </div>
+
         </div>
       </div>
 

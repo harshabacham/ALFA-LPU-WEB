@@ -371,28 +371,6 @@ const Clubs: React.FC = () => {
                         <p className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 truncate">{club.meeting_times || 'Announced via Group'}</p>
                       </div>
                     </div>
-
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="p-1.5 bg-zinc-50 dark:bg-zinc-900 rounded-lg text-zinc-400 dark:text-zinc-500 shrink-0">
-                          <Mail size={12} />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400">Contact Point</p>
-                          <p className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 truncate">{club.contact_info || 'Registration Form'}</p>
-                        </div>
-                      </div>
-                      
-                      {club.contact_info && club.contact_info !== '-' && (
-                        <button 
-                          onClick={() => copyToClipboard(club.contact_info, club.id)}
-                          className="p-1.5 text-zinc-400 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors shrink-0"
-                          title="Copy Contact Info"
-                        >
-                          {isCopied ? <Check size={11} className="text-emerald-500" /> : <Copy size={11} />}
-                        </button>
-                      )}
-                    </div>
                   </div>
 
                 </div>

@@ -148,13 +148,13 @@ const Home: React.FC = () => {
 
               <div className="space-y-4">
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 font-display leading-tight">
-                  Navigate Campus Life <br className="hidden sm:inline" />
+                  Your LPU Campus Life, <br className="hidden sm:inline" />
                   <PointerHighlight
                     rectangleClassName="bg-neutral-200 dark:bg-neutral-700 border-neutral-300 dark:border-neutral-600"
                     pointerClassName="text-yellow-500"
                     containerClassName="inline-block relative"
                   >
-                    <span className="text-primary-500">Like a Pro.</span>
+                    <span className="text-primary-500">Simplified.</span>
                   </PointerHighlight>
                 </h1>
                 
@@ -180,7 +180,7 @@ const Home: React.FC = () => {
                   rel="noopener noreferrer" 
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-sand-200 text-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 hover:bg-sand-300 dark:hover:bg-zinc-800 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 font-display border border-sand-300 dark:border-zinc-800"
                 >
-                  <Download size={15} /> Download Offical App
+                  <Download size={15} /> Download Official App
                 </a>
               </div>
 

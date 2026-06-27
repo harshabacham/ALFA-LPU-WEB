@@ -14,6 +14,8 @@ import Notes from './pages/Notes';
 import SubjectNotes from './pages/SubjectNotes';
 import FreeCourses from './pages/FreeCourses';
 import Deals from './pages/Deals';
+import AddDeal from './pages/AddDeal';
+import Login from './pages/Login';
 import AITools from './pages/AITools';
 import Emergency from './pages/Emergency';
 import YouTubeChannels from './pages/YouTubeChannels';
@@ -38,6 +40,8 @@ const App: React.FC = () => {
         <Route path="/notes/:subjectName" element={<SubjectNotes />} />
         <Route path="/courses" element={<FreeCourses />} />
         <Route path="/deals" element={<Deals />} />
+        <Route path="/deals/add" element={<AddDeal />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/ai-tools" element={<AITools />} />
         <Route path="/youtube" element={<YouTubeChannels />} />
         <Route path="/emergency" element={<Emergency />} />

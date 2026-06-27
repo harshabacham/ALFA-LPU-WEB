@@ -477,7 +477,7 @@ const PGRooms: React.FC = () => {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: Math.min(idx * 0.04, 0.3) }}
-                  key={pg.name}
+                  key={`${pg.name}-${idx}`}
                   onClick={() => navigate(`/pg-rooms/${data.indexOf(pg)}`)}
                   className="group cursor-pointer flex flex-col space-y-3 min-w-0 text-left"
                 >

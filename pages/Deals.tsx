@@ -1,10 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Tag, Search, Filter, MapPin, ShoppingBag, Star, Mail, Phone, ChevronRight, Sparkles, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Tag, Search, Filter, MapPin, ShoppingBag, Star, Mail, Phone, ChevronRight, Sparkles, Zap, Plus, X, Lock, LogOut, CheckCircle2, Globe, ArrowRight, AlertCircle, ExternalLink, ShieldCheck, Copy } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Deal } from '../types';
+import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from '../services/firebase';
+import { User } from '../services/firebase';
+
+const DEFAULT_IMAGES = [
+  {
+    name: 'Textbooks',
+    url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    name: 'Gadgets',
+    url: 'https://images.unsplash.com/photo-1468495244123-6c6c332eeece?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    name: 'Cycles & Transport',
+    url: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    name: 'Calculators',
+    url: 'https://images.unsplash.com/photo-1518133680790-3985ea46d4a5?auto=format&fit=crop&q=80&w=600',
+  },
+  {
+    name: 'Essentials & Furniture',
+    url: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=600',
+  }
+];
 
 const Deals: React.FC = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<Deal[]>([]);
   const [filteredData, setFilteredData] = useState<Deal[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,16 +39,37 @@ const Deals: React.FC = () => {
   const [selectedCondition, setSelectedCondition] = useState('All');
   const [loading, setLoading] = useState(true);
 
+  // Authentication and Form State
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  // Track Firebase Auth State
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Load CSV and local Deals
   useEffect(() => {
     const load = async () => {
-      const result = await fetchCSV<Deal>(CSV_URLS.DEALS);
-      setData(result);
-      setFilteredData(result);
-      setLoading(false);
+      try {
+        const result = await fetchCSV<Deal>(CSV_URLS.DEALS);
+        const localDealsStr = localStorage.getItem('alfa_local_deals');
+        const localDeals: Deal[] = localDealsStr ? JSON.parse(localDealsStr) : [];
+        const combined = [...localDeals, ...result];
+        setData(combined);
+        setFilteredData(combined);
+      } catch (err) {
+        console.error('Error loading deals:', err);
+      } finally {
+        setLoading(false);
+      }
     };
     load();
   }, []);
 
+  // Filtering Logic
   useEffect(() => {
     let result = data;
     if (searchTerm) {
@@ -54,9 +102,23 @@ const Deals: React.FC = () => {
     return `https://wa.me/${cleaned}?text=${message}`;
   };
 
+  const handleAddClick = () => {
+    navigate('/deals/add');
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error("Sign out error:", err);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 text-left">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+      
+      {/* Top Banner & Header Section */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-6 border-b border-zinc-200/40 dark:border-zinc-800/40">
         <div className="space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-[10px] font-bold uppercase tracking-wider font-display">
             <Sparkles size={12} className="text-accent-500" /> Marketplace Hub
@@ -68,37 +130,75 @@ const Deals: React.FC = () => {
             Exclusively curated community marketplace. Buy and sell textbooks, gadgets, and campus essentials safely.
           </p>
         </div>
-        
-        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <div className="relative flex-grow">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
-            <input 
-              type="text" 
-              placeholder="What are you looking for?" 
-              className="pl-11 pr-4 py-3.5 w-full md:w-64 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all shadow-sm font-medium text-sm"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2">
-            <select 
-              className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-            </select>
-            <select 
-              className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider"
-              value={selectedCondition}
-              onChange={(e) => setSelectedCondition(e.target.value)}
-            >
-              {conditions.map(cond => <option key={cond} value={cond}>{cond}</option>)}
-            </select>
-          </div>
+
+        {/* Action Controls Side */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+          {/* User profile details if authenticated */}
+          {currentUser && (
+            <div className="flex items-center gap-2 bg-white dark:bg-zinc-900 p-2 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50 shadow-sm mr-2 shrink-0">
+              {currentUser.photoURL ? (
+                <img src={currentUser.photoURL} alt={currentUser.displayName || ''} className="w-8 h-8 rounded-full border border-zinc-200" referrerPolicy="no-referrer" />
+              ) : (
+                <div className="w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                  {currentUser.displayName?.charAt(0) || 'U'}
+                </div>
+              )}
+              <div className="hidden md:block text-left pr-2">
+                <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider font-display leading-none">Seller Profile</p>
+                <p className="text-xs font-bold text-zinc-700 dark:text-zinc-200 truncate max-w-[120px]">{currentUser.displayName}</p>
+              </div>
+              <button 
+                onClick={handleSignOut}
+                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 hover:text-rose-500 rounded-lg transition-colors cursor-pointer"
+                title="Sign Out"
+              >
+                <LogOut size={14} />
+              </button>
+            </div>
+          )}
+
+          {/* Primary CTA - Add Your Item Option */}
+          <button
+            onClick={handleAddClick}
+            className="flex items-center justify-center gap-2 px-5 py-3.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-md shadow-primary-500/10 transition-all active:scale-95 cursor-pointer font-display shrink-0"
+          >
+            <Plus size={16} />
+            <span>Add Your Item</span>
+          </button>
         </div>
       </div>
 
+      {/* Filter and Search Bar Section */}
+      <div className="flex flex-col sm:flex-row gap-3 w-full">
+        <div className="relative flex-grow">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
+          <input 
+            type="text" 
+            placeholder="What are you looking for?" 
+            className="pl-11 pr-4 py-3.5 w-full rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all shadow-sm font-medium text-sm text-zinc-800 dark:text-zinc-100"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-2">
+          <select 
+            className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+          <select 
+            className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200"
+            value={selectedCondition}
+            onChange={(e) => setSelectedCondition(e.target.value)}
+          >
+            {conditions.map(cond => <option key={cond} value={cond}>{cond}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {/* Deals Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-24">
         {loading ? (
           <div className="col-span-full py-40 text-center">
@@ -167,6 +267,7 @@ const Deals: React.FC = () => {
           </div>
         )}
       </div>
+
     </div>
   );
 };

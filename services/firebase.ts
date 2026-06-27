@@ -8,13 +8,13 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase
  * Connected to: alfa-lpu
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyB_ZrbBhBV934mZZRtSGCrK9iOtOt1J92U",
+  apiKey: "AIzaSyBFEvc6gpWXf6QnBAlmrYXS6EIkdMopqPA",
   authDomain: "alfa-lpu.firebaseapp.com",
   projectId: "alfa-lpu",
   storageBucket: "alfa-lpu.firebasestorage.app",
   messagingSenderId: "782878893322",
-  appId: "1:782878893322:web:74331553ebab20938a06f3",
-  measurementId: "G-7Y29JJ04J9"
+  appId: "1:782878893322:web:022ef756098f28d98a06f3",
+  measurementId: "G-ZQYYCFW8S2"
 };
 
 // Initialize Firebase

@@ -222,13 +222,13 @@ const Bookmarks: React.FC = () => {
         {activeTab === 'pgs' && (
           filteredPGs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredPGs.map((bp) => {
+              {filteredPGs.map((bp, idx) => {
                 const images = String(bp.item.image_urls || "").split(/[\n,\s]+/).map(u => u.trim()).filter(u => u.length > 10);
                 const firstImg = getDirectImageUrl(images[0]);
 
                 return (
                   <div 
-                    key={bp.item.name}
+                    key={`${bp.item.name}-${idx}`}
                     className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group h-full"
                   >
                     {/* Image */}

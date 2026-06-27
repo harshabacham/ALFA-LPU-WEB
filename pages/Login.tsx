@@ -18,7 +18,9 @@ const Login: React.FC = () => {
     setErrorCode(null);
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate('/');
+      const searchParams = new URLSearchParams(window.location.search);
+      const redirectPath = searchParams.get('redirect') || '/';
+      navigate(redirectPath);
     } catch (err: any) {
       console.error("Login Error:", err);
       setErrorCode(err.code);

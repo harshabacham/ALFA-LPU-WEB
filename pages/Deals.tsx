@@ -103,6 +103,7 @@ function doPost(e) {
           sheet.getRange(rowNum, 10).setValue(data.location || "Campus");
           sheet.getRange(rowNum, 11).setValue(data.condition || "");
           sheet.getRange(rowNum, 12).setValue(data.seller_name || "");
+          sheet.getRange(rowNum, 13).setValue(data.seller_email || "");
           
           return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Deal updated successfully!" }))
             .setMimeType(ContentService.MimeType.JSON)
@@ -124,7 +125,8 @@ function doPost(e) {
       data.rating || "5.0",
       data.location || "Campus",
       data.condition || "",
-      data.seller_name || ""
+      data.seller_name || "",
+      data.seller_email || ""
     ]);
     
     return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Deal synced!" }))
@@ -157,7 +159,8 @@ function doGet(e) {
       "5.0",
       params.location || "Campus",
       params.condition || "",
-      params.seller_name || ""
+      params.seller_name || "",
+      params.seller_email || ""
     ]);
     
     return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Deal synced!" }))
@@ -348,8 +351,9 @@ const Deals: React.FC = () => {
           editedDeals[cleanId(k)] = editedDealsRaw[k];
         });
 
-        // Combine local additions and sheet results
-        const rawCombined = [...localDeals, ...result];
+        // Combine local additions and sheet results in reverse order (newest from sheet first)
+        const reversedResult = [...result].reverse();
+        const rawCombined = [...localDeals, ...reversedResult];
         const seenIds = new Set<string>();
         const combined: Deal[] = [];
 
@@ -663,10 +667,13 @@ const Deals: React.FC = () => {
           </div>
         ) : filteredData.length > 0 ? (
           filteredData.map((deal, idx) => {
-            const isOwner = !!(currentUser && (
-              (deal.seller_name && currentUser.displayName && deal.seller_name.trim().toLowerCase() === currentUser.displayName.trim().toLowerCase()) ||
-              (deal.id && deal.id.toString().startsWith('local-deal-'))
-            ));
+            const isOwner = !!(
+              currentUser &&
+              (
+                (deal.seller_email && currentUser.email && deal.seller_email.trim().toLowerCase() === currentUser.email.trim().toLowerCase()) ||
+                (!deal.seller_email && deal.seller_name && currentUser.displayName && deal.seller_name.trim().toLowerCase() === currentUser.displayName.trim().toLowerCase())
+              )
+            );
             return (
               <div key={`${deal.id || 'deal'}-${idx}`} className="group bg-sand-50 dark:bg-zinc-900/40 rounded-2xl overflow-hidden border border-zinc-200/50 dark:border-zinc-800/40 hover:shadow-md hover:border-primary-500/20 hover:scale-[1.02] transition-all duration-350 flex flex-col text-left">
                 <div className="relative h-40 md:h-48 overflow-hidden bg-zinc-50 dark:bg-zinc-950">

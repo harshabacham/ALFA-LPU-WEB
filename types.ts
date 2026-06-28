@@ -88,6 +88,7 @@ export interface Deal {
   location: string;
   condition: string;
   seller_name: string;
+  seller_email?: string;
 }
 
 export interface AITool {

@@ -178,6 +178,7 @@ const AddDeal: React.FC = () => {
       location: formData.location || "Campus",
       condition: formData.condition,
       seller_name: currentUser?.displayName || "Student Seller",
+      seller_email: currentUser?.email || "",
     };
 
     // Save to local storage for persistence

@@ -748,16 +748,6 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
                 </div>
               )}
             </motion.div>
-
-            {/* Minimalist Fixed Footer */}
-            <div className="p-6 border-t border-zinc-100 dark:border-zinc-900 shrink-0">
-              <div className="flex items-center justify-between text-[8px] font-bold text-zinc-400 dark:text-zinc-600 uppercase tracking-widest font-mono">
-                <span>ALFA STUDENT PORTAL</span>
-                <Link to="/privacy" onClick={() => setIsOverlayOpen(false)} className="hover:text-primary-500 transition-colors">
-                  Privacy
-                </Link>
-              </div>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

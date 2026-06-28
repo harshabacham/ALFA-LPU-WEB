@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FloatingNav } from './ui/floating-navbar';
-import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -37,7 +36,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex-grow pt-24 md:pt-28 pb-16 w-full overflow-x-hidden max-w-full">
           {children}
         </div>
-        {location.pathname === '/' && <Footer />}
       </main>
     </div>
   );

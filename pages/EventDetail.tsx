@@ -10,6 +10,7 @@ import { CSV_URLS } from '../constants';
 import { Event } from '../types';
 import { useBookmarks } from '../lib/bookmarks';
 import { motion } from 'framer-motion';
+import { WarningGraphic } from '../components/ui/warning-graphic';
 
 const EventDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,19 +49,26 @@ const EventDetail: React.FC = () => {
   );
 
   if (!event) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-6 text-center">
-       <div className="w-16 h-16 rounded-3xl bg-red-500/10 text-red-500 flex items-center justify-center mb-5 border border-red-500/20">
-         <Info size={28} />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-6 text-center space-y-6">
+       <div className="bg-zinc-150/50 dark:bg-zinc-900/30 border border-zinc-200/50 dark:border-zinc-800/40 p-6 rounded-[2rem] shadow-sm backdrop-blur-md">
+         <WarningGraphic 
+           width={260} 
+           height={85} 
+           color="#fe7f2d"
+           enableAnimations={true}
+         />
        </div>
-       <h1 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight font-display">
-         Event Not Found
-       </h1>
-       <p className="text-zinc-500 dark:text-zinc-400 text-xs mt-2 mb-6 max-w-sm font-medium">
-         The campus event you are seeking does not exist or has completed.
-       </p>
+       <div className="space-y-2">
+         <h1 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight font-display">
+           Event Not Found
+         </h1>
+         <p className="text-zinc-500 dark:text-zinc-400 text-xs max-w-sm font-medium">
+           The campus event you are seeking does not exist or has completed.
+         </p>
+       </div>
        <button 
          onClick={() => navigate('/events')} 
-         className="px-6 py-3 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer"
+         className="px-6 py-3 bg-[#fe7f2d] hover:bg-[#ee6517] text-white rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer"
        >
          Return to Events Hub
        </button>

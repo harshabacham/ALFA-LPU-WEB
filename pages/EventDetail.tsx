@@ -145,7 +145,7 @@ const EventDetail: React.FC = () => {
               <div className="p-1">
                 <div className="aspect-[21/9] w-full rounded-[2.2rem] overflow-hidden bg-zinc-950 relative">
                   <img 
-                    src={event.image_url} 
+                    src={event.image_url || null} 
                     alt={event.title} 
                     className="w-full h-full object-cover"
                     onError={(e) => {

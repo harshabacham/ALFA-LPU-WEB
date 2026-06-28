@@ -259,7 +259,7 @@ const Events: React.FC = () => {
           {/* Banner Poster Column */}
           <div className="relative w-full lg:w-[380px] aspect-[4/3] lg:aspect-[4/5] rounded-2xl overflow-hidden bg-white/50 dark:bg-zinc-950/40 z-10 shrink-0 border border-primary-100/50 dark:border-zinc-800/30">
             <img 
-              src={spotlightEvent.image_url} 
+              src={spotlightEvent.image_url || null} 
               alt={spotlightEvent.title}
               onError={(e) => (e.currentTarget.src = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800")}
               className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
@@ -514,7 +514,7 @@ const Events: React.FC = () => {
                         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] bg-zinc-100 dark:bg-zinc-800 shrink-0">
                           <img
                             loading="lazy"
-                            src={event.image_url}
+                            src={event.image_url || null}
                             alt={event.title}
                             onError={(e) => (e.currentTarget.src = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800")}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -627,7 +627,7 @@ const Events: React.FC = () => {
                       <div className="flex items-center gap-4 w-full md:w-auto min-w-0">
                         <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-zinc-100 shrink-0">
                           <img 
-                            src={event.image_url} 
+                            src={event.image_url || null} 
                             alt={event.title} 
                             onError={(e) => (e.currentTarget.src = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800")}
                             className="w-full h-full object-cover"

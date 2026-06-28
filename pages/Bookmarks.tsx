@@ -149,7 +149,7 @@ const Bookmarks: React.FC = () => {
                   {/* Poster Image */}
                   <div className="relative aspect-[16/10] w-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
                     <img 
-                      src={be.item.image_url} 
+                      src={be.item.image_url || null} 
                       alt={be.item.title} 
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
                     />
@@ -234,7 +234,7 @@ const Bookmarks: React.FC = () => {
                     {/* Image */}
                     <div className="relative aspect-square w-full bg-gray-50 dark:bg-gray-900 overflow-hidden">
                       <img 
-                        src={firstImg} 
+                        src={firstImg || null} 
                         alt={bp.item.name} 
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
                         onError={(e) => (e.currentTarget.src = 'https://images.unsplash.com/photo-1522770179533-24471fcdba45?w=800')}

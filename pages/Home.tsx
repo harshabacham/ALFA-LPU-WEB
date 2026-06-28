@@ -402,7 +402,7 @@ const Home: React.FC = () => {
                         }`}
                       >
                         <Link to={`/events/${idx}`} className="block w-full h-full relative group/img overflow-hidden">
-                          <img src={event.image_url} alt={event.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover/img:scale-105" />
+                          <img src={event.image_url || null} alt={event.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover/img:scale-105" />
                           {/* Smooth vignette overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                         </Link>
@@ -827,7 +827,7 @@ const Home: React.FC = () => {
                     </video>
                   ) : (
                     <img 
-                      src={selectedNotif.media_url} 
+                      src={selectedNotif.media_url || null} 
                       alt="" 
                       className="w-full h-auto max-h-[40vh] object-contain mx-auto" 
                     />

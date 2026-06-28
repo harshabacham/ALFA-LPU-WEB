@@ -384,7 +384,7 @@ const Notifications: React.FC = () => {
             {spotlightNotif.media_url ? (
               <div className="lg:col-span-4 relative aspect-[16/10] sm:aspect-video lg:aspect-square w-full rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-950">
                 <img 
-                  src={spotlightNotif.media_url} 
+                  src={spotlightNotif.media_url || null} 
                   alt={spotlightNotif.title} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                 />
@@ -702,7 +702,7 @@ const Notifications: React.FC = () => {
                         {notif.media_url && (
                           <div className="w-full md:w-32 h-20 shrink-0 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 relative">
                             <img 
-                              src={notif.media_url} 
+                              src={notif.media_url || null} 
                               alt="" 
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                             />
@@ -817,7 +817,7 @@ const Notifications: React.FC = () => {
                           </video>
                         ) : (
                           <img 
-                            src={selectedNotif.media_url} 
+                            src={selectedNotif.media_url || null} 
                             alt="" 
                             className="w-full h-auto max-h-[300px] object-cover hover:scale-101 transition-transform" 
                           />

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { 
   ShoppingBag, ArrowLeft, Sparkles, MapPin, Plus, Lock, 
   ExternalLink, ShieldCheck, AlertCircle, Copy, CheckCircle2, 
-  Check, Info, Package, DollarSign, Phone, TextQuote, Tag
+  Check, Info, Package, DollarSign, Phone, TextQuote, Tag,
+  UploadCloud, Loader2, Trash2
 } from 'lucide-react';
 import { auth, googleProvider, signInWithPopup, onAuthStateChanged } from '../services/firebase';
 import { User } from '../services/firebase';
@@ -44,6 +45,12 @@ const AddDeal: React.FC = () => {
   const [copiedDomain, setCopiedDomain] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Submitting and syncing state
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatusText, setSubmitStatusText] = useState('Saving listing...');
+
+  const globalSubmitApi = import.meta.env.VITE_DEALS_SUBMIT_API || localStorage.getItem('alfa_deals_submit_api') || 'https://script.google.com/macros/s/AKfycby-c7QxbvujL1YKXnzgREA1Ra6dGjhD4_mmO1_vRQzeXQzhTm4J8ky_MoFMKOxw5yCEiA/exec';
+
   // Form Fields
   const [formData, setFormData] = useState({
     title: '',
@@ -58,6 +65,60 @@ const AddDeal: React.FC = () => {
   });
 
   const currentDomain = window.location.hostname;
+
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const handleImageUpload = async (file: File) => {
+    if (!file) return;
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setUploadError("Please select a valid image file.");
+      return;
+    }
+    
+    // Validate file size (10MB limit for ImgBB)
+    if (file.size > 10 * 1024 * 1024) {
+      setUploadError("Image size must be less than 10MB.");
+      return;
+    }
+
+    setUploading(true);
+    setUploadError(null);
+
+    try {
+      const body = new FormData();
+      body.append('image', file);
+      body.append('key', '070a49d17706829a493c0eee083502a6');
+
+      const response = await fetch('https://api.imgbb.com/1/upload', {
+        method: 'POST',
+        body: body,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Upload failed with status ${response.status}`);
+      }
+
+      const resData = await response.json();
+      if (resData && resData.success && resData.data && resData.data.url) {
+        const uploadedUrl = resData.data.url;
+        setFormData(prev => ({
+          ...prev,
+          imageUrl: uploadedUrl,
+          selectedImageTemplate: ''
+        }));
+      } else {
+        throw new Error(resData?.error?.message || "Invalid response from ImgBB");
+      }
+    } catch (err: any) {
+      console.error("ImgBB upload error:", err);
+      setUploadError(err.message || "Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const copyDomain = () => {
     navigator.clipboard.writeText(currentDomain);
@@ -94,12 +155,15 @@ const AddDeal: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.price || !formData.contact || !formData.description) {
       alert("Please fill in all required fields.");
       return;
     }
+
+    setIsSubmitting(true);
+    setSubmitStatusText("Saving listing locally...");
 
     const newDeal: Deal = {
       id: `local-deal-${Date.now()}`,
@@ -122,11 +186,43 @@ const AddDeal: React.FC = () => {
     const updatedLocal = [newDeal, ...localDeals];
     localStorage.setItem('alfa_local_deals', JSON.stringify(updatedLocal));
 
+    // Post to Google Sheets if API is configured
+    if (globalSubmitApi) {
+      setSubmitStatusText("Syncing deal with Google Sheets...");
+      try {
+        await fetch(globalSubmitApi, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newDeal)
+        });
+        console.log("Successfully appended row to Google Sheet.");
+      } catch (err) {
+        console.error("Error submitting to Google Sheet Web App:", err);
+      }
+    }
+
+    setIsSubmitting(false);
     setIsSubmitted(true);
     setTimeout(() => {
       navigate('/deals');
-    }, 2000);
+    }, 2500);
   };
+
+  // If currently saving/submitting, show loading state
+  if (isSubmitting) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto space-y-6">
+        <div className="animate-spin w-14 h-14 border-4 border-primary-500 border-t-transparent rounded-full"></div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-black text-zinc-950 dark:text-white font-display uppercase tracking-tight">Publishing Listing</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold animate-pulse">{submitStatusText}</p>
+        </div>
+      </div>
+    );
+  }
 
   // If newly submitted, show success state
   if (isSubmitted) {
@@ -270,6 +366,21 @@ const AddDeal: React.FC = () => {
             Fill in your product specifications carefully. LPU community members will find your details and initiate trade through WhatsApp securely.
           </p>
         </div>
+
+        {/* Sync Indicator Banner */}
+        {!globalSubmitApi && (
+          <div className="mx-6 md:mx-10 mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex gap-3 text-left">
+              <Info size={18} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-wider text-amber-800 dark:text-amber-400 font-display">Local Mode Active</h4>
+                <p className="text-[11px] text-amber-700 dark:text-zinc-400 font-semibold leading-relaxed font-sans">
+                  This deal will only be saved in your local browser storage. To share with the whole LPU campus, please connect your Google Sheets sync webhook on the Marketplace main page!
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-6">
@@ -421,9 +532,95 @@ const AddDeal: React.FC = () => {
               <ShoppingBag size={14} /> Product Image
             </h3>
 
+            {/* Upload Area */}
+            <div className="space-y-2.5">
+              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block font-display">Upload Product Photo</label>
+              
+              <div 
+                className={`relative border-2 border-dashed rounded-2xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-pointer ${
+                  uploading ? 'bg-zinc-50 dark:bg-zinc-900/30 border-primary-400 animate-pulse' :
+                  formData.imageUrl && !formData.selectedImageTemplate ? 'bg-emerald-500/5 border-emerald-500/40' :
+                  'bg-sand-50/20 dark:bg-zinc-950/20 border-zinc-200 dark:border-zinc-800 hover:border-primary-500/40 hover:bg-sand-50/45'
+                }`}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    handleImageUpload(e.dataTransfer.files[0]);
+                  }
+                }}
+                onClick={() => {
+                  const input = document.getElementById('image-upload-input');
+                  if (input) input.click();
+                }}
+              >
+                <input 
+                  type="file" 
+                  id="image-upload-input" 
+                  className="hidden" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      handleImageUpload(e.target.files[0]);
+                    }
+                  }}
+                />
+
+                {uploading ? (
+                  <div className="space-y-3 py-4">
+                    <Loader2 className="w-8 h-8 text-primary-500 animate-spin mx-auto" />
+                    <p className="text-xs font-bold text-zinc-600 dark:text-zinc-300">Uploading to ImgBB...</p>
+                  </div>
+                ) : formData.imageUrl && !formData.selectedImageTemplate ? (
+                  <div className="space-y-4 w-full flex flex-col items-center">
+                    <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-emerald-500/30 shadow-sm">
+                      <img referrerPolicy="no-referrer" src={formData.imageUrl} alt="Uploaded preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFormData(prev => ({ ...prev, imageUrl: '', selectedImageTemplate: DEFAULT_IMAGES[0].url }));
+                        }}
+                        className="absolute top-1 right-1 p-1 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition-colors shadow"
+                        title="Remove image"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1">
+                        <CheckCircle2 size={14} /> Image Uploaded Successfully!
+                      </p>
+                      <p className="text-[10px] text-zinc-400 font-semibold truncate max-w-xs">{formData.imageUrl}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-2 py-2">
+                    <UploadCloud className="w-8 h-8 text-zinc-400 dark:text-zinc-500 mx-auto transition-transform hover:scale-110" />
+                    <div className="space-y-1">
+                      <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                        Drag and drop your image, or <span className="text-primary-600 dark:text-primary-400 underline">browse</span>
+                      </p>
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-semibold">Supports PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {uploadError && (
+                <p className="text-[10.5px] text-rose-500 font-bold flex items-center gap-1 bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20">
+                  <AlertCircle size={14} /> {uploadError}
+                </p>
+              )}
+            </div>
+
             {/* Presets */}
             <div className="space-y-2.5">
-              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block font-display">Choose High-Resolution Cover Preset</label>
+              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block font-display">Or Choose High-Resolution Cover Preset</label>
               
               <div className="grid grid-cols-5 gap-3">
                 {DEFAULT_IMAGES.map((img) => {
@@ -437,7 +634,7 @@ const AddDeal: React.FC = () => {
                         isSelected ? 'border-primary-500 scale-95 ring-4 ring-primary-500/15' : 'border-zinc-200 dark:border-zinc-800/80 opacity-60 hover:opacity-90'
                       }`}
                     >
-                      <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
+                      <img referrerPolicy="no-referrer" src={img.url} alt={img.name} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/40 flex items-end p-1.5">
                         <span className="text-[7.5px] text-white font-black uppercase tracking-wider truncate leading-none">{img.name}</span>
                       </div>

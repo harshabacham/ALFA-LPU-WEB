@@ -329,7 +329,7 @@ const Clubs: React.FC = () => {
                     <div className="w-16 h-16 rounded-2xl bg-zinc-50 dark:bg-zinc-950 p-2.5 shadow-inner border border-zinc-200/30 dark:border-zinc-800/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                       {club.logo_link ? (
                         <img 
-                          src={getDirectImageUrl(club.logo_link)} 
+                          src={getDirectImageUrl(club.logo_link) || null} 
                           alt={club.name} 
                           className="w-full h-full object-contain filter drop-shadow-sm rounded-lg" 
                           referrerPolicy="no-referrer"

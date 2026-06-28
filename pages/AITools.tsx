@@ -126,7 +126,7 @@ const AITools: React.FC = () => {
               
               <div className="flex items-center gap-4 mb-5 relative z-10">
                 <div className="w-12 h-12 rounded-xl bg-zinc-50 dark:bg-zinc-800/80 p-2 flex items-center justify-center border border-zinc-200/50 dark:border-zinc-700/50 shadow-inner group-hover:scale-105 transition-transform duration-300">
-                  <img src={tool.logo_url} alt={tool.tool_name} className="w-full h-full object-contain rounded-lg" />
+                  <img src={tool.logo_url || null} alt={tool.tool_name} className="w-full h-full object-contain rounded-lg" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 group-hover:text-primary-500 transition-colors font-display leading-tight">
@@ -179,7 +179,7 @@ const AITools: React.FC = () => {
             <div className="p-6 pb-3 flex justify-between items-start border-b border-zinc-100 dark:border-zinc-800/60">
               <div className="flex items-center gap-4 text-left">
                 <div className="w-14 h-14 bg-zinc-50 dark:bg-zinc-800 rounded-xl p-2.5 flex items-center justify-center border border-zinc-200/50 dark:border-zinc-700/50 shadow-inner">
-                  <img src={selectedTool.logo_url} alt={selectedTool.tool_name} className="w-full h-full object-contain rounded" />
+                  <img src={selectedTool.logo_url || null} alt={selectedTool.tool_name} className="w-full h-full object-contain rounded" />
                 </div>
                 <div className="space-y-1">
                    <div className="flex items-center gap-2">

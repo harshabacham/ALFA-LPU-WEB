@@ -175,7 +175,7 @@ const Home: React.FC = () => {
                   Explore Spotlight Events <ArrowUpRight size={15} />
                 </button>
                 <a 
-                  href="https://alfalpu1.apk.com" 
+                  href="https://drive.google.com/file/d/1cYCcd6Omzrbliqh5CjOQazLvjZ5Vb_4R/view?usp=sharing" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-sand-200 text-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 hover:bg-sand-300 dark:hover:bg-zinc-800 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 font-display border border-sand-300 dark:border-zinc-800"
@@ -602,7 +602,7 @@ const Home: React.FC = () => {
                 Stay updated with instant push notifications, high-performance offline access, and a fully polished, native student mobile dashboard.
               </p>
               <a 
-                href="https://alfalpu1.apk.com" 
+                href="https://drive.google.com/file/d/1cYCcd6Omzrbliqh5CjOQazLvjZ5Vb_4R/view?usp=sharing" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 bg-sand-50 text-accent-900 hover:bg-sand-200 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl transition-all hover:scale-105 active:scale-95 font-display"

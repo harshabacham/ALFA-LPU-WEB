@@ -759,31 +759,69 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* About Developer Section */}
+        {/* About Developer & Donate Section */}
         <section className="mt-8 text-left">
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
-            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">About the Author</h3>
-          </div>
-          <div className="bg-sand-50 dark:bg-zinc-900/50 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-850/40 p-6 sm:p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-3xl rounded-full pointer-events-none"></div>
-            <div className="w-32 h-32 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800 shadow-md relative group/dev">
-              <img src="https://i.postimg.cc/d0dg476z/Chat-GPT-Image-Jun-11-2025-07-35-42-AM.png" alt="Harsha Bacham" className="w-full h-full object-cover transition-transform duration-500 group-hover/dev:scale-110" />
-              <div className="absolute inset-0 bg-primary-500/10 mix-blend-overlay"></div>
-            </div>
-            <div className="flex-grow space-y-4 text-center md:text-left">
-              <div>
-                <h4 className="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 font-display tracking-tight">Harsha Bacham</h4>
-                <p className="text-primary-500 dark:text-primary-400 font-bold text-[10px] uppercase tracking-widest mt-1 font-display">Lead Creator & Designer</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Developer Card */}
+            <div className="space-y-4 flex flex-col">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-6 bg-primary-500 rounded-full"></div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">About the Author</h3>
               </div>
-              <p className="text-zinc-500 dark:text-zinc-400 text-xs md:text-sm leading-relaxed max-w-xl font-medium">
-                Deeply focused on developing next-generation student platforms that elevate community networks. ALFA(LPU) represents a completely streamlined full-stack solution.
-              </p>
-              <div className="flex justify-center md:justify-start gap-3">
-                <a href="https://www.linkedin.com/in/harsha-bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#0077b5] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Linkedin size={15} /></a>
-                <a href="https://www.instagram.com/harsha_bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#e1306c] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Instagram size={15} /></a>
-                <a href="https://github.com/harshabacham" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Github size={15} /></a>
-                <a href="https://wa.me/917793914091" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#25D366] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><MessageCircle size={15} /></a>
+              <div className="bg-sand-50 dark:bg-zinc-900/50 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-850/40 p-6 sm:p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group flex-1">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-3xl rounded-full pointer-events-none"></div>
+                <div className="w-32 h-32 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800 shadow-md relative group/dev">
+                  <img src="https://i.postimg.cc/d0dg476z/Chat-GPT-Image-Jun-11-2025-07-35-42-AM.png" alt="Harsha Bacham" className="w-full h-full object-cover transition-transform duration-500 group-hover/dev:scale-110" />
+                  <div className="absolute inset-0 bg-primary-500/10 mix-blend-overlay"></div>
+                </div>
+                <div className="flex-grow space-y-4 text-center md:text-left">
+                  <div>
+                    <h4 className="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 font-display tracking-tight">Harsha Bacham</h4>
+                    <p className="text-primary-500 dark:text-primary-400 font-bold text-[10px] uppercase tracking-widest mt-1 font-display">Lead Creator & Designer</p>
+                  </div>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs md:text-sm leading-relaxed max-w-xl font-medium">
+                    Deeply focused on developing next-generation student platforms that elevate community networks. ALFA(LPU) represents a completely streamlined full-stack solution.
+                  </p>
+                  <div className="flex justify-center md:justify-start gap-3">
+                    <a href="https://www.linkedin.com/in/harsha-bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#0077b5] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Linkedin size={15} /></a>
+                    <a href="https://www.instagram.com/harsha_bacham/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#e1306c] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Instagram size={15} /></a>
+                    <a href="https://github.com/harshabacham" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><Github size={15} /></a>
+                    <a href="https://wa.me/917793914091" target="_blank" rel="noopener noreferrer" className="w-9 h-9 flex items-center justify-center bg-[#25D366] text-white rounded-lg shadow-sm hover:-translate-y-1 duration-300 transition-transform"><MessageCircle size={15} /></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Donate Card */}
+            <div className="space-y-4 flex flex-col">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-6 bg-[#fe7f2d] rounded-full"></div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Support ALFA</h3>
+              </div>
+              <div className="bg-sand-50 dark:bg-zinc-900/50 rounded-[2rem] border border-zinc-200/50 dark:border-zinc-850/40 p-6 sm:p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group flex-1">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#fe7f2d]/5 blur-3xl rounded-full pointer-events-none"></div>
+                <div className="w-32 h-32 rounded-2xl bg-white dark:bg-zinc-950 overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800 shadow-md flex items-center justify-center p-2 relative">
+                  <img 
+                    src="https://i.ibb.co/PsdmxtQb/upipe-qr.png" 
+                    alt="UPI QR Code" 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://placehold.co/300x300/1c1c1e/fe7f2d?text=Scan+To+Donate";
+                    }}
+                  />
+                </div>
+                <div className="flex-grow space-y-4 text-center md:text-left">
+                  <div>
+                    <h4 className="text-2xl md:text-3xl font-extrabold text-zinc-900 dark:text-zinc-50 font-display tracking-tight">Buy me a coffee ☕</h4>
+                    <p className="text-[#fe7f2d] font-bold text-[10px] uppercase tracking-widest mt-1 font-display">Support the Project</p>
+                  </div>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs md:text-sm leading-relaxed max-w-xl font-medium">
+                    ALFA is completely free to use. If you find it helpful, consider supporting the development! Thank you for your support!
+                  </p>
+                  <p className="text-zinc-400 dark:text-zinc-500 text-[10px] font-mono tracking-wider font-semibold uppercase">
+                    UPI ID: 7793914091@ibl
+                  </p>
+                </div>
               </div>
             </div>
           </div>

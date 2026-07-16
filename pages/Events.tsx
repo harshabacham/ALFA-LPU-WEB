@@ -12,6 +12,7 @@ import { Event } from '../types';
 import { CometCard } from '../components/ui/comet-card';
 import { useBookmarks } from '../lib/bookmarks';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FALLBACK_EVENTS } from '../services/fallbackData';
 
 type SortOption = 'default' | 'title-asc' | 'date-soonest' | 'price-low';
 type CategoryOption = 'all' | 'free' | 'premium' | 'tech' | 'cultural' | 'workshop';
@@ -35,11 +36,16 @@ const Events: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const result = await fetchCSV<Event>(CSV_URLS.EVENTS);
+        let result = await fetchCSV<Event>(CSV_URLS.EVENTS);
+        if (!result || result.length === 0) {
+          result = FALLBACK_EVENTS;
+        }
         setData(result);
         setFilteredData(result);
       } catch (error) {
         console.error("Error loading events CSV:", error);
+        setData(FALLBACK_EVENTS);
+        setFilteredData(FALLBACK_EVENTS);
       } finally {
         setLoading(false);
       }

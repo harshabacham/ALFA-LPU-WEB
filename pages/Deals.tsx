@@ -4,6 +4,7 @@ import { Tag, Search, Filter, MapPin, ShoppingBag, Star, Mail, Phone, ChevronRig
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Deal } from '../types';
+import { FALLBACK_DEALS } from '../services/fallbackData';
 import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from '../services/firebase';
 import { User } from '../services/firebase';
 
@@ -268,7 +269,7 @@ const Deals: React.FC = () => {
   const [testStatus, setTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState('');
 
-  const globalSubmitApi = import.meta.env.VITE_DEALS_SUBMIT_API || submitApiUrl;
+  const globalSubmitApi = (import.meta as any).env.VITE_DEALS_SUBMIT_API || submitApiUrl;
 
   const copyAppsScript = () => {
     navigator.clipboard.writeText(APPS_SCRIPT_CODE);
@@ -335,7 +336,10 @@ const Deals: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const result = await fetchCSV<Deal>(CSV_URLS.DEALS);
+        let result = await fetchCSV<Deal>(CSV_URLS.DEALS);
+        if (!result || result.length === 0) {
+          result = FALLBACK_DEALS;
+        }
         
         const localDealsStr = localStorage.getItem('alfa_local_deals');
         const localDeals: Deal[] = localDealsStr ? JSON.parse(localDealsStr) : [];

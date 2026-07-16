@@ -7,7 +7,7 @@ import {
 import { 
   Library, BookOpen, ChevronRight, Folder, Cpu, Settings, 
   Zap, Binary, Globe, Search, ArrowRight, GraduationCap,
-  Sparkles, Star, Bookmark, Bookmarked, Download, FileText,
+  Sparkles, Star, Bookmark, Download, FileText,
   Share2, Hash, Eye, TrendingUp, Compass, FolderKanban, Info,
   ExternalLink, Trash2, CheckCircle2, Copy
 } from 'lucide-react';

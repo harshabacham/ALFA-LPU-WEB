@@ -115,6 +115,15 @@ const modulesData = [
     badge: "Live",
     color: "sky"
   },
+  { 
+    name: "Campus Guides", 
+    path: "/guides", 
+    icon: Sparkles, 
+    category: "Campus Life", 
+    description: "Senior-vetted roadmaps for placements, fests & academics",
+    badge: "Unique",
+    color: "amber"
+  },
 
   { 
     name: "PG Rooms", 

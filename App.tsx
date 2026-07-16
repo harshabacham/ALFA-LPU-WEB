@@ -22,6 +22,11 @@ import YouTubeChannels from './pages/YouTubeChannels';
 import Bookmarks from './pages/Bookmarks';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import GPACalculator from './pages/GPACalculator';
+import About from './pages/About';
+import Terms from './pages/Terms';
+import Disclaimer from './pages/Disclaimer';
+import Contact from './pages/Contact';
+import Guides from './pages/Guides';
 import NotFound from './pages/NotFound';
 import CookieConsent from './components/CookieConsent';
 
@@ -49,6 +54,11 @@ const App: React.FC = () => {
         <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="/gpa" element={<GPACalculator />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/guides" element={<Guides />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieConsent />

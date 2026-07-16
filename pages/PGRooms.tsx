@@ -11,6 +11,7 @@ import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { PGRoom } from '../types';
 import { useBookmarks } from '../lib/bookmarks';
+import { FALLBACK_PG_ROOMS } from '../services/fallbackData';
 
 const PGRooms: React.FC = () => {
   const [data, setData] = useState<PGRoom[]>([]);
@@ -33,7 +34,10 @@ const PGRooms: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const result = await fetchCSV<PGRoom>(CSV_URLS.PG_ROOMS);
+      let result = await fetchCSV<PGRoom>(CSV_URLS.PG_ROOMS);
+      if (!result || result.length === 0) {
+        result = FALLBACK_PG_ROOMS;
+      }
       setData(result);
       setFilteredData(result);
       setLoading(false);
@@ -48,7 +52,7 @@ const PGRooms: React.FC = () => {
       );
       // Get unique and filter to popular ones
       const unique = Array.from(new Set(allAmenities))
-        .filter(a => a.length > 2 && a.length < 25)
+        .filter((a: string) => a.length > 2 && a.length < 25)
         .slice(0, 10);
       setAvailableAmenities(unique);
     }

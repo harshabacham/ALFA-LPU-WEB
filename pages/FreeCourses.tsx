@@ -4,6 +4,7 @@ import { GraduationCap, Search, PlayCircle, Clock, Book } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Course } from '../types';
+import { FALLBACK_COURSES } from '../services/fallbackData';
 
 const FreeCourses: React.FC = () => {
   const [data, setData] = useState<Course[]>([]);
@@ -14,7 +15,10 @@ const FreeCourses: React.FC = () => {
 
   useEffect(() => {
     const load = async () => {
-      const result = await fetchCSV<Course>(CSV_URLS.FREE_COURSES);
+      let result = await fetchCSV<Course>(CSV_URLS.FREE_COURSES);
+      if (!result || result.length === 0) {
+        result = FALLBACK_COURSES;
+      }
       setData(result);
       setFilteredData(result);
       setLoading(false);

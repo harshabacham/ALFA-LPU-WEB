@@ -49,7 +49,7 @@ const AddDeal: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatusText, setSubmitStatusText] = useState('Saving listing...');
 
-  const globalSubmitApi = import.meta.env.VITE_DEALS_SUBMIT_API || localStorage.getItem('alfa_deals_submit_api') || 'https://script.google.com/macros/s/AKfycby-c7QxbvujL1YKXnzgREA1Ra6dGjhD4_mmO1_vRQzeXQzhTm4J8ky_MoFMKOxw5yCEiA/exec';
+  const globalSubmitApi = (import.meta as any).env.VITE_DEALS_SUBMIT_API || localStorage.getItem('alfa_deals_submit_api') || 'https://script.google.com/macros/s/AKfycby-c7QxbvujL1YKXnzgREA1Ra6dGjhD4_mmO1_vRQzeXQzhTm4J8ky_MoFMKOxw5yCEiA/exec';
 
   // Form Fields
   const [formData, setFormData] = useState({

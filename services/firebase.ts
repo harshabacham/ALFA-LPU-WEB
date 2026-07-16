@@ -1,6 +1,9 @@
 
+// @ts-ignore
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+// @ts-ignore
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+// @ts-ignore
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js';
 
 /**

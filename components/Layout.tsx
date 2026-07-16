@@ -28,16 +28,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const toggleTheme = () => setIsDark(!isDark);
 
   return (
-    <div className="flex min-h-screen bg-sand-100 dark:bg-zinc-950 overflow-x-hidden w-full max-w-full">
+    <div className="flex min-h-screen bg-transparent overflow-x-hidden w-full max-w-full">
       {/* Dynamic Floating Premium Navbar - Global for All Pages */}
       <FloatingNav isDark={isDark} toggleTheme={toggleTheme} />
 
       {/* Main Content Area */}
-      <main className="relative flex-grow min-h-screen bg-sand-100 dark:bg-zinc-950 bg-grid-pattern flex flex-col overflow-x-hidden w-full max-w-full">
+      <main className="relative flex-grow min-h-screen bg-transparent flex flex-col overflow-x-hidden w-full max-w-full">
         <div className="flex-grow pt-24 md:pt-28 pb-16 w-full overflow-x-hidden max-w-full">
           {children}
         </div>
-        {location.pathname === '/' && <FooterTapedDesign />}
+        <FooterTapedDesign />
       </main>
     </div>
   );

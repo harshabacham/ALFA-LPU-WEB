@@ -8,6 +8,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { AITool } from '../types';
+import { FALLBACK_AI_TOOLS } from '../services/fallbackData';
 
 const AITools: React.FC = () => {
   const [data, setData] = useState<AITool[]>([]);
@@ -19,7 +20,10 @@ const AITools: React.FC = () => {
 
   useEffect(() => {
     const load = async () => {
-      const result = await fetchCSV<AITool>(CSV_URLS.AI_TOOLS);
+      let result = await fetchCSV<AITool>(CSV_URLS.AI_TOOLS);
+      if (!result || result.length === 0) {
+        result = FALLBACK_AI_TOOLS;
+      }
       setData(result);
       setFilteredData(result);
       setLoading(false);

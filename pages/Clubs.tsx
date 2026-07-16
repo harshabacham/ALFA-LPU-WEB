@@ -8,6 +8,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Club } from '../types';
+import { FALLBACK_CLUBS } from '../services/fallbackData';
 
 const Clubs: React.FC = () => {
   const [data, setData] = useState<Club[]>([]);
@@ -24,7 +25,10 @@ const Clubs: React.FC = () => {
 
   useEffect(() => {
     const load = async () => {
-      const result = await fetchCSV<Club>(CSV_URLS.CLUBS);
+      let result = await fetchCSV<Club>(CSV_URLS.CLUBS);
+      if (!result || result.length === 0) {
+        result = FALLBACK_CLUBS;
+      }
       setData(result);
       setFilteredData(result);
       setLoading(false);
@@ -106,7 +110,7 @@ const Clubs: React.FC = () => {
   };
 
   const categoryCounts = getCategoryCounts();
-  const categories = ['All', ...Array.from(new Set(data.map(i => i.category).filter(Boolean)))];
+  const categories: string[] = ['All', ...Array.from(new Set(data.map(i => i.category).filter(Boolean))) as string[]];
 
   // Map categories to modern distinct gradient classes
   const getCategoryColor = (cat: string) => {

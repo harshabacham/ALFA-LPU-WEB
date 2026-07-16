@@ -42,7 +42,7 @@ export const FooterTapedDesign = () => {
         </div>
 
         {/* Links lists columns */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16 w-full md:w-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16 w-full md:w-auto text-left">
           
           {/* Column 1 */}
           <div className="space-y-3">
@@ -50,10 +50,11 @@ export const FooterTapedDesign = () => {
               Directories
             </h4>
             <div className="flex flex-col gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
-              <Link className="hover:text-[#fe7f2d] transition-colors" to="/pg-rooms">PG Directories</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/pg-rooms">PG Rooms</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/events">Campus Events</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/clubs">Clubs & Chapters</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/notes">Subject Notes</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors font-bold text-[#fe7f2d]" to="/guides">Campus Guides</Link>
             </div>
           </div>
 
@@ -64,23 +65,27 @@ export const FooterTapedDesign = () => {
             </h4>
             <div className="flex flex-col gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/gpa">GPA Calculator</Link>
-              <Link className="hover:text-[#fe7f2d] transition-colors" to="/free-courses">Free Courses</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/courses">Free Courses</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/duty-leaves">Duty Leaves</Link>
-              <Link className="hover:text-[#fe7f2d] transition-colors" to="/youtube-channels">YouTube Channels</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/youtube">YouTube Channels</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/ai-tools">AI Toolbox</Link>
             </div>
           </div>
 
           {/* Column 3 */}
           <div className="space-y-3 col-span-2 sm:col-span-1">
             <h4 className="uppercase font-display text-xs text-[#fe7f2d] font-extrabold tracking-wider">
-              Support
+              Legal & Support
             </h4>
             <div className="flex flex-col gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/about">About Us</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/contact">Contact Us</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/privacy">Privacy Policy</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/terms">Terms of Service</Link>
+              <Link className="hover:text-[#fe7f2d] transition-colors" to="/disclaimer">Disclaimer</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors text-red-500 hover:text-red-600 flex items-center gap-1" to="/emergency">
                 <AlertTriangle size={12} /> Emergency Help
               </Link>
-              <Link className="hover:text-[#fe7f2d] transition-colors" to="/ai-tools">AI Study tools</Link>
             </div>
           </div>
 
@@ -97,7 +102,9 @@ export const FooterTapedDesign = () => {
           <div className="flex flex-row gap-3">
             <Link className="hover:text-[#fe7f2d] transition-colors" to="/privacy">Privacy Policy</Link>
             <span>•</span>
-            <Link className="hover:text-[#fe7f2d] transition-colors" to="/emergency">Emergency Terms</Link>
+            <Link className="hover:text-[#fe7f2d] transition-colors" to="/terms">Terms</Link>
+            <span>•</span>
+            <Link className="hover:text-[#fe7f2d] transition-colors" to="/disclaimer">Disclaimer</Link>
           </div>
         </div>
 

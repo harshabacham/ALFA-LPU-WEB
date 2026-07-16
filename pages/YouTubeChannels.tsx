@@ -8,6 +8,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { YouTubeChannel } from '../types';
+import { FALLBACK_YOUTUBE_CHANNELS } from '../services/fallbackData';
 
 const YouTubeChannels: React.FC = () => {
   const [data, setData] = useState<YouTubeChannel[]>([]);
@@ -36,7 +37,10 @@ const YouTubeChannels: React.FC = () => {
 
   useEffect(() => {
     const load = async () => {
-      const result = await fetchCSV<YouTubeChannel>(CSV_URLS.YOUTUBE_CHANNELS);
+      let result = await fetchCSV<YouTubeChannel>(CSV_URLS.YOUTUBE_CHANNELS);
+      if (!result || result.length === 0) {
+        result = FALLBACK_YOUTUBE_CHANNELS;
+      }
       setData(result);
       setFilteredData(result);
       

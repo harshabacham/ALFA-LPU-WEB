@@ -382,7 +382,23 @@
 </head>
   <body class="bg-grainy-gradient text-zinc-900 dark:text-zinc-100 min-h-screen selection:bg-primary-500/30 overflow-x-hidden">
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-9077289968849050"></amp-auto-ads>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Semantic initial HTML content for Googlebot & search crawlers before JS hydration -->
+      <header style="padding: 20px; text-align: center;">
+        <h1>LPU ALFA - Lovely Professional University Student Portal</h1>
+        <p>The ultimate official student hub for Lovely Professional University. Access LPU semester notes, PYQs, student clubs, campus events, marketplace, CGPA calculator, PGs, and emergency contacts.</p>
+        <nav style="margin-top: 15px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+          <a href="/notes">LPU Academic Notes & PYQs</a> |
+          <a href="/clubs">LPU Student Clubs</a> |
+          <a href="/events">LPU Campus Events & Fests</a> |
+          <a href="/deals">LPU Student Marketplace</a> |
+          <a href="/gpa">LPU CGPA Calculator</a> |
+          <a href="/pg-rooms">LPU PGs & Law Gate Rooms</a> |
+          <a href="/duty-leaves">LPU Duty Leave Guide</a> |
+          <a href="/emergency">LPU Emergency Helplines</a>
+        </nav>
+      </header>
+    </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

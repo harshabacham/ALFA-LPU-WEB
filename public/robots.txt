@@ -1,0 +1,46 @@
+# Robots.txt for Alfa LPU - Lovely Professional University Student Portal
+User-agent: *
+Allow: /
+Allow: /clubs
+Allow: /events
+Allow: /pg-rooms
+Allow: /notes
+Allow: /courses
+Allow: /deals
+Allow: /ai-tools
+Allow: /youtube
+Allow: /emergency
+Allow: /gpa
+Allow: /about
+Allow: /contact
+Allow: /guides
+Allow: /privacy
+Allow: /terms
+Allow: /disclaimer
+
+# Disallow private user routes
+Disallow: /profile
+Disallow: /bookmarks
+Disallow: /login
+
+# Specific Bot Rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Sitemap URL
+Sitemap: https://alfa-lpu.web.app/sitemap.xml

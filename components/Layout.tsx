@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FloatingNav } from './ui/floating-navbar';
 import { FooterTapedDesign } from './ui/footer-taped-design';
+import SEOHead from './SEOHead';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,6 +30,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="flex min-h-screen bg-transparent overflow-x-hidden w-full max-w-full">
+      {/* Dynamic SEO Head Manager */}
+      <SEOHead />
+
       {/* Dynamic Floating Premium Navbar - Global for All Pages */}
       <FloatingNav isDark={isDark} toggleTheme={toggleTheme} />
 

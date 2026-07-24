@@ -633,33 +633,69 @@ const Deals: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar Section */}
-      <div className="flex flex-col sm:flex-row gap-3 w-full">
-        <div className="relative flex-grow">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
-          <input 
-            type="text" 
-            placeholder="What are you looking for?" 
-            className="pl-11 pr-4 py-3.5 w-full rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all shadow-sm font-medium text-sm text-zinc-800 dark:text-zinc-100"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+      <div className="space-y-3 w-full">
+        <div className="flex flex-col sm:flex-row gap-3 w-full">
+          <div className="relative flex-grow">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
+            <input 
+              type="text" 
+              placeholder="Search deals by title or description in real-time..." 
+              className="pl-11 pr-10 py-3.5 w-full rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/80 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 outline-none transition-all shadow-sm font-medium text-sm text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded-xl transition-colors cursor-pointer bg-zinc-100 dark:bg-zinc-800"
+                title="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          <div className="flex gap-2">
+            <select 
+              className="px-4 py-3.5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/80 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200 cursor-pointer shadow-sm"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories.map(cat => <option key={cat} value={cat}>{cat === 'All' ? 'All Categories' : cat}</option>)}
+            </select>
+            <select 
+              className="px-4 py-3.5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/80 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200 cursor-pointer shadow-sm"
+              value={selectedCondition}
+              onChange={(e) => setSelectedCondition(e.target.value)}
+            >
+              {conditions.map(cond => <option key={cond} value={cond}>{cond === 'All' ? 'All Conditions' : cond}</option>)}
+            </select>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <select 
-            className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-          </select>
-          <select 
-            className="px-4 py-3.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/60 bg-sand-50 dark:bg-zinc-900/50 focus:border-primary-500 outline-none text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-200"
-            value={selectedCondition}
-            onChange={(e) => setSelectedCondition(e.target.value)}
-          >
-            {conditions.map(cond => <option key={cond} value={cond}>{cond}</option>)}
-          </select>
-        </div>
+
+        {/* Real-time search indicator bar */}
+        {(searchTerm || selectedCategory !== 'All' || selectedCondition !== 'All') && (
+          <div className="flex items-center justify-between px-1 text-xs text-zinc-500 dark:text-zinc-400 font-medium animate-in fade-in duration-200">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span>Found <strong className="text-zinc-900 dark:text-zinc-100 font-bold">{filteredData.length}</strong> {filteredData.length === 1 ? 'deal' : 'deals'}</span>
+              {searchTerm && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-primary-500/10 text-primary-600 dark:text-primary-400 font-semibold text-[11px]">
+                  Matching "{searchTerm}"
+                </span>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('All');
+                setSelectedCondition('All');
+              }}
+              className="text-xs font-bold text-primary-500 hover:text-primary-600 cursor-pointer hover:underline"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Deals Grid */}

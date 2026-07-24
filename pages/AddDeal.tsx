@@ -186,6 +186,7 @@ const AddDeal: React.FC = () => {
     const localDeals: Deal[] = localDealsStr ? JSON.parse(localDealsStr) : [];
     const updatedLocal = [newDeal, ...localDeals];
     localStorage.setItem('alfa_local_deals', JSON.stringify(updatedLocal));
+    window.dispatchEvent(new Event('alfa_profile_updated'));
 
     // Post to Google Sheets if API is configured
     if (globalSubmitApi) {

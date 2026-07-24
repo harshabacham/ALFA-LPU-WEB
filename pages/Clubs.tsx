@@ -9,6 +9,7 @@ import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Club } from '../types';
 import { FALLBACK_CLUBS } from '../services/fallbackData';
+import { userProfileService } from '../services/userProfileService';
 
 const Clubs: React.FC = () => {
   const [data, setData] = useState<Club[]>([]);
@@ -22,6 +23,20 @@ const Clubs: React.FC = () => {
   
   // Clipboard copying state
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  
+  // Registered / Joined clubs tracking
+  const [joinedClubIds, setJoinedClubIds] = useState<string[]>([]);
+
+  const refreshJoinedClubs = () => {
+    const joined = userProfileService.getJoinedClubs();
+    setJoinedClubIds(joined.map(c => c.id || c.name));
+  };
+
+  useEffect(() => {
+    refreshJoinedClubs();
+    window.addEventListener('alfa_profile_updated', refreshJoinedClubs);
+    return () => window.removeEventListener('alfa_profile_updated', refreshJoinedClubs);
+  }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -379,17 +394,43 @@ const Clubs: React.FC = () => {
 
                 </div>
 
-                {/* Bottom Call to action link */}
-                <div className="p-6 pt-0">
-                  <a 
-                    href={club.form_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group/btn w-full flex items-center justify-center gap-1.5 py-3 bg-zinc-50 hover:bg-zinc-900 dark:bg-zinc-900 hover:text-white dark:hover:bg-zinc-100 dark:hover:text-zinc-950 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 rounded-xl font-extrabold text-xs uppercase tracking-widest transition-all shadow-sm"
-                  >
-                    <span>Join Community</span>
-                    <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  </a>
+                {/* Bottom Call to action link & Register Toggle */}
+                <div className="p-6 pt-0 space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        userProfileService.toggleJoinClub(club);
+                        refreshJoinedClubs();
+                      }}
+                      className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-extrabold text-[11px] uppercase tracking-wider transition-all cursor-pointer border ${
+                        joinedClubIds.includes(club.id || club.name)
+                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                          : 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20'
+                      }`}
+                    >
+                      {joinedClubIds.includes(club.id || club.name) ? (
+                        <>
+                          <Check size={13} className="text-emerald-500" />
+                          <span>Registered</span>
+                        </>
+                      ) : (
+                        <>
+                          <PlusCircle size={13} />
+                          <span>Register</span>
+                        </>
+                      )}
+                    </button>
+
+                    <a 
+                      href={club.form_link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="group/btn flex items-center justify-center gap-1 py-2.5 px-3 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border border-transparent rounded-xl font-extrabold text-[11px] uppercase tracking-wider transition-all shadow-sm hover:opacity-95"
+                    >
+                      <span>Join Form</span>
+                      <ArrowUpRight size={13} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
                 </div>
 
               </div>

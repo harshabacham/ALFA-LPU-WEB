@@ -13,7 +13,7 @@ import {
   Home, Bell, Users, Calendar, Bed, BookOpen, 
   GraduationCap, Tag, Cpu, PhoneCall, Youtube, 
   Bookmark, Ticket, ShieldAlert, Sparkle, ArrowRight,
-  Clock, Activity, Info, ArrowLeft, Calculator
+  Clock, Activity, Info, ArrowLeft, Calculator, User
 } from "lucide-react";
 
 interface FloatingNavProps {
@@ -161,6 +161,15 @@ const modulesData = [
     description: "Your saved academic posts, notes, & articles",
     badge: "Saved",
     color: "purple"
+  },
+  { 
+    name: "My Profile", 
+    path: "/profile", 
+    icon: User, 
+    category: "Services & Essentials", 
+    description: "Manage registered clubs, saved events & posted marketplace deals",
+    badge: "Profile",
+    color: "emerald"
   },
 ];
 
@@ -531,8 +540,24 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               </div>
             )}
 
-            {/* Right: Theme Toggle & Creative Menu Toggle */}
+            {/* Right: Profile Link, Theme Toggle & Creative Menu Toggle */}
             <div className="flex items-center gap-2">
+              {/* Profile button */}
+              <Link
+                to="/profile"
+                onClick={() => setIsOverlayOpen(false)}
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-xl transition-all cursor-pointer shadow-sm border",
+                  location.pathname === "/profile"
+                    ? "bg-primary-500 text-white border-primary-600"
+                    : "bg-sand-100/80 text-zinc-600 hover:bg-sand-200/80 dark:bg-zinc-800/80 dark:text-zinc-400 dark:hover:bg-zinc-750 border-sand-200/10 dark:border-zinc-800/10"
+                )}
+                aria-label="User Profile"
+                title="User Profile"
+              >
+                <User size={15} />
+              </Link>
+
               {/* Theme toggler inside pill */}
               <button
                 onClick={handleToggleTheme}

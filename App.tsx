@@ -20,6 +20,7 @@ import AITools from './pages/AITools';
 import Emergency from './pages/Emergency';
 import YouTubeChannels from './pages/YouTubeChannels';
 import Bookmarks from './pages/Bookmarks';
+import Profile from './pages/Profile';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import GPACalculator from './pages/GPACalculator';
 import About from './pages/About';
@@ -52,6 +53,7 @@ const App: React.FC = () => {
         <Route path="/youtube" element={<YouTubeChannels />} />
         <Route path="/emergency" element={<Emergency />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/gpa" element={<GPACalculator />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/about" element={<About />} />

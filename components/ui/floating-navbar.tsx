@@ -15,6 +15,9 @@ import {
   Bookmark, Ticket, ShieldAlert, Sparkle, ArrowRight,
   Clock, Activity, Info, ArrowLeft, Calculator, User
 } from "lucide-react";
+import { fetchCSV } from "../../services/csvService";
+import { CSV_URLS } from "../../constants";
+import { Event as AppEvent, PGRoom } from "../../types";
 
 interface FloatingNavProps {
   isDark?: boolean;
@@ -213,6 +216,30 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
   const location = useLocation();
   const isDashboard = location.pathname === "/";
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const [eventTitles, setEventTitles] = useState<Record<number, string>>({});
+  const [pgNames, setPgNames] = useState<Record<number, string>>({});
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/events/') && Object.keys(eventTitles).length === 0) {
+      fetchCSV<AppEvent>(CSV_URLS.EVENTS).then((data) => {
+        const titlesMap: Record<number, string> = {};
+        data.forEach((evt, idx) => {
+          if (evt.title) titlesMap[idx] = evt.title;
+        });
+        setEventTitles(titlesMap);
+      }).catch(err => console.warn("Failed to load event titles for breadcrumb:", err));
+    }
+    if (location.pathname.startsWith('/pg-rooms/') && Object.keys(pgNames).length === 0) {
+      fetchCSV<PGRoom>(CSV_URLS.PG_ROOMS).then((data) => {
+        const namesMap: Record<number, string> = {};
+        data.forEach((pg, idx) => {
+          if (pg.name) namesMap[idx] = pg.name;
+        });
+        setPgNames(namesMap);
+      }).catch(err => console.warn("Failed to load PG names for breadcrumb:", err));
+    }
+  }, [location.pathname]);
 
   // Handle local dark mode state if parent didn't pass it down
   const [localIsDark, setLocalIsDark] = useState(() => localStorage.getItem("theme") === "dark");
@@ -478,12 +505,12 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
           {/* Main Floating Pill Header */}
           <div className="flex h-14 md:h-16 items-center justify-between rounded-2xl border border-sand-200/60 bg-white/80 px-3 md:px-5 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 dark:border-zinc-800/60 dark:bg-zinc-900/80">
             
-            {/* Left: Brand Identity (Dashboard) or Back Button (Remaining Pages) */}
+            {/* Left side: Logo on Dashboard, OR Inline Breadcrumbs on Subpages */}
             {isDashboard ? (
               <Link 
                 to="/" 
                 onClick={() => setIsOverlayOpen(false)}
-                className="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
+                className="flex items-center gap-2.5 hover:opacity-90 transition-opacity shrink-0"
               >
                 <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-sand-200/50 bg-sand-100 p-0.5 dark:border-zinc-800 dark:bg-zinc-800/80">
                   <img src={LOGO_URL} alt="ALFA" className="h-full w-full object-contain dark:brightness-110" />
@@ -498,17 +525,91 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
                 </div>
               </Link>
             ) : (
-              <Link 
-                to={location.pathname.startsWith("/events/") ? "/events" : "/"} 
-                onClick={() => setIsOverlayOpen(false)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sand-100 hover:bg-sand-200 text-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-750 dark:text-zinc-300 font-extrabold text-xs uppercase tracking-wider transition-all border border-sand-200/10 dark:border-zinc-800/10 cursor-pointer shadow-sm group"
-              >
-                <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-                <span>{location.pathname.startsWith("/events/") ? "Campus Hub" : "Back"}</span>
-              </Link>
+              <div className="flex items-center gap-1.5 xs:gap-2 shrink-0 max-w-[65vw] xs:max-w-[72vw] sm:max-w-[80vw] md:max-w-2xl overflow-hidden">
+                <Link
+                  to="/"
+                  onClick={() => setIsOverlayOpen(false)}
+                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-sand-100/90 dark:bg-zinc-800/90 hover:bg-sand-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 font-bold text-xs transition-all border border-sand-200/60 dark:border-zinc-700/60 shrink-0 shadow-2xs group"
+                  title="Return to Home Dashboard"
+                >
+                  <ArrowLeft size={13} className="text-primary-500 transition-transform group-hover:-translate-x-0.5" />
+                  <span className="hidden xs:inline font-bold">Home</span>
+                </Link>
+
+                {/* Inline Breadcrumb Segment Trail */}
+                <div className="flex items-center gap-1 sm:gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-xl bg-sand-100/60 dark:bg-zinc-950/40 border border-sand-200/30 dark:border-zinc-800/30 overflow-hidden">
+                  {location.pathname.split('/').filter(Boolean).map((value, index, array) => {
+                    const to = `/${array.slice(0, index + 1).join('/')}`;
+                    const isLast = index === array.length - 1;
+                    const parentSegment = index > 0 ? array[index - 1] : '';
+
+                    const ROUTE_NAMES: Record<string, string> = {
+                      'clubs': 'Clubs',
+                      'events': 'Events',
+                      'deals': 'Marketplace',
+                      'add': 'Post Deal',
+                      'notes': 'Notes',
+                      'gpa': 'GPA Calc',
+                      'pg-rooms': 'PG Rooms',
+                      'duty-leaves': 'Duty Leaves',
+                      'courses': 'Courses',
+                      'ai-tools': 'AI Tools',
+                      'emergency': 'Emergency',
+                      'youtube': 'YouTube',
+                      'about': 'About',
+                      'contact': 'Contact',
+                      'guides': 'Guides',
+                      'notifications': 'Feed',
+                      'bookmarks': 'Bookmarks',
+                      'profile': 'Profile',
+                      'privacy': 'Privacy',
+                      'terms': 'Terms',
+                      'disclaimer': 'Disclaimer'
+                    };
+
+                    let formattedName = ROUTE_NAMES[value];
+                    if (!formattedName) {
+                      if (/^\d+$/.test(value)) {
+                        if (parentSegment === 'events') {
+                          formattedName = eventTitles[parseInt(value)] || 'Event Details';
+                        } else if (parentSegment === 'pg-rooms') {
+                          formattedName = pgNames[parseInt(value)] || 'PG Details';
+                        } else {
+                          formattedName = 'Details';
+                        }
+                      } else if (parentSegment === 'notes') {
+                        formattedName = decodeURIComponent(value).replace(/-/g, ' ').toUpperCase();
+                      } else {
+                        formattedName = decodeURIComponent(value)
+                          .replace(/-/g, ' ')
+                          .replace(/\b\w/g, (l) => l.toUpperCase());
+                      }
+                    }
+
+                    return (
+                      <React.Fragment key={to}>
+                        <span className="text-zinc-300 dark:text-zinc-600 shrink-0 text-[10px]">/</span>
+                        {isLast ? (
+                          <span className="text-primary-600 dark:text-primary-400 font-bold truncate max-w-[110px] xs:max-w-[150px] sm:max-w-[220px] md:max-w-[320px]">
+                            {formattedName}
+                          </span>
+                        ) : (
+                          <Link
+                            to={to}
+                            onClick={() => setIsOverlayOpen(false)}
+                            className="text-zinc-500 hover:text-primary-600 dark:text-zinc-400 dark:hover:text-primary-400 transition-colors shrink-0"
+                          >
+                            {formattedName}
+                          </Link>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </div>
             )}
 
-            {/* Middle: Quick Links (visible on md/lg screens, ONLY on dashboard page) */}
+            {/* Middle: Quick Links on Dashboard */}
             {isDashboard && (
               <div className="hidden md:flex items-center gap-1.5 bg-sand-100/50 dark:bg-zinc-950/40 p-1 rounded-xl border border-sand-200/30 dark:border-zinc-800/20">
                 {[

@@ -43,4 +43,4 @@ User-agent: YandexBot
 Allow: /
 
 # Sitemap URL
-Sitemap: https://alfa-lpu.web.app/sitemap.xml
+Sitemap: https://lpualfa.vercel.app/sitemap.xml

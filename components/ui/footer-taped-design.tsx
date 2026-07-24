@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Linkedin, Instagram, Github, Compass, Sparkles, AlertTriangle } from "lucide-react";
+import { WhatsAppIcon } from "../icons/WhatsAppIcon";
 
 const tape = (
   <svg xmlns="http://www.w3.org/2000/svg" width="95" height="80" viewBox="0 0 95 80" fill="none">
@@ -78,6 +79,14 @@ export const FooterTapedDesign = () => {
               Legal & Support
             </h4>
             <div className="flex flex-col gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+              <a 
+                href="https://chat.whatsapp.com/Dn9sOCWDBfDDhijvuDD0hs" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-emerald-500 hover:text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 transition-colors"
+              >
+                <WhatsAppIcon size={14} className="text-[#25D366]" /> WhatsApp Community
+              </a>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/about">About Us</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/contact">Contact Us</Link>
               <Link className="hover:text-[#fe7f2d] transition-colors" to="/privacy">Privacy Policy</Link>
@@ -110,6 +119,16 @@ export const FooterTapedDesign = () => {
 
         {/* Social connections */}
         <div className="flex gap-4 items-center">
+          <a
+            href="https://chat.whatsapp.com/Dn9sOCWDBfDDhijvuDD0hs"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            aria-label="WhatsApp Community"
+            title="Join Official LPU ALFA WhatsApp Community"
+            className="text-zinc-400 hover:text-[#25D366] dark:text-zinc-500 dark:hover:text-[#25D366] transition-colors"
+          >
+            <WhatsAppIcon size={16} />
+          </a>
           <a
             href="https://www.instagram.com/harsha_bacham/"
             target="_blank"

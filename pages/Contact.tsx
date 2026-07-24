@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ChevronLeft, Mail, MapPin, Clock, Send, 
-  CheckCircle, MessageSquare, ShieldCheck
+  CheckCircle, MessageSquare, ShieldCheck, Users, ArrowUpRight
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/icons/WhatsAppIcon';
 
 const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -101,6 +102,34 @@ const Contact: React.FC = () => {
             <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 leading-relaxed">
               Your details are covered under our privacy policies. We never sell, lease, or distribute email contacts.
             </p>
+          </div>
+
+          {/* WhatsApp Community Box */}
+          <div className="p-6 bg-gradient-to-br from-[#25D366]/10 via-emerald-500/10 to-teal-500/10 border border-[#25D366]/30 rounded-3xl space-y-4 relative overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#25D366]/20">
+                <WhatsAppIcon size={20} />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-zinc-900 dark:text-white uppercase font-display tracking-wider">
+                  WhatsApp Community
+                </h4>
+                <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                  Official LPU Student Group
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-300 font-medium leading-relaxed">
+              Prefer real-time chat? Join 10,000+ LPU peers in our official WhatsApp group for instant announcements & peer assistance.
+            </p>
+            <a 
+              href="https://chat.whatsapp.com/Dn9sOCWDBfDDhijvuDD0hs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md shadow-[#25D366]/20 transition-all font-display"
+            >
+              <WhatsAppIcon size={16} /> Join Community Group <ArrowUpRight size={14} />
+            </a>
           </div>
         </div>
 

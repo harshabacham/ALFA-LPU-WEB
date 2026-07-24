@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DOMAIN = 'https://alfa-lpu.web.app';
+const DOMAIN = process.env.SITE_URL || 'https://lpualfa.vercel.app';
 const APP_TSX_PATH = path.resolve(__dirname, '../App.tsx');
 const SITEMAP_OUTPUT_PATH = path.resolve(__dirname, '../public/sitemap.xml');
 

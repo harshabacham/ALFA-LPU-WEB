@@ -5,140 +5,140 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- Automatically generated from App.tsx routes on 2026-07-24 -->
   <url>
-    <loc>https://alfa-lpu.web.app/</loc>
+    <loc>https://lpualfa.vercel.app/</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/notifications</loc>
+    <loc>https://lpualfa.vercel.app/notifications</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/clubs</loc>
+    <loc>https://lpualfa.vercel.app/clubs</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/events</loc>
+    <loc>https://lpualfa.vercel.app/events</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/pg-rooms</loc>
+    <loc>https://lpualfa.vercel.app/pg-rooms</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/duty-leaves</loc>
+    <loc>https://lpualfa.vercel.app/duty-leaves</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/notes</loc>
+    <loc>https://lpualfa.vercel.app/notes</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/courses</loc>
+    <loc>https://lpualfa.vercel.app/courses</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/deals</loc>
+    <loc>https://lpualfa.vercel.app/deals</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/deals/add</loc>
+    <loc>https://lpualfa.vercel.app/deals/add</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/ai-tools</loc>
+    <loc>https://lpualfa.vercel.app/ai-tools</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/youtube</loc>
+    <loc>https://lpualfa.vercel.app/youtube</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/emergency</loc>
+    <loc>https://lpualfa.vercel.app/emergency</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/gpa</loc>
+    <loc>https://lpualfa.vercel.app/gpa</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/privacy</loc>
+    <loc>https://lpualfa.vercel.app/privacy</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/about</loc>
+    <loc>https://lpualfa.vercel.app/about</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/terms</loc>
+    <loc>https://lpualfa.vercel.app/terms</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/disclaimer</loc>
+    <loc>https://lpualfa.vercel.app/disclaimer</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/contact</loc>
+    <loc>https://lpualfa.vercel.app/contact</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://alfa-lpu.web.app/guides</loc>
+    <loc>https://lpualfa.vercel.app/guides</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

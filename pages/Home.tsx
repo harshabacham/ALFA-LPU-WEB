@@ -14,6 +14,7 @@ import { CSV_URLS, QUOTES } from '../constants';
 import { Event, Notification as NotificationType, Deal, PGRoom } from '../types';
 import { FollowerPointerCard } from '../components/ui/following-pointer';
 import { PointerHighlight } from '../components/ui/pointer-highlight';
+import { WhatsAppIcon } from '../components/icons/WhatsAppIcon';
 
 const Home: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -755,6 +756,69 @@ const Home: React.FC = () => {
               <p className="mt-4 text-xs text-zinc-400 dark:text-zinc-500 font-medium leading-relaxed">
                 Smart automation widgets designed to elevate your day-to-day productivity.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Join Official WhatsApp Community Section */}
+        <section className="mt-8 text-left">
+          <div className="flex items-center gap-2 mb-6">
+            <div className="w-1.5 h-6 bg-[#25D366] rounded-full"></div>
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest font-display">Official Community</h3>
+          </div>
+
+          <div className="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 dark:from-emerald-950/90 dark:via-zinc-900 dark:to-teal-950 rounded-[2.5rem] p-6 sm:p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group border border-emerald-500/30">
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#25D366]/20 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-1000"></div>
+            <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-teal-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="space-y-4 max-w-2xl text-left">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-full text-xs font-black uppercase tracking-widest text-emerald-200">
+                  <WhatsAppIcon size={16} className="text-[#25D366]" /> Official Student Network
+                </div>
+                
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black font-display tracking-tight leading-tight">
+                  Join the ALFA(LPU) WhatsApp Community
+                </h3>
+                
+                <p className="text-emerald-100 dark:text-zinc-300 text-sm md:text-base font-medium leading-relaxed">
+                  Connect with fellow LPU students! Receive instant updates for exam dates, syllabus notes, duty leaves, campus fests, marketplace deals, and room openings.
+                </p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="bg-black/20 backdrop-blur-md border border-white/10 rounded-2xl p-3">
+                    <p className="text-xs font-bold text-emerald-300 uppercase tracking-wider font-display">⚡ Instant Updates</p>
+                    <p className="text-[11px] text-zinc-200 font-medium mt-0.5">Notes & Exam Alerts</p>
+                  </div>
+                  <div className="bg-black/20 backdrop-blur-md border border-white/10 rounded-2xl p-3">
+                    <p className="text-xs font-bold text-emerald-300 uppercase tracking-wider font-display">🎉 Campus Events</p>
+                    <p className="text-[11px] text-zinc-200 font-medium mt-0.5">Fests & Club Passes</p>
+                  </div>
+                  <div className="bg-black/20 backdrop-blur-md border border-white/10 rounded-2xl p-3 col-span-2 sm:col-span-1">
+                    <p className="text-xs font-bold text-emerald-300 uppercase tracking-wider font-display">🤝 Peer Network</p>
+                    <p className="text-[11px] text-zinc-200 font-medium mt-0.5">Buy/Sell & PG Help</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="shrink-0 w-full lg:w-auto flex flex-col items-center gap-4 bg-white/10 dark:bg-black/40 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-white/20 text-center shadow-xl">
+                <div className="w-20 h-20 bg-[#25D366] text-white rounded-3xl flex items-center justify-center shadow-lg shadow-[#25D366]/40 group-hover:scale-110 transition-transform duration-500">
+                  <WhatsAppIcon size={44} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-black font-display tracking-tight text-white">LPU ALFA Community</h4>
+                  <p className="text-xs text-emerald-200 font-semibold mt-1">Free to Join • Verified LPU Members</p>
+                </div>
+                <a 
+                  href="https://chat.whatsapp.com/Dn9sOCWDBfDDhijvuDD0hs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-[#25D366]/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 font-display"
+                >
+                  <WhatsAppIcon size={18} /> Join WhatsApp Group
+                  <ArrowUpRight size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </section>

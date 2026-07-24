@@ -14,7 +14,7 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined' && window.location.origin) {
     return window.location.origin;
   }
-  return "https://alfa-lpu.web.app";
+  return "https://lpualfa.vercel.app";
 };
 
 const ROUTE_SEO_MAP: Record<string, SEOConfig> = {

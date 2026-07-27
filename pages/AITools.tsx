@@ -8,6 +8,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { AITool } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_AI_TOOLS } from '../services/fallbackData';
 
 const AITools: React.FC = () => {
@@ -115,10 +116,11 @@ const AITools: React.FC = () => {
       {/* Tools Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
         {loading ? (
-          <div className="col-span-full py-40 text-center">
-            <div className="animate-spin w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
-            <p className="mt-4 text-zinc-400 font-bold uppercase tracking-widest text-[10px] font-display">Syncing AI Database...</p>
-          </div>
+          <>
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <CardSkeleton key={idx} hasImage={false} className="h-44" />
+            ))}
+          </>
         ) : filteredData.length > 0 ? (
           filteredData.map((tool, idx) => (
             <div 

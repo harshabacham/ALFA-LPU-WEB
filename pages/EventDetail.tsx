@@ -9,6 +9,7 @@ import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Event } from '../types';
 import { useBookmarks } from '../lib/bookmarks';
+import { DetailSkeleton } from '../components/ui/skeleton';
 import { motion } from 'framer-motion';
 import { WarningGraphic } from '../components/ui/warning-graphic';
 
@@ -36,15 +37,8 @@ const EventDetail: React.FC = () => {
   }, [id]);
 
   if (loading) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950">
-      <motion.div 
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-        className="w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full"
-      />
-      <p className="mt-4 text-zinc-500 dark:text-zinc-400 text-xs font-black uppercase tracking-widest font-display animate-pulse">
-        Assembling Event Intelligence...
-      </p>
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pt-10">
+      <DetailSkeleton />
     </div>
   );
 

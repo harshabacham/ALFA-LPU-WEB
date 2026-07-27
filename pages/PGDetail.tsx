@@ -9,6 +9,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { PGRoom } from '../types';
+import { DetailSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 import { motion, AnimatePresence } from 'motion/react';
 import { WarningGraphic } from '../components/ui/warning-graphic';
@@ -121,9 +122,8 @@ const PGDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 border-4 border-[#fe7f2d] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-400 animate-pulse font-display">Preparing listing presentation...</p>
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pt-10">
+        <DetailSkeleton />
       </div>
     );
   }

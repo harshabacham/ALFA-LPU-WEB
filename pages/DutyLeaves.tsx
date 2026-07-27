@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { DutyLeave } from '../types';
+import { ListSkeleton } from '../components/ui/skeleton';
 
 const DutyLeaves: React.FC = () => {
   const [data, setData] = useState<DutyLeave[]>([]);
@@ -172,10 +173,7 @@ const DutyLeaves: React.FC = () => {
 
           {/* Active List Stream */}
           {loading ? (
-            <div className="text-center py-20 bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-zinc-200/60 dark:border-zinc-900">
-              <div className="animate-spin w-8 h-8 border-3 border-primary-500 border-t-transparent rounded-full mx-auto mb-4" />
-              <p className="text-zinc-500 font-bold text-sm">Fetching verified DL ledger...</p>
-            </div>
+            <ListSkeleton count={5} />
           ) : processedData.length > 0 ? (
             <div className="space-y-4">
               {processedData.map((leave, idx) => {

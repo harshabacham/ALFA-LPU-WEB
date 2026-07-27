@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Tag, Search, Filter, MapPin, ShoppingBag, Star, Mail, Phone, ChevronRight, Sparkles, Zap, Plus, X, Lock, LogOut, CheckCircle2, Globe, ArrowRight, AlertCircle, ExternalLink, ShieldCheck, Copy, Edit, Trash2, UploadCloud, Loader2 } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Deal } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_DEALS } from '../services/fallbackData';
 import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from '../services/firebase';
 import { User } from '../services/firebase';
@@ -198,7 +199,16 @@ const Deals: React.FC = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<Deal[]>([]);
   const [filteredData, setFilteredData] = useState<Deal[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const searchParam = new URLSearchParams(location.search).get('search') || '';
+  const [searchTerm, setSearchTerm] = useState(searchParam);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('search');
+    if (query !== null) {
+      setSearchTerm(query);
+    }
+  }, [location.search]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedCondition, setSelectedCondition] = useState('All');
   const [loading, setLoading] = useState(true);
@@ -701,10 +711,11 @@ const Deals: React.FC = () => {
       {/* Deals Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-24">
         {loading ? (
-          <div className="col-span-full py-40 text-center">
-            <div className="animate-spin w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
-            <p className="mt-4 text-zinc-400 font-bold uppercase tracking-widest text-[10px] font-display">Syncing Market Database...</p>
-          </div>
+          <>
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <CardSkeleton key={idx} imageHeight="h-40" />
+            ))}
+          </>
         ) : filteredData.length > 0 ? (
           filteredData.map((deal, idx) => {
             const isOwner = !!(

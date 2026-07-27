@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Notification } from '../types';
+import { ListSkeleton } from '../components/ui/skeleton';
 import { FollowerPointerCard } from '../components/ui/following-pointer';
 
 const Notifications: React.FC = () => {
@@ -643,10 +644,7 @@ const Notifications: React.FC = () => {
           )}
 
           {loading && data.length === 0 ? (
-            <div className="text-center py-20 bg-white dark:bg-zinc-950 rounded-[2.5rem] border border-zinc-200/60 dark:border-zinc-900">
-              <div className="animate-spin w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p className="text-zinc-500 font-bold text-sm">Synchronizing stream board...</p>
-            </div>
+            <ListSkeleton count={5} />
           ) : processedData.length > 0 ? (
             <div className="relative pl-6 sm:pl-8 space-y-6 border-l border-zinc-200 dark:border-zinc-800 ml-4">
               

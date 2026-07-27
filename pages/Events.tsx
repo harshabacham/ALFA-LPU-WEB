@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Calendar, MapPin, Clock, Search, 
   Sparkles, Bookmark, Grid, List, ChevronRight, Share2, X, AlertCircle, Info, ExternalLink, Ticket, CheckCircle2, SlidersHorizontal, RefreshCw, Star
@@ -10,6 +10,7 @@ import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Event } from '../types';
 import { CometCard } from '../components/ui/comet-card';
+import { CardSkeleton, HeroSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FALLBACK_EVENTS } from '../services/fallbackData';
@@ -20,7 +21,16 @@ type CategoryOption = 'all' | 'free' | 'premium' | 'tech' | 'cultural' | 'worksh
 const Events: React.FC = () => {
   const [data, setData] = useState<Event[]>([]);
   const [filteredData, setFilteredData] = useState<Event[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const searchParam = new URLSearchParams(location.search).get('search') || '';
+  const [searchTerm, setSearchTerm] = useState(searchParam);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('search');
+    if (query !== null) {
+      setSearchTerm(query);
+    }
+  }, [location.search]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>('all');
   const [sortBy, setSortBy] = useState<SortOption>('default');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -475,17 +485,7 @@ const Events: React.FC = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {Array.from({ length: 6 }).map((_, idx) => (
-                <div key={idx} className="w-full bg-white dark:bg-zinc-900 p-5 rounded-[2.5rem] border border-zinc-200/50 dark:border-zinc-800/40 space-y-6 animate-pulse">
-                  <div className="aspect-[4/3] w-full bg-zinc-200 dark:bg-zinc-800 rounded-[2rem]" />
-                  <div className="space-y-4 px-1">
-                    <div className="flex justify-between items-center">
-                      <div className="h-3 w-20 bg-zinc-200 dark:bg-zinc-800 rounded" />
-                      <div className="h-3 w-10 bg-zinc-200 dark:bg-zinc-800 rounded" />
-                    </div>
-                    <div className="h-6 w-3/4 bg-zinc-200 dark:bg-zinc-800 rounded-lg" />
-                    <div className="h-4 w-1/2 bg-zinc-200 dark:bg-zinc-800 rounded-lg" />
-                  </div>
-                </div>
+                <CardSkeleton key={idx} imageHeight="h-56" />
               ))}
             </div>
           ) : filteredData.length > 0 ? (

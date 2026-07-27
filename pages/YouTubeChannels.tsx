@@ -8,6 +8,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { YouTubeChannel } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_YOUTUBE_CHANNELS } from '../services/fallbackData';
 
 const YouTubeChannels: React.FC = () => {
@@ -371,8 +372,10 @@ const YouTubeChannels: React.FC = () => {
 
       {/* 5. Main Videos Grid */}
       {loading ? (
-        <div className="py-24 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 border-4 border-red-100 dark:border-red-950/40 border-t-red-600 rounded-full animate-spin"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <CardSkeleton key={idx} imageHeight="h-44" />
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">

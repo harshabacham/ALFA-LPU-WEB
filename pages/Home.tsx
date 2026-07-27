@@ -14,6 +14,7 @@ import { CSV_URLS, QUOTES } from '../constants';
 import { Event, Notification as NotificationType, Deal, PGRoom } from '../types';
 import { FollowerPointerCard } from '../components/ui/following-pointer';
 import { PointerHighlight } from '../components/ui/pointer-highlight';
+import { HeroSkeleton } from '../components/ui/skeleton';
 import { WhatsAppIcon } from '../components/icons/WhatsAppIcon';
 
 const Home: React.FC = () => {
@@ -498,10 +499,7 @@ const Home: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-20 bg-sand-50 dark:bg-zinc-900/60 border border-zinc-200/50 dark:border-zinc-800/40 rounded-[2rem] shadow-sm">
-              <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="mt-4 text-zinc-400 text-xs font-semibold uppercase tracking-widest font-display">Syncing Spotlight Universe...</p>
-            </div>
+            <HeroSkeleton />
           )}
         </div>
       </section>

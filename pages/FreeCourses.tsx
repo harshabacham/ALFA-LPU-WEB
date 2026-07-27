@@ -4,6 +4,7 @@ import { GraduationCap, Search, PlayCircle, Clock, Book } from 'lucide-react';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Course } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_COURSES } from '../services/fallbackData';
 
 const FreeCourses: React.FC = () => {
@@ -74,9 +75,11 @@ const FreeCourses: React.FC = () => {
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {loading ? (
-          <div className="col-span-full py-20 text-center">
-            <div className="animate-spin w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full mx-auto"></div>
-          </div>
+          <>
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <CardSkeleton key={idx} imageHeight="h-44" />
+            ))}
+          </>
         ) : filteredData.length > 0 ? (
           filteredData.map((course, idx) => (
             <div key={idx} className="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all flex flex-col">

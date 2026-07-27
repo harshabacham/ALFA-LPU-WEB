@@ -18,6 +18,7 @@ import {
 import { fetchCSV } from "../../services/csvService";
 import { CSV_URLS } from "../../constants";
 import { Event as AppEvent, PGRoom } from "../../types";
+import GlobalSearchModal from "../GlobalSearchModal";
 
 interface FloatingNavProps {
   isDark?: boolean;
@@ -210,12 +211,25 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isGlobalSearchOpen, setIsGlobalSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategoryFilter, setActiveCategoryFilter] = useState("All");
   const [greeting, setGreeting] = useState("Hello");
   const location = useLocation();
   const isDashboard = location.pathname === "/";
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Global keyboard shortcut Ctrl+K / Cmd+K to trigger global search modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsGlobalSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const [eventTitles, setEventTitles] = useState<Record<number, string>>({});
   const [pgNames, setPgNames] = useState<Record<number, string>>({});
@@ -641,8 +655,21 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
               </div>
             )}
 
-            {/* Right: Profile Link, Theme Toggle & Creative Menu Toggle */}
-            <div className="flex items-center gap-2">
+            {/* Right: Global Search, Profile Link, Theme Toggle & Creative Menu Toggle */}
+            <div className="flex items-center gap-1.5 xs:gap-2">
+              {/* Global Search Component Trigger Button */}
+              <button
+                onClick={() => {
+                  setIsOverlayOpen(false);
+                  setIsGlobalSearchOpen(true);
+                }}
+                className="flex h-8 w-8 items-center justify-center rounded-xl bg-sand-100/80 text-zinc-600 transition-all hover:bg-sand-200/80 dark:bg-zinc-800/80 dark:text-zinc-400 dark:hover:bg-zinc-750 cursor-pointer shadow-sm border border-sand-200/10 dark:border-zinc-800/10 group"
+                aria-label="Global Search (Ctrl+K)"
+                title="Search notes, events, clubs, marketplace... (Ctrl+K)"
+              >
+                <Search size={15} className="text-primary-500 group-hover:scale-110 transition-transform" />
+              </button>
+
               {/* Profile button */}
               <Link
                 to="/profile"
@@ -886,6 +913,12 @@ export const FloatingNav: React.FC<FloatingNavProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Global Command Palette / Search Modal across Notes, Events, Clubs, & Marketplace */}
+      <GlobalSearchModal
+        isOpen={isGlobalSearchOpen}
+        onClose={() => setIsGlobalSearchOpen(false)}
+      />
     </>
   );
 };

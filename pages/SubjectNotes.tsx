@@ -13,6 +13,7 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Note } from '../types';
+import { ListSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 
 const SubjectNotes: React.FC = () => {
@@ -130,8 +131,8 @@ const SubjectNotes: React.FC = () => {
             </div>
 
             {loading ? (
-              <div className="py-24 text-center text-zinc-400 animate-pulse text-xs font-bold uppercase tracking-widest">
-                Scanning Database Archives...
+              <div className="p-4">
+                <ListSkeleton count={4} />
               </div>
             ) : filteredNotes.length > 0 ? (
               <div className="divide-y divide-zinc-100 dark:divide-zinc-900">

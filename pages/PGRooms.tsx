@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { PGRoom } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 import { FALLBACK_PG_ROOMS } from '../services/fallbackData';
 
@@ -427,19 +428,7 @@ const PGRooms: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
             {Array.from({ length: 8 }).map((_, idx) => (
-              <div key={idx} className="flex flex-col space-y-4 animate-pulse text-left min-w-0">
-                <div className="relative aspect-square overflow-hidden rounded-3xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
-                  <Bed className="text-zinc-300 dark:text-zinc-700/50 animate-bounce" size={40} />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-start gap-4">
-                    <div className="h-5 w-2/3 bg-zinc-300 dark:bg-zinc-700 rounded-lg" />
-                    <div className="h-4 w-10 bg-zinc-200 dark:bg-zinc-800 rounded-lg" />
-                  </div>
-                  <div className="h-4 w-1/2 bg-zinc-200 dark:bg-zinc-800 rounded-lg" />
-                  <div className="h-4 w-1/3 bg-zinc-300 dark:bg-zinc-700 rounded-lg pt-1" />
-                </div>
-              </div>
+              <CardSkeleton key={idx} imageHeight="h-52" />
             ))}
           </div>
         ) : filteredData.length === 0 ? (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   motion, 
   AnimatePresence 
@@ -14,15 +14,25 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Note } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 
 const Notes: React.FC = () => {
   const [subjects, setSubjects] = useState<{name: string, count: number, category: string}[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const searchParam = new URLSearchParams(location.search).get('search') || '';
+  const [searchTerm, setSearchTerm] = useState(searchParam);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { notes: bookmarkedNotes, toggleNote, isNoteBookmarked } = useBookmarks();
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('search');
+    if (query !== null) {
+      setSearchTerm(query);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     const load = async () => {
@@ -175,10 +185,7 @@ const Notes: React.FC = () => {
             <AnimatePresence mode="popLayout">
               {loading ? (
                 Array.from({ length: 6 }).map((_, idx) => (
-                  <div
-                    key={`skeleton-${idx}`}
-                    className="h-28 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl animate-pulse p-4"
-                  />
+                  <CardSkeleton key={`skeleton-${idx}`} hasImage={false} className="h-32" />
                 ))
               ) : filteredSubjects.length > 0 ? (
                 filteredSubjects.map((subject, idx) => {

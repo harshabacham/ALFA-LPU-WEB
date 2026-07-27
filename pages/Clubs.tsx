@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   Users, Search, ExternalLink, Mail, Clock, 
   ShieldCheck, PlusCircle, ArrowUpRight, 
@@ -8,13 +9,23 @@ import {
 import { fetchCSV } from '../services/csvService';
 import { CSV_URLS } from '../constants';
 import { Club } from '../types';
+import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_CLUBS } from '../services/fallbackData';
 import { userProfileService } from '../services/userProfileService';
 
 const Clubs: React.FC = () => {
   const [data, setData] = useState<Club[]>([]);
   const [filteredData, setFilteredData] = useState<Club[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const searchParam = new URLSearchParams(location.search).get('search') || '';
+  const [searchTerm, setSearchTerm] = useState(searchParam);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('search');
+    if (query !== null) {
+      setSearchTerm(query);
+    }
+  }, [location.search]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
   
@@ -326,9 +337,10 @@ const Clubs: React.FC = () => {
 
       {/* 4. Communities Grid */}
       {loading ? (
-        <div className="py-40 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 border-4 border-indigo-100 dark:border-indigo-950/40 border-t-indigo-600 rounded-full animate-spin"></div>
-          <p className="mt-6 text-zinc-400 dark:text-zinc-500 font-extrabold uppercase tracking-widest text-[10px]">Syncing Campus Hubs...</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <CardSkeleton key={idx} imageHeight="h-24" />
+          ))}
         </div>
       ) : filteredData.length > 0 ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

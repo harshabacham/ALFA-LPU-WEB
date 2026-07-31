@@ -6,6 +6,7 @@ import { CSV_URLS } from '../constants';
 import { Deal } from '../types';
 import { CardSkeleton } from '../components/ui/skeleton';
 import { FALLBACK_DEALS } from '../services/fallbackData';
+import { AdUnit } from '../components/AdUnit';
 import { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut } from '../services/firebase';
 import { User } from '../services/firebase';
 
@@ -1280,6 +1281,44 @@ const Deals: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* AdSense Sponsored Unit */}
+      <div className="my-10">
+        <AdUnit label="Student Marketplace & Gear Sponsors" slot="5069382104" />
+      </div>
+
+      {/* Rich Marketplace Safety & Student Trading Guide */}
+      <section className="bg-sand-50 dark:bg-zinc-900/50 border border-zinc-200/60 dark:border-zinc-800 rounded-3xl p-6 md:p-8 space-y-4 text-left">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="text-primary-500" size={20} />
+          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 font-display">
+            Student Marketplace Safety & Fair Pricing Guidelines
+          </h2>
+        </div>
+        <p className="text-xs md:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          The ALFA Campus Marketplace is designed for student-to-student exchange of textbooks, lab coats, scientific calculators, bicycles, and hostel furniture. Always follow these safety best practices:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">1. Public Campus Meetups</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Conduct transactions in well-lit public campus locations like Central Library, UniMall, or Block 34 food courts.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">2. Inspect Item Before Payment</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Verify gadget functionality, bicycle brakes, or textbook condition in person prior to transferring funds via UPI.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">3. Zero Advance Deposits</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Never wire advance booking fees to unverified numbers. Real student sellers will gladly meet you on campus.
+            </p>
+          </div>
+        </div>
+      </section>
 
     </div>
   );

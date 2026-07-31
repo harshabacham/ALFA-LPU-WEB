@@ -14,6 +14,7 @@ import { CardSkeleton, HeroSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FALLBACK_EVENTS } from '../services/fallbackData';
+import { AdUnit } from '../components/AdUnit';
 
 type SortOption = 'default' | 'title-asc' | 'date-soonest' | 'price-low';
 type CategoryOption = 'all' | 'free' | 'premium' | 'tech' | 'cultural' | 'workshop';
@@ -747,6 +748,44 @@ const Events: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
+
+      {/* AdSense Sponsored Unit */}
+      <div className="my-8">
+        <AdUnit label="Campus Fests & Event Sponsors" slot="4059281029" />
+      </div>
+
+      {/* Rich Campus Event Guide: Duty Leaves & YouthVibe Guidelines */}
+      <section className="bg-sand-50 dark:bg-zinc-900/50 border border-zinc-200/60 dark:border-zinc-800 rounded-3xl p-6 md:p-8 space-y-4 text-left">
+        <div className="flex items-center gap-2">
+          <Ticket className="text-primary-500" size={20} />
+          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 font-display">
+            LPU Events, YouthVibe Fests & Duty Leave Approval Guide
+          </h2>
+        </div>
+        <p className="text-xs md:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Lovely Professional University hosts some of India's largest mega-fests including YouthVibe, One India, and One World. Participating in official campus activities allows students to claim duty leaves (DL) to safeguard their academic attendance:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">1. Duty Leave (DL) Eligibility</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Only DSW-registered events with official coordinator approvals grant DL credits. Ensure your student ID is logged at the event venue.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">2. DSW Pass Verification</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              For celebrity concerts and pro-nights, carry your physical LPU Student ID card along with your digital ticket barcode for smooth entry.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">3. Hackathons & Tech Fests</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              National coding competitions and hackathons qualify for academic exemptions and practical viva credits under departmental approval.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import { CSV_URLS } from '../constants';
 import { Note } from '../types';
 import { CardSkeleton } from '../components/ui/skeleton';
 import { useBookmarks } from '../lib/bookmarks';
+import { AdUnit } from '../components/AdUnit';
 
 const Notes: React.FC = () => {
   const [subjects, setSubjects] = useState<{name: string, count: number, category: string}[]>([]);
@@ -365,6 +366,44 @@ const Notes: React.FC = () => {
         </div>
 
       </div>
+
+      {/* AdSense Sponsored Unit */}
+      <div className="my-10">
+        <AdUnit label="Academic Resources & Study Sponsors" slot="3049582019" />
+      </div>
+
+      {/* Rich Academic Guide: How to Study for LPU Exams */}
+      <section className="bg-sand-50 dark:bg-zinc-900/50 border border-zinc-200/60 dark:border-zinc-800 rounded-3xl p-6 md:p-8 space-y-4 text-left">
+        <div className="flex items-center gap-2">
+          <GraduationCap className="text-primary-500" size={20} />
+          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 font-display">
+            LPU Exam Preparation & Unit-wise Study Guidelines
+          </h2>
+        </div>
+        <p className="text-xs md:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Mastering course modules at Lovely Professional University requires a systematic approach to both Mid-Term and End-Term examinations. Here is how to utilize ALFA Study Vault to maximize your academic performance:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">1. Unit 1 & 2 Focus (Mid-Terms)</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Mid-term examinations primarily cover the initial two syllabus units. Prioritize conceptual clarity, standard derivations, and solved textbook examples.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">2. Previous Year Papers (PYQs)</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Over 60% of End-Term question patterns mirror previous year papers. Solve at least 3 years of PYQs under timed conditions before the final exams.
+            </p>
+          </div>
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-2xl border border-zinc-200/50 dark:border-zinc-800 space-y-1">
+            <h3 className="font-bold text-zinc-900 dark:text-zinc-100">3. Continuous Assessment (CA)</h3>
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Maintain regular assignment submissions and class presentations. CA scores directly boost your relative grading percentile.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Decorative Curated Footer Badges */}
       <div className="flex flex-wrap items-center gap-6 pt-12 border-t border-zinc-100 dark:border-zinc-900 mt-16 opacity-60">
